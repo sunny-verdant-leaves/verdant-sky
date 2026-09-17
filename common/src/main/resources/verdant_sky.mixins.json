@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "verdant_leaves.mixin",
+  "package": "com.github.verdant_leaves.verdant_sky.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [

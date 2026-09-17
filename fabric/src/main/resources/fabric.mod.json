@@ -16,10 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "verdant_leaves.fabric.ExampleModFabric"
+      "com.github.verdant_leaves.verdant_sky.fabric.ExampleModFabric"
     ],
     "client": [
-      "verdant_leaves.fabric.client.ExampleModFabricClient"
+      "com.github.verdant_leaves.verdant_sky.fabric.client.ExampleModFabricClient"
     ]
   },
   "mixins": [
@@ -29,6 +29,7 @@
     "fabricloader": ">=0.19.5",
     "minecraft": "~1.20.1",
     "java": ">=17",
+    "architectury": ">=9.2.14",
     "fabric-api": "*"
   },
   "suggests": {
