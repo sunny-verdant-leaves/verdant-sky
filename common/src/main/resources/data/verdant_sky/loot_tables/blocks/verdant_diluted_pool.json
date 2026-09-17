@@ -4,7 +4,7 @@
     "rolls": 1,
     "entries": [{
       "type": "minecraft:item",
-      "name": "verdant_sky:verdant_diluted_pool"
+      "name": "verdant_sky:livingwood_pool"
     }],
     "conditions": [{
       "condition": "minecraft:survives_explosion"

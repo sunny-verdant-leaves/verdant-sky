@@ -36,7 +36,7 @@ public class BotaniaBlockEntitiesMixin {
             BiFunction<BlockPos, BlockState, T> func,
             Block... blocks) {
         if (id.equals(prefix(LibBlockNames.POOL))) {
-            blocks = ArrayUtils.add(blocks, ModBlocks.VERDANT_DILUTED_POOL.get());
+            blocks = ArrayUtils.add(blocks, ModBlocks.LIVINGWOOD_POOL.get());
         }
         return blocks;
     }
