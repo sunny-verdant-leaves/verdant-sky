@@ -13,5 +13,7 @@ public final class VerdantSkyFabric implements ModInitializer {
 
         // Run our common setup.
         VerdantSky.init();
+        VerdantSky.blocksRegister();
+        VerdantSky.blocksEntitiesRegister();
     }
 }

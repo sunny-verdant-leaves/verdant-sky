@@ -7,7 +7,13 @@ public final class VerdantSky {
     public static final String MOD_ID = "verdant_sky";
 
     public static void init() {
+    }
+
+    public static void blocksRegister() {
         ModBlocks.register();
+    }
+
+    public static void blocksEntitiesRegister() {
         ModBlockEntities.register();
     }
 }

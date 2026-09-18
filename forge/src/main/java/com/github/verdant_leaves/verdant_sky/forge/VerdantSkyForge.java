@@ -14,5 +14,7 @@ public final class VerdantSkyForge {
 
         // Run our common setup.
         VerdantSky.init();
+        VerdantSky.blocksRegister();
+        VerdantSky.blocksEntitiesRegister();
     }
 }
