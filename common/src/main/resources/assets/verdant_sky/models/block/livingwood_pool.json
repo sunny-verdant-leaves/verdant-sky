@@ -2,8 +2,8 @@
   "parent": "verdant_sky:block/shapes/livingwood_pool",
   "textures": {
     "bottom": "botania:block/mana_pool_bottom",
-    "inside": "botania:block/diluted_pool_inside",
-    "side": "botania:block/diluted_pool_side",
-    "top": "botania:block/diluted_pool_top"
+    "inside": "verdant_sky:block/livingwood_pool_inside",
+    "side": "verdant_sky:block/livingwood_pool_side",
+    "top": "verdant_sky:block/livingwood_pool_top"
   }
 }
