@@ -26,6 +26,10 @@ public class ModCreativeTabs {
 
     public static void register() {
         TABS.register();
-        CreativeTabRegistry.append(VERDANT_TAB, ModBlocks.LIVINGWOOD_POOL_ITEM);
+        CreativeTabRegistry.append(
+            VERDANT_TAB, 
+            ModBlocks.APOTHECARY_WOODEN_ITEM, 
+            ModBlocks.LIVINGWOOD_POOL_ITEM
+        );
     }
 }

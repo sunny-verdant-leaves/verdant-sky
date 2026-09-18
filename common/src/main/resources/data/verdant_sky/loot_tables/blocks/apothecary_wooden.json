@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:block",
+  "pools": [{
+    "rolls": 1,
+    "entries": [{
+      "type": "minecraft:item",
+      "name": "verdant_sky:apothecary_wooden"
+    }],
+    "conditions": [{
+      "condition": "minecraft:survives_explosion"
+    }]
+  }]
+}

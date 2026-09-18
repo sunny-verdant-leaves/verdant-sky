@@ -40,4 +40,22 @@ public class BotaniaBlockEntitiesMixin {
         }
         return blocks;
     }
+    
+    @ModifyArg(
+        method = "<clinit>",
+        at = @At(value = "INVOKE",
+            target = "Lvazkii/botania/common/block/block_entity/BotaniaBlockEntities;type(Lnet/minecraft/resources/ResourceLocation;Ljava/util/function/BiFunction;[Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/entity/BlockEntityType;",
+            remap = true),
+        index = 2,
+        require = 0
+    )
+    private static <T extends BlockEntity> Block[] addWoodenAltar(
+            ResourceLocation id,
+            BiFunction<BlockPos, BlockState, T> func,
+            Block... blocks) {
+        if (id.equals(prefix(LibBlockNames.ALTAR))) {
+            blocks = ArrayUtils.add(blocks, ModBlocks.APOTHECARY_WOODEN.get());
+        }
+        return blocks;
+    }
 }

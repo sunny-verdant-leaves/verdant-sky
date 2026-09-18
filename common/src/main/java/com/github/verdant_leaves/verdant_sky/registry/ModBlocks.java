@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
+import com.github.verdant_leaves.verdant_sky.block.WoodenPetalApothecaryBlock;
 import com.github.verdant_leaves.verdant_sky.block.VerdantPoolBlock;
 
 public class ModBlocks {
@@ -33,6 +34,21 @@ public class ModBlocks {
     public static final RegistrySupplier<Item> LIVINGWOOD_POOL_ITEM =
         ITEMS.register("livingwood_pool", () ->
             new BlockItem(LIVINGWOOD_POOL.get(), new Item.Properties())
+        );
+    
+    public static final RegistrySupplier<Block> APOTHECARY_WOODEN =
+    BLOCKS.register("apothecary_wooden", () ->
+        new WoodenPetalApothecaryBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.WOOD)
+            .strength(2.5F)
+            .sound(SoundType.WOOD)
+            .noOcclusion()
+        )
+    );
+
+    public static final RegistrySupplier<Item> APOTHECARY_WOODEN_ITEM =
+        ITEMS.register("apothecary_wooden", () ->
+            new BlockItem(APOTHECARY_WOODEN.get(), new Item.Properties())
         );
 
     public static void register() {
