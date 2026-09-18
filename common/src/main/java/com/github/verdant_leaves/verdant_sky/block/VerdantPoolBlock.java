@@ -17,12 +17,14 @@ import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
 public class VerdantPoolBlock extends ManaPoolBlock {
     public VerdantPoolBlock(BlockBehaviour.Properties props) {
         super(Variant.DILUTED, props);
+        System.out.println("[VerdantSky] Try to VerdantPoolBlock");
     }
 
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        System.out.println("[VerdantSky] Try to VerdantPoolBlockEntity");
         return new VerdantPoolBlockEntity(pos, state);
-    }
+	}
 
     @Nullable
     @Override
