@@ -26,5 +26,8 @@ public final class VerdantSkyForge {
         if (event.getItemStack().is(ModBlocks.LIVINGWOOD_POOL_ITEM.get())) {
             event.setBurnTime(1600);
         }
+        else if (event.getItemStack().is(ModBlocks.APOTHECARY_WOODEN_ITEM.get())) {
+            event.setBurnTime(1600);
+        }
     }
 }
