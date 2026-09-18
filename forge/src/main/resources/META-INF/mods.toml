@@ -9,7 +9,7 @@ version = "${version}"
 displayName = "Verdant Sky"
 authors = "Me!"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+Mod for Modspack Verdant Sky
 '''
 #logoFile = ""
 
