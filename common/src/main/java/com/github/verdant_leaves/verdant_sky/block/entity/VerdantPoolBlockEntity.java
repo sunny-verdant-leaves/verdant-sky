@@ -129,12 +129,10 @@ public class VerdantPoolBlockEntity extends BotaniaBlockEntity implements ManaPo
 
 	public VerdantPoolBlockEntity(BlockPos pos, BlockState state) {
 		this(pos, state, DEFAULT_MAX_MANA);
-    	System.out.println("[VerdantSky] BE constructed with DEFAULT_MAX_MANA");
 	}
 
 	protected VerdantPoolBlockEntity(BlockPos pos, BlockState state, int maxMana) {
 		super(ModBlockEntities.VERDANT_POOL.get(), pos, state);
-    	System.out.println("[VerdantSky] BE constructed with maxMana");
 		this.manaCap = maxMana;
 	}
 
@@ -278,7 +276,8 @@ public class VerdantPoolBlockEntity extends BotaniaBlockEntity implements ManaPo
 	private void initManaCapAndNetwork() {
 		// 容量在构造器中已设置，此处不再判断 Variant
 		if (!ManaNetworkHandler.instance.isPoolIn(level, this) && !isRemoved()) {
-			BotaniaAPI.instance().getManaNetworkInstance().fireManaNetworkEvent(this, ManaBlockType.POOL, ManaNetworkAction.ADD);
+			BotaniaAPI.instance().getManaNetworkInstance().fireManaNetworkEvent(this, ManaBlockType.POOL,
+					ManaNetworkAction.ADD);
 		}
 	}
 
