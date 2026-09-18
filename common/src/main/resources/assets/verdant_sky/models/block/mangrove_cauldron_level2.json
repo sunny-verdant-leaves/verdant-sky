@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/water_cauldron_level2",
+  "textures": {
+    "top": "minecraft:block/mangrove_planks",
+    "bottom": "minecraft:block/mangrove_planks",
+    "side": "minecraft:block/mangrove_planks",
+    "inside": "minecraft:block/mangrove_planks",
+    "content": "minecraft:block/water_still",
+    "particle": "minecraft:block/mangrove_planks"
+  }
+}

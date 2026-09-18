@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/water_cauldron_level1",
+  "textures": {
+    "top": "minecraft:block/oak_planks",
+    "bottom": "minecraft:block/oak_planks",
+    "side": "minecraft:block/oak_planks",
+    "inside": "minecraft:block/oak_planks",
+    "content": "minecraft:block/water_still",
+    "particle": "minecraft:block/oak_planks"
+  }
+}

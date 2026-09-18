@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
@@ -26,10 +27,15 @@ public class ModCreativeTabs {
 
     public static void register() {
         TABS.register();
+        
         CreativeTabRegistry.append(
             VERDANT_TAB, 
-            ModBlocks.APOTHECARY_WOODEN_ITEM, 
-            ModBlocks.LIVINGWOOD_POOL_ITEM
+            ModBlocks.LIVINGWOOD_POOL_ITEM, 
+            ModBlocks.APOTHECARY_WOODEN_ITEM
         );
+
+        for (RegistrySupplier<Item> item : ModBlocks.WOODEN_CAULDRON_ITEMS) {
+            CreativeTabRegistry.append(VERDANT_TAB, item);
+        }
     }
 }
