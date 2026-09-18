@@ -5,21 +5,21 @@
   "name": "Verdant Sky",
   "description": "Mod for Modspack Verdant Sky",
   "authors": [
-    "Me!"
+    "Sunny Verdant Leaves"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/sunny-verdant-leaves/verdant-sky",
+    "sources": "https://github.com/sunny-verdant-leaves/verdant-sky"
   },
-  "license": "CC0-1.0",
-  "icon": "assets/verdant_sky/icon.png",
+  "license": "MIT",
+  "icon": "logo.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.verdant_leaves.verdant_sky.fabric.ExampleModFabric"
+      "com.github.verdant_leaves.verdant_sky.fabric.VerdantSkyFabric"
     ],
     "client": [
-      "com.github.verdant_leaves.verdant_sky.fabric.client.ExampleModFabricClient"
+      "com.github.verdant_leaves.verdant_sky.fabric.client.VerdantSkyFabricClient"
     ]
   },
   "mixins": [
@@ -29,10 +29,10 @@
     "fabricloader": ">=0.19.5",
     "minecraft": "~1.20.1",
     "java": ">=17",
-    "architectury": ">=9.2.14",
-    "fabric-api": "*"
+    "architectury": ">=9.1.10",
+    "fabric-api": "*",
+    "botania": ">=1.20.1-451"
   },
   "suggests": {
-    "another-mod": "*"
   }
 }

@@ -1,8 +1,10 @@
 package com.github.verdant_leaves.verdant_sky.fabric;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
+import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 
 public final class VerdantSkyFabric implements ModInitializer {
     @Override
@@ -13,5 +15,8 @@ public final class VerdantSkyFabric implements ModInitializer {
 
         // Run our common setup.
         VerdantSky.init();
+
+        // 注册燃料燃烧时间
+        FuelRegistry.INSTANCE.add(ModBlocks.LIVINGWOOD_POOL_ITEM.get(), 1600);
     }
 }

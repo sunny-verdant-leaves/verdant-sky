@@ -1,17 +1,17 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+issueTrackerURL = "https://github.com/sunny-verdant-leaves/verdant-sky/issues"
+license = "MIT"
 
 [[mods]]
 modId = "verdant_sky"
 version = "${version}"
 displayName = "Verdant Sky"
-authors = "Me!"
+authors = "Sunny Verdant Leaves"
 description = '''
-Mod for Modspack Verdant Sky
+This is a Minecraft mod for the Verdant Sky modpack.
 '''
-#logoFile = ""
+logoFile = "logo.png"
 
 [[dependencies.verdant_sky]]
 modId = "forge"
@@ -30,6 +30,13 @@ side = "BOTH"
 [[dependencies.verdant_sky]]
 modId = "architectury"
 mandatory = true
-versionRange = "[9.2.14,)"
+versionRange = "[9.1.10,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.verdant_sky]]
+modId = "botania"
+mandatory = true
+versionRange = "[1.20.1-453,)"
 ordering = "AFTER"
 side = "BOTH"

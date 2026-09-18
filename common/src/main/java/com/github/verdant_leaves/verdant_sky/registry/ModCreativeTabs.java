@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 
@@ -18,9 +19,10 @@ public class ModCreativeTabs {
         TABS.register("verdant_sky", () ->
             CreativeTabRegistry.create(
                 Component.translatable("itemGroup.verdant_sky"),
-                () -> new ItemStack(ModBlocks.LIVINGWOOD_POOL_ITEM.get())
+                () -> new ItemStack(Items.FLOWERING_AZALEA_LEAVES) // 原版的 flowering_azalea_leaves
             )
         );
+        
 
     public static void register() {
         TABS.register();
