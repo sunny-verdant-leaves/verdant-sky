@@ -29,7 +29,8 @@ public class ModCreativeTabs {
         TABS.register();
         
         CreativeTabRegistry.append(
-            VERDANT_TAB, 
+            VERDANT_TAB,
+            ModBlocks.DECAY_FLOWER_ITEM,
             ModBlocks.LIVINGWOOD_POOL_ITEM, 
             ModBlocks.APOTHECARY_WOODEN_ITEM
         );

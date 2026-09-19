@@ -1,7 +1,5 @@
 package com.github.verdant_leaves.verdant_sky.integration;
 
-import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronBehavior;
-import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronFamily;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +17,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+
+import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronBehavior;
+import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronFamily;
 
 public final class BotaniaIntegration {
     private BotaniaIntegration() {}

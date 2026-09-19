@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodenVariantRegistry;
+import com.github.verdant_leaves.verdant_sky.block.DecayFlowerBlock;
 import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronFamily;
 import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronNames;
 import com.github.verdant_leaves.verdant_sky.block.VerdantPoolBlock;
@@ -34,6 +35,26 @@ public class ModBlocks {
 
     public static final DeferredRegister<Item> ITEMS =
         DeferredRegister.create(VerdantSky.MOD_ID, Registries.ITEM);
+    
+    // ══════════════════════════════════════════════════════════════
+    //  腐朽花 Decay Flower
+    // ══════════════════════════════════════════════════════════════
+
+    public static final RegistrySupplier<Block> DECAY_FLOWER =
+        BLOCKS.register("decay_flower", () ->
+            new DecayFlowerBlock(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.PLANT)
+                .strength(0.0F)
+                .sound(SoundType.GRASS)
+                .noCollission()
+                .instabreak()
+            )
+        );
+
+    public static final RegistrySupplier<Item> DECAY_FLOWER_ITEM =
+        ITEMS.register("decay_flower", () ->
+            new BlockItem(DECAY_FLOWER.get(), new Item.Properties())
+        );
     
     // ══════════════════════════════════════════════════════════════
     //  活木魔力池

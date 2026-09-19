@@ -5,17 +5,21 @@ import dev.architectury.platform.Platform;
 
 import com.github.verdant_leaves.verdant_sky.integration.BotaniaIntegration;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
+import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
 import com.github.verdant_leaves.verdant_sky.registry.ModCreativeTabs;
+import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
 
 public final class VerdantSky {
     public static final String MOD_ID = "verdant_sky";
 
     public static void init() {
         ModBlocks.register();
+        ModBlockEntities.register();
+        ModRecipeTypes.register();
         ModCreativeTabs.register();
 
         // 安全地执行软依赖集成
-        // 此事件在公共设置阶段触发，此时所有注册表都已填充完毕[reference:2][reference:3]
+        // 此事件在公共设置阶段触发，此时所有注册表都已填充完毕
         LifecycleEvent.SETUP.register(() -> {
             // 再次确认 Botania 是否加载，避免不必要的类加载
             if (Platform.isModLoaded("botania")) {
