@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/template_cauldron_full",
+  "textures": {
+    "bottom": "minecraft:block/cherry_planks",
+    "inside": "minecraft:block/cherry_planks",
+    "particle": "minecraft:block/cherry_planks",
+    "side": "minecraft:block/cherry_planks",
+    "top": "minecraft:block/cherry_planks",
+    "content": "minecraft:block/powder_snow"
+  }
+}

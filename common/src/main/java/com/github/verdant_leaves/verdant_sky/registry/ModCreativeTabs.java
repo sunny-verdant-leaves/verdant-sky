@@ -34,7 +34,7 @@ public class ModCreativeTabs {
             ModBlocks.APOTHECARY_WOODEN_ITEM
         );
 
-        for (RegistrySupplier<Item> item : ModBlocks.WOODEN_CAULDRON_ITEMS) {
+        for (RegistrySupplier<Item> item : ModBlocks.CAULDRON_ITEMS) {
             CreativeTabRegistry.append(VERDANT_TAB, item);
         }
     }
