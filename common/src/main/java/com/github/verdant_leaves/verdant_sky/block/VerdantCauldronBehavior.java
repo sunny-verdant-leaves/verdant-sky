@@ -66,6 +66,9 @@ public class VerdantCauldronBehavior {
             if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
                 return InteractionResult.PASS;
             }
+            if (!family.isSpecial()) {
+                return InteractionResult.PASS;
+            }
             return emptyBucket(level, pos, player, hand, stack,
                     family.getLavaBlock().defaultBlockState(),
                     SoundEvents.BUCKET_EMPTY_LAVA);

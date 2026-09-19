@@ -71,8 +71,9 @@ public class ModBlocks {
     // 木炼药锅
     /** 支持的木材列表。加新木材在这里加一行。 */
     public static final String[] CAULDRON_WOODS = { 
-        "oak", 
-        "cherry" 
+        "cherry", 
+        "crimson", 
+        "oak"
     };
     public static final Map<String, RegistrySupplier<Block>> EMPTY_CAULDRONS = new LinkedHashMap<>();
     public static final Map<String, RegistrySupplier<Block>> WATER_CAULDRONS = new LinkedHashMap<>();
