@@ -6,15 +6,13 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class WoodenEmptyCauldronBlock extends AbstractCauldronBlock implements VerdantCauldronFamily {
 
-    public WoodenEmptyCauldronBlock(BlockBehaviour.Properties props) {
+    private final String wood;
+
+    public WoodenEmptyCauldronBlock(BlockBehaviour.Properties props, String wood) {
         super(props, VerdantCauldronBehavior.VERDANT_EMPTY_BEHAVIOR);
+        this.wood = wood;
     }
 
     @Override public boolean isFull(BlockState state) { return false; }
-
-    @Override public String selfName() { return VerdantCauldronNames.EMPTY; }
-    @Override public String emptyName() { return VerdantCauldronNames.EMPTY; }
-    @Override public String waterName() { return VerdantCauldronNames.WATER; }
-    @Override public String lavaName() { return VerdantCauldronNames.LAVA; }
-    @Override public String powderSnowName() { return VerdantCauldronNames.POWDER_SNOW; }
+    @Override public String wood() { return wood; }
 }

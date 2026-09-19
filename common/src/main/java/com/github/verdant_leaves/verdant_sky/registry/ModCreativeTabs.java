@@ -31,11 +31,11 @@ public class ModCreativeTabs {
         CreativeTabRegistry.append(
             VERDANT_TAB, 
             ModBlocks.LIVINGWOOD_POOL_ITEM, 
-            ModBlocks.APOTHECARY_WOODEN_ITEM,
-            ModBlocks.EMPTY_CAULDRON_ITEM,
-            ModBlocks.WATER_CAULDRON_ITEM,
-            ModBlocks.LAVA_CAULDRON_ITEM,
-            ModBlocks.POWDER_SNOW_CAULDRON_ITEM
+            ModBlocks.APOTHECARY_WOODEN_ITEM
         );
+
+        for (RegistrySupplier<Item> item : ModBlocks.CAULDRON_ITEMS) {
+            CreativeTabRegistry.append(VERDANT_TAB, item);
+        }
     }
 }

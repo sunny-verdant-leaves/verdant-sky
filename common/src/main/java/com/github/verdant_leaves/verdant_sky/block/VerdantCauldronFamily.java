@@ -8,21 +8,14 @@ import com.github.verdant_leaves.verdant_sky.VerdantSky;
 
 public interface VerdantCauldronFamily {
 
-    // 本方块自己是哪一种锅。
-    String selfName();
-
-    // 邻居的注册名。
-    String emptyName();
-    String waterName();
-    String lavaName();
-    String powderSnowName();
+    String wood();
 
     default Block lookup(String name) {
         return BuiltInRegistries.BLOCK.get(new ResourceLocation(VerdantSky.MOD_ID, name));
     }
 
-    default Block getEmptyBlock() { return lookup(emptyName()); }
-    default Block getWaterBlock() { return lookup(waterName()); }
-    default Block getLavaBlock() { return lookup(lavaName()); }
-    default Block getPowderSnowBlock() { return lookup(powderSnowName()); }
+    default Block getEmptyBlock()      { return lookup(VerdantCauldronNames.empty(wood())); }
+    default Block getWaterBlock()      { return lookup(VerdantCauldronNames.water(wood())); }
+    default Block getLavaBlock()       { return lookup(VerdantCauldronNames.lava(wood())); }
+    default Block getPowderSnowBlock() { return lookup(VerdantCauldronNames.powderSnow(wood())); }
 }

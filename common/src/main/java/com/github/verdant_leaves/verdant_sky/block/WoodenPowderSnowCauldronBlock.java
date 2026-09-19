@@ -5,13 +5,12 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class WoodenPowderSnowCauldronBlock extends LayeredCauldronBlock implements VerdantCauldronFamily {
 
-    public WoodenPowderSnowCauldronBlock(BlockBehaviour.Properties props) {
+    private final String wood;
+
+    public WoodenPowderSnowCauldronBlock(BlockBehaviour.Properties props, String wood) {
         super(props, LayeredCauldronBlock.SNOW, VerdantCauldronBehavior.VERDANT_POWDER_SNOW_BEHAVIOR);
+        this.wood = wood;
     }
 
-    @Override public String selfName() { return VerdantCauldronNames.POWDER_SNOW; }
-    @Override public String emptyName() { return VerdantCauldronNames.EMPTY; }
-    @Override public String waterName() { return VerdantCauldronNames.WATER; }
-    @Override public String lavaName() { return VerdantCauldronNames.LAVA; }
-    @Override public String powderSnowName() { return VerdantCauldronNames.POWDER_SNOW; }
+    @Override public String wood() { return wood; }
 }

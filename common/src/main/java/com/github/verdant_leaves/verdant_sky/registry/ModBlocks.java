@@ -2,6 +2,8 @@ package com.github.verdant_leaves.verdant_sky.registry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -67,43 +69,58 @@ public class ModBlocks {
     
 
     // 木炼药锅
-    public static final RegistrySupplier<Block> EMPTY_CAULDRON =
-    BLOCKS.register(VerdantCauldronNames.EMPTY, () ->
-        new WoodenEmptyCauldronBlock(props()));
+    /** 支持的木材列表。加新木材在这里加一行。 */
+    public static final String[] CAULDRON_WOODS = { 
+        "oak", 
+        "cherry" 
+    };
+    public static final Map<String, RegistrySupplier<Block>> EMPTY_CAULDRONS = new LinkedHashMap<>();
+    public static final Map<String, RegistrySupplier<Block>> WATER_CAULDRONS = new LinkedHashMap<>();
+    public static final Map<String, RegistrySupplier<Block>> LAVA_CAULDRONS = new LinkedHashMap<>();
+    public static final Map<String, RegistrySupplier<Block>> POWDER_SNOW_CAULDRONS = new LinkedHashMap<>();
 
-    public static final RegistrySupplier<Block> WATER_CAULDRON =
-        BLOCKS.register(VerdantCauldronNames.WATER, () ->
-            new WoodenCauldronBlock(props()));
+    /** 所有炼药锅的物品，供创造模式物品栏遍历。 */
+    public static final List<RegistrySupplier<Item>> CAULDRON_ITEMS = new ArrayList<>();
 
-    public static final RegistrySupplier<Block> LAVA_CAULDRON =
-        BLOCKS.register(VerdantCauldronNames.LAVA, () ->
-            new WoodenLavaCauldronBlock(props()));
+    static {
+        for (String wood : CAULDRON_WOODS) {
+            registerCauldronSet(wood);
+        }
+    }
 
-    public static final RegistrySupplier<Block> POWDER_SNOW_CAULDRON =
-        BLOCKS.register(VerdantCauldronNames.POWDER_SNOW, () ->
-            new WoodenPowderSnowCauldronBlock(props()));
+    private static void registerCauldronSet(String wood) {
+        RegistrySupplier<Block> empty = BLOCKS.register(VerdantCauldronNames.empty(wood),
+            () -> new WoodenEmptyCauldronBlock(props(wood), wood));
+        EMPTY_CAULDRONS.put(wood, empty);
 
-    public static final RegistrySupplier<Item> EMPTY_CAULDRON_ITEM =
-        ITEMS.register(VerdantCauldronNames.EMPTY, () ->
-            new BlockItem(EMPTY_CAULDRON.get(), new Item.Properties()));
+        RegistrySupplier<Block> water = BLOCKS.register(VerdantCauldronNames.water(wood),
+            () -> new WoodenCauldronBlock(props(wood), wood));
+        WATER_CAULDRONS.put(wood, water);
 
-    public static final RegistrySupplier<Item> WATER_CAULDRON_ITEM =
-        ITEMS.register(VerdantCauldronNames.WATER, () ->
-            new BlockItem(WATER_CAULDRON.get(), new Item.Properties()));
+        RegistrySupplier<Block> lava = BLOCKS.register(VerdantCauldronNames.lava(wood),
+            () -> new WoodenLavaCauldronBlock(props(wood), wood));
+        LAVA_CAULDRONS.put(wood, lava);
 
-    public static final RegistrySupplier<Item> LAVA_CAULDRON_ITEM =
-        ITEMS.register(VerdantCauldronNames.LAVA, () ->
-            new BlockItem(LAVA_CAULDRON.get(), new Item.Properties()));
+        RegistrySupplier<Block> powder = BLOCKS.register(VerdantCauldronNames.powderSnow(wood),
+            () -> new WoodenPowderSnowCauldronBlock(props(wood), wood));
+        POWDER_SNOW_CAULDRONS.put(wood, powder);
 
-    public static final RegistrySupplier<Item> POWDER_SNOW_CAULDRON_ITEM =
-        ITEMS.register(VerdantCauldronNames.POWDER_SNOW, () ->
-            new BlockItem(POWDER_SNOW_CAULDRON.get(), new Item.Properties()));
-    
-    private static BlockBehaviour.Properties props() {
+        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.empty(wood),
+            () -> new BlockItem(empty.get(), new Item.Properties())));
+        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.water(wood),
+            () -> new BlockItem(water.get(), new Item.Properties())));
+        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.lava(wood),
+            () -> new BlockItem(lava.get(), new Item.Properties())));
+        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.powderSnow(wood),
+            () -> new BlockItem(powder.get(), new Item.Properties())));
+    }
+
+    private static BlockBehaviour.Properties props(String wood) {
+        boolean nether = wood.equals("crimson") || wood.equals("warped");
         return BlockBehaviour.Properties.of()
-            .mapColor(MapColor.WOOD)
+            .mapColor(nether ? MapColor.NETHER : MapColor.WOOD)
             .strength(2.0F)
-            .sound(SoundType.WOOD)
+            .sound(nether ? SoundType.NETHER_WOOD : SoundType.WOOD)
             .noOcclusion();
     }
 
