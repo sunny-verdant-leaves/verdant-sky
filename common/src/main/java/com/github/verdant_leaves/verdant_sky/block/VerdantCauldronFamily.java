@@ -1,11 +1,28 @@
 package com.github.verdant_leaves.verdant_sky.block;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
-public interface VerdantCauldronFamily {
-    // 水锅舀空后应该变成的空锅。
-    Block getEmptyBlock();
+import com.github.verdant_leaves.verdant_sky.VerdantSky;
 
-    // 空锅装水后应该变成的水锅。
-    Block getWaterBlock();
+public interface VerdantCauldronFamily {
+
+    // 本方块自己是哪一种锅。
+    String selfName();
+
+    // 邻居的注册名。
+    String emptyName();
+    String waterName();
+    String lavaName();
+    String powderSnowName();
+
+    default Block lookup(String name) {
+        return BuiltInRegistries.BLOCK.get(new ResourceLocation(VerdantSky.MOD_ID, name));
+    }
+
+    default Block getEmptyBlock() { return lookup(emptyName()); }
+    default Block getWaterBlock() { return lookup(waterName()); }
+    default Block getLavaBlock() { return lookup(lavaName()); }
+    default Block getPowderSnowBlock() { return lookup(powderSnowName()); }
 }

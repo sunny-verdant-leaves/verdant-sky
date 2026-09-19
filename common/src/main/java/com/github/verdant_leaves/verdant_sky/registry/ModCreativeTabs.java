@@ -33,7 +33,9 @@ public class ModCreativeTabs {
             ModBlocks.LIVINGWOOD_POOL_ITEM, 
             ModBlocks.APOTHECARY_WOODEN_ITEM,
             ModBlocks.EMPTY_CAULDRON_ITEM,
-            ModBlocks.WATER_CAULDRON_ITEM
+            ModBlocks.WATER_CAULDRON_ITEM,
+            ModBlocks.LAVA_CAULDRON_ITEM,
+            ModBlocks.POWDER_SNOW_CAULDRON_ITEM
         );
     }
 }

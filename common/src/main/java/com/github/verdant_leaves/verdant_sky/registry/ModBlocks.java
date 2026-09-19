@@ -16,9 +16,12 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodenVariantRegistry;
+import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronNames;
 import com.github.verdant_leaves.verdant_sky.block.VerdantPoolBlock;
 import com.github.verdant_leaves.verdant_sky.block.WoodenEmptyCauldronBlock;
 import com.github.verdant_leaves.verdant_sky.block.WoodenCauldronBlock;
+import com.github.verdant_leaves.verdant_sky.block.WoodenLavaCauldronBlock;
+import com.github.verdant_leaves.verdant_sky.block.WoodenPowderSnowCauldronBlock;
 import com.github.verdant_leaves.verdant_sky.block.WoodenPetalApothecaryBlock;
 
 public class ModBlocks {
@@ -65,33 +68,44 @@ public class ModBlocks {
 
     // 木炼药锅
     public static final RegistrySupplier<Block> EMPTY_CAULDRON =
-    BLOCKS.register("empty_cauldron", () ->
-        new WoodenEmptyCauldronBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.WOOD)
-            .strength(2.0F)
-            .sound(SoundType.WOOD)
-            .noOcclusion()
-        , "water_cauldron")
-    );
+    BLOCKS.register(VerdantCauldronNames.EMPTY, () ->
+        new WoodenEmptyCauldronBlock(props()));
 
     public static final RegistrySupplier<Block> WATER_CAULDRON =
-        BLOCKS.register("water_cauldron", () ->
-            new WoodenCauldronBlock(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.WOOD)
-                .strength(2.0F)
-                .sound(SoundType.WOOD)
-                .noOcclusion()
-            , "empty_cauldron")
-        );
+        BLOCKS.register(VerdantCauldronNames.WATER, () ->
+            new WoodenCauldronBlock(props()));
+
+    public static final RegistrySupplier<Block> LAVA_CAULDRON =
+        BLOCKS.register(VerdantCauldronNames.LAVA, () ->
+            new WoodenLavaCauldronBlock(props()));
+
+    public static final RegistrySupplier<Block> POWDER_SNOW_CAULDRON =
+        BLOCKS.register(VerdantCauldronNames.POWDER_SNOW, () ->
+            new WoodenPowderSnowCauldronBlock(props()));
 
     public static final RegistrySupplier<Item> EMPTY_CAULDRON_ITEM =
-        ITEMS.register("empty_cauldron", () ->
+        ITEMS.register(VerdantCauldronNames.EMPTY, () ->
             new BlockItem(EMPTY_CAULDRON.get(), new Item.Properties()));
 
     public static final RegistrySupplier<Item> WATER_CAULDRON_ITEM =
-        ITEMS.register("water_cauldron", () ->
+        ITEMS.register(VerdantCauldronNames.WATER, () ->
             new BlockItem(WATER_CAULDRON.get(), new Item.Properties()));
 
+    public static final RegistrySupplier<Item> LAVA_CAULDRON_ITEM =
+        ITEMS.register(VerdantCauldronNames.LAVA, () ->
+            new BlockItem(LAVA_CAULDRON.get(), new Item.Properties()));
+
+    public static final RegistrySupplier<Item> POWDER_SNOW_CAULDRON_ITEM =
+        ITEMS.register(VerdantCauldronNames.POWDER_SNOW, () ->
+            new BlockItem(POWDER_SNOW_CAULDRON.get(), new Item.Properties()));
+    
+    private static BlockBehaviour.Properties props() {
+        return BlockBehaviour.Properties.of()
+            .mapColor(MapColor.WOOD)
+            .strength(2.0F)
+            .sound(SoundType.WOOD)
+            .noOcclusion();
+    }
 
     public static void register() {
         BLOCKS.register();
