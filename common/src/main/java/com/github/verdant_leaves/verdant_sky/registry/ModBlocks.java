@@ -133,15 +133,8 @@ public class ModBlocks {
             () -> new WoodenPowderSnowCauldronBlock(props(wood), wood));
         POWDER_SNOW_CAULDRONS.put(wood, powder);
 
-        // 四种锅的物品全部注册
         CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.empty(wood),
             () -> new BlockItem(empty.get(), new Item.Properties())));
-        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.water(wood),
-            () -> new BlockItem(water.get(), new Item.Properties())));
-        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.lava(wood),
-            () -> new BlockItem(lava.get(), new Item.Properties())));
-        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.powderSnow(wood),
-            () -> new BlockItem(powder.get(), new Item.Properties())));
     }
 
     // 给定木材，返回燃烧时间（tick）。

@@ -31,79 +31,78 @@ public final class BotaniaIntegration {
         if (WATER_BOWL == Items.AIR) {
             return;
         }
-        
 
-    // ── 空锅 + 一碗水 -> 满水锅，一碗水变碗 ──
-    VerdantCauldronBehavior.VERDANT_EMPTY_BEHAVIOR.put(WATER_BOWL,
-            (state, level, pos, player, hand, stack) -> {
-        if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
-            return InteractionResult.PASS;
-        }
-        if (!level.isClientSide) {
-            Item item = stack.getItem();
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
-                    new ItemStack(Items.BOWL)));
-            player.awardStat(Stats.FILL_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(item));
+        // ── 空锅 + 一碗水 -> level 1 水锅 ──
+        VerdantCauldronBehavior.VERDANT_EMPTY_BEHAVIOR.put(WATER_BOWL,
+                (state, level, pos, player, hand, stack) -> {
+            if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
+                return InteractionResult.PASS;
+            }
+            if (!level.isClientSide) {
+                Item item = stack.getItem();
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
+                        new ItemStack(Items.BOWL)));
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(item));
+                level.setBlockAndUpdate(pos, family.getWaterBlock().defaultBlockState()
+                        .setValue(LayeredCauldronBlock.LEVEL, 1));
+                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY,
+                        SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        });
 
-            level.setBlockAndUpdate(pos, family.getWaterBlock().defaultBlockState()
-                    .setValue(LayeredCauldronBlock.LEVEL, 3));
-            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY,
-                    SoundSource.BLOCKS, 1.0F, 1.0F);
-            level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    });
+        // ── 水锅 + 一碗水 -> 水位 +1，满则 PASS ──
+        VerdantCauldronBehavior.VERDANT_WATER_BEHAVIOR.put(WATER_BOWL,
+                (state, level, pos, player, hand, stack) -> {
+            if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
+                return InteractionResult.PASS;
+            }
+            int current = state.getValue(LayeredCauldronBlock.LEVEL);
+            if (current >= 3) {
+                return InteractionResult.PASS;  // 满，拒绝
+            }
+            if (!level.isClientSide) {
+                Item item = stack.getItem();
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
+                        new ItemStack(Items.BOWL)));
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(item));
+                level.setBlockAndUpdate(pos, state.setValue(LayeredCauldronBlock.LEVEL, current + 1));
+                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY,
+                        SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        });
 
-    // ── 水锅 + 一碗水 -> 水位拉满，一碗水变碗 ──
-    VerdantCauldronBehavior.VERDANT_WATER_BEHAVIOR.put(WATER_BOWL,
-            (state, level, pos, player, hand, stack) -> {
-        if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
-            return InteractionResult.PASS;
-        }
-        // 已经满，PASS
-        if (state.getValue(LayeredCauldronBlock.LEVEL) == 3) {
-            return InteractionResult.PASS;
-        }
-        if (!level.isClientSide) {
-            Item item = stack.getItem();
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
-                    new ItemStack(Items.BOWL)));
-            player.awardStat(Stats.FILL_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(item));
+        // ── 水锅 + 碗 -> 水位 -1，归零变空锅 ──
+        VerdantCauldronBehavior.VERDANT_WATER_BEHAVIOR.put(Items.BOWL,
+                (state, level, pos, player, hand, stack) -> {
+            if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
+                return InteractionResult.PASS;
+            }
+            if (state.getValue(LayeredCauldronBlock.LEVEL) < 1) {
+                return InteractionResult.PASS;  // 没水，拒绝
+            }
+            if (!level.isClientSide) {
+                Item item = stack.getItem();
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
+                        new ItemStack(WATER_BOWL)));
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(item));
 
-            level.setBlockAndUpdate(pos, state.setValue(LayeredCauldronBlock.LEVEL, 3));
-            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY,
-                    SoundSource.BLOCKS, 1.0F, 1.0F);
-            level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    });
-
-    // ── 水锅 + 碗 -> 舀水，一碗水；满水锅才允许 ──
-    VerdantCauldronBehavior.VERDANT_WATER_BEHAVIOR.put(Items.BOWL,
-            (state, level, pos, player, hand, stack) -> {
-        if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
-            return InteractionResult.PASS;
-        }
-        // 只有满水锅能舀，对齐水桶逻辑
-        if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
-            return InteractionResult.PASS;
-        }
-        if (!level.isClientSide) {
-            Item item = stack.getItem();
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
-                    new ItemStack(WATER_BOWL)));
-            player.awardStat(Stats.USE_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(item));
-
-            // 满 -> 直接变空锅（对齐水桶）
-            level.setBlockAndUpdate(pos, family.getEmptyBlock().defaultBlockState());
-            level.playSound(null, pos, SoundEvents.BUCKET_FILL,
-                    SoundSource.BLOCKS, 1.0F, 1.0F);
-            level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    });
+                int newLevel = state.getValue(LayeredCauldronBlock.LEVEL) - 1;
+                BlockState newState = newLevel == 0
+                        ? family.getEmptyBlock().defaultBlockState()
+                        : state.setValue(LayeredCauldronBlock.LEVEL, newLevel);
+                level.setBlockAndUpdate(pos, newState);
+                level.playSound(null, pos, SoundEvents.BUCKET_FILL,
+                        SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        });
     }
 }
