@@ -3,7 +3,7 @@ package com.github.verdant_leaves.verdant_sky.forge;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
@@ -11,9 +11,10 @@ import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 
 @Mod(VerdantSky.MOD_ID)
 public final class VerdantSkyForge {
-    public VerdantSkyForge(IEventBus modEventBus) {
+    public VerdantSkyForge() {
         // Submit our event bus to let Architectury API register our content on the right time.
-        EventBuses.registerModEventBus(VerdantSky.MOD_ID, modEventBus);
+        EventBuses.registerModEventBus(VerdantSky.MOD_ID,
+            FMLJavaModLoadingContext.get().getModEventBus());
 
         // Run our common setup.
         VerdantSky.init();
