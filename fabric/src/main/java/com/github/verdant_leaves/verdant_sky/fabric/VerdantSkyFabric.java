@@ -17,7 +17,13 @@ public final class VerdantSkyFabric implements ModInitializer {
         VerdantSky.init();
 
         // 注册燃料燃烧时间
-        FuelRegistry.INSTANCE.add(ModBlocks.LIVINGWOOD_POOL_ITEM.get(), 1600);
-        FuelRegistry.INSTANCE.add(ModBlocks.APOTHECARY_WOODEN_ITEM.get(), 1600);
+        FuelRegistry.INSTANCE.add(ModBlocks.LIVINGWOOD_POOL_ITEM.get(), 300);
+        FuelRegistry.INSTANCE.add(ModBlocks.APOTHECARY_WOODEN_ITEM.get(), 300);
+        for (String wood : ModBlocks.CAULDRON_WOODS) {
+            int time = ModBlocks.burnTimeFor(wood);
+            if (time <= 0) continue;
+
+            FuelRegistry.INSTANCE.add(ModBlocks.EMPTY_CAULDRONS.get(wood).get().asItem(), time);
+        }
     }
 }

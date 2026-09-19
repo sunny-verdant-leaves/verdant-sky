@@ -1,5 +1,8 @@
 package com.github.verdant_leaves.verdant_sky.block;
 
+import java.util.Map;
+import java.util.function.Predicate;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.sounds.SoundEvent;
@@ -24,9 +27,6 @@ import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-
-import java.util.Map;
-import java.util.function.Predicate;
 
 public class VerdantCauldronBehavior {
 
@@ -61,7 +61,7 @@ public class VerdantCauldronBehavior {
                     SoundEvents.BUCKET_EMPTY);
         });
 
-        // 熔岩桶 -> 自己的熔岩锅
+        // 熔岩桶 -> 只有特殊木材（crimson / warped）才允许
         VERDANT_EMPTY_BEHAVIOR.put(Items.LAVA_BUCKET, (state, level, pos, player, hand, stack) -> {
             if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
                 return InteractionResult.PASS;

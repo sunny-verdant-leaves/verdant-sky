@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodenVariantRegistry;
+import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronFamily;
 import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronNames;
 import com.github.verdant_leaves.verdant_sky.block.VerdantPoolBlock;
 import com.github.verdant_leaves.verdant_sky.block.WoodenEmptyCauldronBlock;
@@ -108,12 +109,13 @@ public class ModBlocks {
 
         CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.empty(wood),
             () -> new BlockItem(empty.get(), new Item.Properties())));
-        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.water(wood),
-            () -> new BlockItem(water.get(), new Item.Properties())));
-        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.lava(wood),
-            () -> new BlockItem(lava.get(), new Item.Properties())));
-        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.powderSnow(wood),
-            () -> new BlockItem(powder.get(), new Item.Properties())));
+    }
+
+    public static int burnTimeFor(String wood) {
+        if (VerdantCauldronFamily.SPECIAL_WOODS.contains(wood)) {
+            return 0;   // 特殊物品不燃烧
+        }
+        return 300;
     }
 
     private static BlockBehaviour.Properties props(String wood) {
@@ -124,6 +126,7 @@ public class ModBlocks {
             .sound(nether ? SoundType.NETHER_WOOD : SoundType.WOOD)
             .noOcclusion();
     }
+
 
     public static void register() {
         BLOCKS.register();

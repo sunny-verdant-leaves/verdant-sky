@@ -1,6 +1,7 @@
 package com.github.verdant_leaves.verdant_sky.forge;
 
 import dev.architectury.platform.forge.EventBuses;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -24,11 +25,23 @@ public final class VerdantSkyForge {
     }
 
     private void onFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
-        if (event.getItemStack().is(ModBlocks.LIVINGWOOD_POOL_ITEM.get())) {
-            event.setBurnTime(1600);
+        ItemStack stack = event.getItemStack();
+
+        if (stack.is(ModBlocks.LIVINGWOOD_POOL_ITEM.get())) {
+            event.setBurnTime(300);
         }
-        else if (event.getItemStack().is(ModBlocks.APOTHECARY_WOODEN_ITEM.get())) {
-            event.setBurnTime(1600);
+        else if (stack.is(ModBlocks.APOTHECARY_WOODEN_ITEM.get())) {
+            event.setBurnTime(300);
+        }
+        for (String wood : ModBlocks.CAULDRON_WOODS) {
+            int time = ModBlocks.burnTimeFor(wood);
+            if (time <= 0) continue;
+
+            // 检查是否是这一种木材的某个炼药锅
+            if (stack.is(ModBlocks.EMPTY_CAULDRONS.get(wood).get().asItem())) {
+                event.setBurnTime(time);
+                return;
+            }
         }
     }
 }
