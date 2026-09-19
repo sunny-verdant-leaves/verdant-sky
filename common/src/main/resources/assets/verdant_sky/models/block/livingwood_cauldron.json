@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/cauldron",
+  "textures": {
+    "bottom": "botania:block/livingwood_planks",
+    "inside": "botania:block/livingwood_planks",
+    "particle": "botania:block/livingwood_planks",
+    "side": "botania:block/livingwood_planks",
+    "top": "botania:block/livingwood_planks"
+  }
+}

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
@@ -33,9 +34,11 @@ public class ModBlocks {
 
     public static final DeferredRegister<Item> ITEMS =
         DeferredRegister.create(VerdantSky.MOD_ID, Registries.ITEM);
-
     
-    // 活木魔力池
+    // ══════════════════════════════════════════════════════════════
+    //  活木魔力池
+    // ══════════════════════════════════════════════════════════════
+    
     public static final RegistrySupplier<Block> LIVINGWOOD_POOL =
         BLOCKS.register("livingwood_pool", () ->
             new VerdantPoolBlock(BlockBehaviour.Properties.of()
@@ -51,8 +54,10 @@ public class ModBlocks {
             new BlockItem(LIVINGWOOD_POOL.get(), new Item.Properties())
         );
     
+    // ══════════════════════════════════════════════════════════════
+    //  木花药台
+    // ══════════════════════════════════════════════════════════════
 
-    // 木花药台
     public static final RegistrySupplier<Block> APOTHECARY_WOODEN =
     BLOCKS.register("apothecary_wooden", () ->
         new WoodenPetalApothecaryBlock(BlockBehaviour.Properties.of()
@@ -68,23 +73,44 @@ public class ModBlocks {
             new BlockItem(APOTHECARY_WOODEN.get(), new Item.Properties())
         );
     
+    // ══════════════════════════════════════════════════════════════
+    //  木炼药锅
+    // ══════════════════════════════════════════════════════════════
 
-    // 木炼药锅
-    /** 支持的木材列表。加新木材在这里加一行。 */
-    public static final String[] CAULDRON_WOODS = { 
-        "cherry", 
-        "crimson", 
-        "oak"
-    };
+    // 支持的木材列表。加新木材在这里加一行。
+    public static final List<String> CAULDRON_WOODS = new ArrayList<>();
+
     public static final Map<String, RegistrySupplier<Block>> EMPTY_CAULDRONS = new LinkedHashMap<>();
     public static final Map<String, RegistrySupplier<Block>> WATER_CAULDRONS = new LinkedHashMap<>();
     public static final Map<String, RegistrySupplier<Block>> LAVA_CAULDRONS = new LinkedHashMap<>();
     public static final Map<String, RegistrySupplier<Block>> POWDER_SNOW_CAULDRONS = new LinkedHashMap<>();
 
-    /** 所有炼药锅的物品，供创造模式物品栏遍历。 */
+    // 所有炼药锅的物品，供创造模式物品栏遍历。
     public static final List<RegistrySupplier<Item>> CAULDRON_ITEMS = new ArrayList<>();
 
     static {
+        // ── 原版木材 ──
+        CAULDRON_WOODS.addAll(List.of(
+            "oak",
+            "spruce",
+            "birch",
+            "jungle",
+            "acacia",
+            "dark_oak",
+            "mangrove",
+            "cherry",
+            "bamboo",
+            "crimson",
+            "warped"
+        ));
+
+        // ── 软依赖：Botania 加载时才加活木 / 梦之木 ──
+        if (Platform.isModLoaded("botania")) {
+            CAULDRON_WOODS.add("livingwood");
+            CAULDRON_WOODS.add("dreamwood");
+        }
+
+        // ── 统一注册 ──
         for (String wood : CAULDRON_WOODS) {
             registerCauldronSet(wood);
         }
@@ -107,13 +133,21 @@ public class ModBlocks {
             () -> new WoodenPowderSnowCauldronBlock(props(wood), wood));
         POWDER_SNOW_CAULDRONS.put(wood, powder);
 
+        // 四种锅的物品全部注册
         CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.empty(wood),
             () -> new BlockItem(empty.get(), new Item.Properties())));
+        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.water(wood),
+            () -> new BlockItem(water.get(), new Item.Properties())));
+        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.lava(wood),
+            () -> new BlockItem(lava.get(), new Item.Properties())));
+        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.powderSnow(wood),
+            () -> new BlockItem(powder.get(), new Item.Properties())));
     }
 
+    // 给定木材，返回燃烧时间（tick）。
     public static int burnTimeFor(String wood) {
         if (VerdantCauldronFamily.SPECIAL_WOODS.contains(wood)) {
-            return 0;   // 特殊物品不燃烧
+            return 0;   // 不可燃
         }
         return 300;
     }
@@ -126,7 +160,6 @@ public class ModBlocks {
             .sound(nether ? SoundType.NETHER_WOOD : SoundType.WOOD)
             .noOcclusion();
     }
-
 
     public static void register() {
         BLOCKS.register();
