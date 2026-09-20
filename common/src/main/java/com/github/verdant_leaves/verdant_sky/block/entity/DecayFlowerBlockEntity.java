@@ -62,11 +62,6 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
     }
 
     @Override
-    public ItemStack getDefaultHudIcon() {
-        return new ItemStack(ModBlocks.DECAY_FLOWER_ITEM.get());
-    }
-
-    @Override
     public boolean acceptsRedstone() {
         return true;
     }
@@ -120,7 +115,7 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
             pos,
             SoundEvents.SOUL_ESCAPE,
             SoundSource.BLOCKS,
-            8.0F,
+            1.0F,
             1.0F
         );
     }
