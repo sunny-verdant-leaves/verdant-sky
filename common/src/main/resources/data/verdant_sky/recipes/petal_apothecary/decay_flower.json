@@ -21,7 +21,7 @@
     }
   ],
   "output": {
-    "item": "botania:pure_daisy"
+    "item": "verdant_sky:decay_flower"
   },
   "reagent": {
     "tag": "botania:seed_apothecary_reagent"
