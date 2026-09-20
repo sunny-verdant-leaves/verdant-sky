@@ -2,9 +2,9 @@
   "type": "verdant_sky:decay",
   "input": {
     "type": "block",
-    "block": "minecraft:rooted_dirt"
+    "block": "minecraft:dirt"
   },
   "output": {
-    "name": "minecraft:dirt"
+    "name": "minecraft:rooted_dirt"
   }
 }

@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import vazkii.botania.client.integration.jei.ManaPoolRecipeCategory;
+import vazkii.botania.client.integration.jei.PetalApothecaryRecipeCategory;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
@@ -26,6 +27,10 @@ public class VerdantSkyJeiPlugin implements IModPlugin {
         registry.addRecipeCatalyst(
             new ItemStack(ModBlocks.LIVINGWOOD_POOL.get()),
             ManaPoolRecipeCategory.TYPE
+        );
+        registry.addRecipeCatalyst(
+            new ItemStack(ModBlocks.APOTHECARY_WOODEN.get()),
+            PetalApothecaryRecipeCategory.TYPE
         );
     }
 

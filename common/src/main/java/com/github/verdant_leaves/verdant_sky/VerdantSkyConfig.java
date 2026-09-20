@@ -31,7 +31,7 @@ public class VerdantSkyConfig {
     public int decayAgapanthusInterval = 100;
 
     /** 每次转换方块消耗的魔力。 */
-    public int decayAgapanthusManaCost = 450;
+    public int decayAgapanthusManaCost = 800;
 
     /** 内部魔力缓存上限。 */
     public int decayAgapanthusMaxMana = 10000;

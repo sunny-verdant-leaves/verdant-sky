@@ -1,0 +1,17 @@
+{
+  "values": [
+    "verdant_sky:oak_lava_cauldron",
+    "verdant_sky:spruce_lava_cauldron",
+    "verdant_sky:birch_lava_cauldron",
+    "verdant_sky:jungle_lava_cauldron",
+    "verdant_sky:acacia_lava_cauldron",
+    "verdant_sky:dark_oak_lava_cauldron",
+    "verdant_sky:mangrove_lava_cauldron",
+    "verdant_sky:cherry_lava_cauldron",
+    "verdant_sky:bamboo_lava_cauldron",
+    "verdant_sky:crimson_lava_cauldron",
+    "verdant_sky:warped_lava_cauldron",
+    { "id": "verdant_sky:livingwood_lava_cauldron", "required": false },
+    { "id": "verdant_sky:dreamwood_lava_cauldron",  "required": false }
+  ]
+}
