@@ -1,8 +1,11 @@
 {
   "itemGroup.verdant_sky": "Verdant Sky",
 
-  "block.verdant_sky.apothecary_wooden": "Wooden Petal Apothecary",
+  "block.verdant_sky.decay_flower": "Decay Flower",
+  "block.verdant_sky.decay_flower.reference": "All things shall wither and decay.",
   "block.verdant_sky.livingwood_pool": "Livingwood Mana Pool",
+  "block.verdant_sky.apothecary_wooden": "Wooden Petal Apothecary",
+  
   "block.verdant_sky.oak_cauldron": "Oak Cauldron",
   "block.verdant_sky.oak_water_cauldron": "Oak Water Cauldron",
   "block.verdant_sky.oak_lava_cauldron": "Oak Lava Cauldron",

@@ -15,14 +15,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
-/**
- * 腐朽花配方输出：仿 Botania 的 StateParser 格式。
- * <pre>
- *   { "name": "botania:livingrock" }
- *   { "name": "minecraft:oak_log", "properties": { "axis": "y" } }
- * </pre>
- * 为兼容起见也接受 "block" 作为 "name" 的别名。
- */
 public final class DecayOutput {
 
     private DecayOutput() {}

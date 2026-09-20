@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import vazkii.botania.common.item.block.SpecialFlowerBlockItem;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodenVariantRegistry;
@@ -48,12 +49,13 @@ public class ModBlocks {
                 .sound(SoundType.GRASS)
                 .noCollission()
                 .instabreak()
+                .noOcclusion()
             )
         );
 
     public static final RegistrySupplier<Item> DECAY_FLOWER_ITEM =
         ITEMS.register("decay_flower", () ->
-            new BlockItem(DECAY_FLOWER.get(), new Item.Properties())
+            new SpecialFlowerBlockItem(DECAY_FLOWER.get(), new Item.Properties())
         );
     
     // ══════════════════════════════════════════════════════════════

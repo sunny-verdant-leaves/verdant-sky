@@ -1,60 +1,224 @@
 package com.github.verdant_leaves.verdant_sky.block.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+
+import vazkii.botania.api.block_entity.FunctionalFlowerBlockEntity;
+import vazkii.botania.api.block_entity.RadiusDescriptor;
+
+import com.github.verdant_leaves.verdant_sky.VerdantSkyConfig;
 import com.github.verdant_leaves.verdant_sky.recipe.DecayRecipe;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
+import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
+public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
 
-public class DecayFlowerBlockEntity extends BlockEntity {
-
-    /** 触发间隔（tick），40 = 2 秒 */
-    private static final int INTERVAL = 40;
-
-    /** 5×5×5 → offset -2..2 */
-    private static final int RADIUS = 2;
-
-    private int tickCounter = 0;
+    /** 由 DecayFlowerBlock.getTicker 每次 tick 更新，避免调用 getLevel() */
+    private Level cachedLevel;
 
     public DecayFlowerBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DECAY_FLOWER.get(), pos, state);
     }
 
-    public void serverTick(Level level, BlockPos pos, BlockState state) {
-        if (!(level instanceof ServerLevel serverLevel)) return;
+    public void setCachedLevel(Level level) {
+        this.cachedLevel = level;
+    }
 
-        if (++tickCounter < INTERVAL) return;
-        tickCounter = 0;
+    // ══════════════════════════════════════════════════════════════
+    //  必须实现（基类 abstract）
+    // ══════════════════════════════════════════════════════════════
 
+    @Override
+    public int getColor() {
+        return 0x6B3A6B; // 暗紫色
+    }
+
+    @Override
+    public int getMaxMana() {
+        return VerdantSkyConfig.decayFlowerMaxMana();
+    }
+
+    @Override
+    public RadiusDescriptor getRadius() {
+        return RadiusDescriptor.Rectangle.square(
+            getEffectivePos(),
+            VerdantSkyConfig.decayFlowerRadius()
+        );
+    }
+
+    @Override
+    public ItemStack getDefaultHudIcon() {
+        return new ItemStack(ModBlocks.DECAY_FLOWER_ITEM.get());
+    }
+
+    @Override
+    public boolean acceptsRedstone() {
+        return true;
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    //  核心逻辑
+    // ══════════════════════════════════════════════════════════════
+    @Override
+    public void tickFlower() {
+        super.tickFlower(); // 抽魔 + 红石刷新 + 客户端粒子
+
+        if (cachedLevel == null || cachedLevel.isClientSide()) {
+            return;
+        }
+        if (redstoneSignal > 0) {
+            return;
+        }
+        if (ticksExisted % VerdantSkyConfig.decayFlowerInterval() != 0) {
+            return;
+        }
+        if (getMana() < VerdantSkyConfig.decayFlowerManaCost()) {
+            return;
+        }
+        if (!(cachedLevel instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        BlockPos center = getEffectivePos();
+
+        // 施加凋零效果
+        applyWitherToNearbyEntities(serverLevel, center);
+
+        // 先转换
+        int converted = performDecayConversion(serverLevel);
+
+        // 只有真的转换了方块，才响音效 + 扣魔力
+        if (converted > 0) {
+            playWorkSound(serverLevel, center);
+            addMana(-VerdantSkyConfig.decayFlowerManaCost() * converted);
+            sync();
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    //  音效
+    // ══════════════════════════════════════════════════════════════
+
+    private void playWorkSound(ServerLevel level, BlockPos pos) {
+        level.playSound(
+            null,
+            pos,
+            SoundEvents.SOUL_ESCAPE,
+            SoundSource.BLOCKS,
+            8.0F,
+            1.0F
+        );
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    //  凋零效果
+    // ══════════════════════════════════════════════════════════════
+
+    private void applyWitherToNearbyEntities(ServerLevel level, BlockPos center) {
+        int radius = VerdantSkyConfig.decayFlowerRadius();
+        AABB area = new AABB(
+            center.getX() - radius,
+            center.getY() - radius,
+            center.getZ() - radius,
+            center.getX() + radius + 1,
+            center.getY() + radius + 1,
+            center.getZ() + radius + 1
+        );
+
+        List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, area);
+        if (entities.isEmpty()) return;
+
+        MobEffectInstance wither = new MobEffectInstance(
+            MobEffects.WITHER,
+            VerdantSkyConfig.decayFlowerWitherDuration(),
+            VerdantSkyConfig.decayFlowerWitherAmplifier()
+        );
+
+        for (LivingEntity entity : entities) {
+            entity.addEffect(new MobEffectInstance(wither));
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    //  转换逻辑
+    // ══════════════════════════════════════════════════════════════
+
+    private int performDecayConversion(ServerLevel serverLevel) {
         List<DecayRecipe> recipes =
             serverLevel.getRecipeManager().getAllRecipesFor(ModRecipeTypes.DECAY.get());
-        if (recipes.isEmpty()) return;
+        if (recipes.isEmpty()) return 0;
 
-        for (int dx = -RADIUS; dx <= RADIUS; dx++) {
-            for (int dy = -RADIUS; dy <= RADIUS; dy++) {
-                for (int dz = -RADIUS; dz <= RADIUS; dz++) {
+        BlockPos pos = getEffectivePos();
+        int radius = VerdantSkyConfig.decayFlowerRadius();
+        int maxConversions = VerdantSkyConfig.decayFlowerMaxConversionsPerTick();
+
+        List<BlockPos> candidates = new ArrayList<>();
+        RandomSource random = serverLevel.getRandom();
+
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                for (int dz = -radius; dz <= radius; dz++) {
                     if (dx == 0 && dy == 0 && dz == 0) continue;
 
                     BlockPos targetPos = pos.offset(dx, dy, dz);
                     BlockState targetState = serverLevel.getBlockState(targetPos);
 
-                    // 空气无需转换，尽早跳过
                     if (targetState.isAir()) continue;
 
                     for (DecayRecipe recipe : recipes) {
-                        if (recipe.matchesState(targetState)) {
-                            serverLevel.setBlockAndUpdate(targetPos, recipe.outputState());
-                            break;
-                        }
+                        if (!recipe.matchesState(targetState)) continue;
+                        if (recipe.outputState() == targetState) continue;
+
+                        candidates.add(targetPos.immutable());
+                        break;
                     }
                 }
             }
         }
+
+        if (candidates.isEmpty()) return 0;
+
+        int converted = 0;
+        int attempts = Math.min(maxConversions, candidates.size());
+
+        for (int i = 0; i < attempts; i++) {
+            int index = random.nextInt(candidates.size());
+            BlockPos targetPos = candidates.remove(index);
+
+            BlockState targetState = serverLevel.getBlockState(targetPos);
+
+            for (DecayRecipe recipe : recipes) {
+                if (!recipe.matchesState(targetState)) continue;
+                if (recipe.outputState() == targetState) continue;
+
+                serverLevel.setBlockAndUpdate(targetPos, recipe.outputState());
+                serverLevel.sendParticles(
+                    ParticleTypes.SCULK_SOUL,
+                    targetPos.getX() + 0.5,
+                    targetPos.getY() + 1.05,
+                    targetPos.getZ() + 0.5,
+                    6, 0.25, 0.15, 0.25, 0.01
+                );
+                converted++;
+                break;
+            }
+        }
+
+        return converted;
     }
 }

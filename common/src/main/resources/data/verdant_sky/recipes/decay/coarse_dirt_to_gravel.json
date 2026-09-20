@@ -1,0 +1,10 @@
+{
+  "type": "verdant_sky:decay",
+  "input": {
+    "type": "block",
+    "block": "minecraft:coarse_dirt"
+  },
+  "output": {
+    "name": "minecraft:gravel"
+  }
+}

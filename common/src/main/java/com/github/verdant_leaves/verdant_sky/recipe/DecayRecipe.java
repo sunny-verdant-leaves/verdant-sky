@@ -16,10 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-/**
- * 腐朽花配方：把 input（block / tag）转换为其 output（BlockState）。
- * 匹配逻辑在 DecayFlowerBlockEntity 中主动进行，不依赖合成容器。
- */
 public class DecayRecipe implements Recipe<Container> {
 
     private final ResourceLocation id;
@@ -40,14 +36,9 @@ public class DecayRecipe implements Recipe<Container> {
         return output;
     }
 
-    /** 供方块实体调用：判断某个方块状态是否匹配本配方。 */
     public boolean matchesState(BlockState state) {
         return input.test(state);
     }
-
-    // ══════════════════════════════════════════════════════════════
-    //  Recipe 接口实现（本配方不以容器形式使用）
-    // ══════════════════════════════════════════════════════════════
 
     @Override
     public boolean matches(Container container, Level level) {
@@ -83,10 +74,6 @@ public class DecayRecipe implements Recipe<Container> {
     public RecipeType<?> getType() {
         return ModRecipeTypes.DECAY.get();
     }
-
-    // ══════════════════════════════════════════════════════════════
-    //  Serializer
-    // ══════════════════════════════════════════════════════════════
 
     public static class Serializer implements RecipeSerializer<DecayRecipe> {
 

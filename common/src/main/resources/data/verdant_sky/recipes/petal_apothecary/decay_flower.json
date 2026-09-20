@@ -1,0 +1,29 @@
+{
+  "type": "botania:petal_apothecary",
+  "ingredients": [
+    {
+      "tag": "botania:petals/black"
+    },
+    {
+      "tag": "botania:petals/black"
+    },
+    {
+      "tag": "botania:petals/gray"
+    },
+    {
+      "tag": "botania:petals/brown"
+    },
+    {
+      "item": "botania:mana_powder"
+    },
+    {
+      "item": "botania:mana_powder"
+    }
+  ],
+  "output": {
+    "item": "verdant_sky:decay_flower"
+  },
+  "reagent": {
+    "tag": "botania:seed_apothecary_reagent"
+  }
+}

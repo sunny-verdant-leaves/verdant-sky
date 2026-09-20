@@ -2,9 +2,9 @@
   "type": "verdant_sky:decay",
   "input": {
     "type": "tag",
-    "tag": "minecraft:dirt"
+    "tag": "minecraft:leaves"
   },
   "output": {
-    "name": "minecraft:coarse_dirt"
+    "name": "minecraft:rooted_dirt"
   }
 }

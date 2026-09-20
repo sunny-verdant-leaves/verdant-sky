@@ -38,6 +38,10 @@ dependencies {
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
+    
+    // Botania
+    modCompileOnly "vazkii.botania:Botania:1.20.1-453-FORGE"
+    modRuntimeOnly "vazkii.botania:Botania:1.20.1-453-FORGE"
 }
 
 processResources {

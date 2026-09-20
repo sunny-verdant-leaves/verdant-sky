@@ -13,22 +13,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-/**
- * 腐朽花配方输入：仿 Botania StateIngredient 的两种简单类型。
- * <pre>
- *   { "type": "block", "block": "minecraft:stone" }
- *   { "type": "tag",   "tag":   "minecraft:logs"  }
- * </pre>
- */
 public abstract class DecayIngredient {
 
     public abstract boolean test(BlockState state);
 
     public abstract void toNetwork(FriendlyByteBuf buf);
-
-    // ══════════════════════════════════════════════════════════════
-    //  反序列化
-    // ══════════════════════════════════════════════════════════════
 
     public static DecayIngredient fromJson(JsonObject json) {
         String type = GsonHelper.getAsString(json, "type");
@@ -49,10 +38,6 @@ public abstract class DecayIngredient {
                 "Unknown decay ingredient network type: " + type);
         };
     }
-
-    // ══════════════════════════════════════════════════════════════
-    //  Block 匹配
-    // ══════════════════════════════════════════════════════════════
 
     public static class BlockIngredient extends DecayIngredient {
 
@@ -81,10 +66,6 @@ public abstract class DecayIngredient {
             buf.writeVarInt(BuiltInRegistries.BLOCK.getId(block));
         }
     }
-
-    // ══════════════════════════════════════════════════════════════
-    //  Tag 匹配
-    // ══════════════════════════════════════════════════════════════
 
     public static class TagIngredient extends DecayIngredient {
 
@@ -117,14 +98,9 @@ public abstract class DecayIngredient {
         }
     }
 
-    // ══════════════════════════════════════════════════════════════
-    //  工具
-    // ══════════════════════════════════════════════════════════════
-
     private static Block resolveBlock(String name) {
         ResourceLocation loc = new ResourceLocation(name);
         Block block = BuiltInRegistries.BLOCK.get(loc);
-        // 注册表里找不到时 get 会返回 air，需要和"真的注册了 air"区分
         if (block == Blocks.AIR
                 && !loc.equals(BuiltInRegistries.BLOCK.getKey(Blocks.AIR))) {
             throw new JsonSyntaxException("Unknown block in decay recipe: " + loc);
