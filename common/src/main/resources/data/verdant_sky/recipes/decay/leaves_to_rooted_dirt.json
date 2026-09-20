@@ -5,6 +5,6 @@
     "tag": "minecraft:leaves"
   },
   "output": {
-    "name": "minecraft:dirt"
+    "name": "minecraft:rooted_dirt"
   }
 }

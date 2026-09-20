@@ -25,10 +25,10 @@ public class VerdantSkyConfig {
     public int decayFlowerRadius = 2;
 
     /** 单次扫描最多转换多少个方块，防止卡顿。 */
-    public int decayFlowerMaxConversionsPerTick = 4;
+    public int decayFlowerMaxConversionsPerTick = 2;
 
     /** 腐朽花触发间隔，单位 tick。 */
-    public int decayFlowerInterval = 60;
+    public int decayFlowerInterval = 100;
 
     /** 每次转换方块消耗的魔力。 */
     public int decayFlowerManaCost = 450;
@@ -37,7 +37,7 @@ public class VerdantSkyConfig {
     public int decayFlowerMaxMana = 10000;
 
     /** 每次工作时给范围内生物施加的凋零持续时长，单位 tick。 */
-    public int decayFlowerWitherDuration = 100;
+    public int decayFlowerWitherDuration = 200;
 
     /** 凋零效果等级。0 = I 级，1 = II 级。 */
     public int decayFlowerWitherAmplifier = 1;

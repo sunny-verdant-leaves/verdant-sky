@@ -4,10 +4,12 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Block;
 
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
+import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import dev.architectury.registry.registries.RegistrySupplier;
 
 import vazkii.botania.client.render.block_entity.SpecialFlowerBlockEntityRenderer;
@@ -21,8 +23,25 @@ public final class VerdantSkyClient {
     private VerdantSkyClient() {}
 
     public static void init() {
-        registerCauldronWaterColor();
+        registerDecayFlowerRenderType();
         registerDecayFlowerRenderer();
+        registerCauldronWaterColor();
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    //  腐朽花的渲染层（透明）
+    // ══════════════════════════════════════════════════════════════
+
+    /**
+     * 使用 cutout 渲染层，让十字模型（cross）的透明部分正确显示。
+     * Forge 端其实可以从模型自动推断，但 Fabric 端必须显式声明，
+     * 走 Architectury 的 RenderTypeRegistry 可以两端通吃。
+     */
+    private static void registerDecayFlowerRenderType() {
+        RenderTypeRegistry.register(
+            RenderType.cutout(),
+            ModBlocks.DECAY_FLOWER.get()
+        );
     }
 
     // ══════════════════════════════════════════════════════════════

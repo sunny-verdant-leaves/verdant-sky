@@ -49,6 +49,7 @@ public class ModBlocks {
                 .sound(SoundType.GRASS)
                 .noCollission()
                 .instabreak()
+                .noOcclusion()
             )
         );
 

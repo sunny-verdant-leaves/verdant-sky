@@ -120,7 +120,7 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
             pos,
             SoundEvents.SOUL_ESCAPE,
             SoundSource.BLOCKS,
-            5.0F,
+            8.0F,
             1.0F
         );
     }
