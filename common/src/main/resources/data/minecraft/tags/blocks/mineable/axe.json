@@ -1,0 +1,72 @@
+{
+  "replace": false,
+  "values": [
+    "verdant_sky:livingwood_pool",
+    "verdant_sky:apothecary_wooden",
+
+    "verdant_sky:oak_cauldron",
+    "verdant_sky:oak_water_cauldron",
+    "verdant_sky:oak_lava_cauldron",
+    "verdant_sky:oak_powder_snow_cauldron",
+
+    "verdant_sky:spruce_cauldron",
+    "verdant_sky:spruce_water_cauldron",
+    "verdant_sky:spruce_lava_cauldron",
+    "verdant_sky:spruce_powder_snow_cauldron",
+
+    "verdant_sky:birch_cauldron",
+    "verdant_sky:birch_water_cauldron",
+    "verdant_sky:birch_lava_cauldron",
+    "verdant_sky:birch_powder_snow_cauldron",
+
+    "verdant_sky:jungle_cauldron",
+    "verdant_sky:jungle_water_cauldron",
+    "verdant_sky:jungle_lava_cauldron",
+    "verdant_sky:jungle_powder_snow_cauldron",
+
+    "verdant_sky:acacia_cauldron",
+    "verdant_sky:acacia_water_cauldron",
+    "verdant_sky:acacia_lava_cauldron",
+    "verdant_sky:acacia_powder_snow_cauldron",
+
+    "verdant_sky:dark_oak_cauldron",
+    "verdant_sky:dark_oak_water_cauldron",
+    "verdant_sky:dark_oak_lava_cauldron",
+    "verdant_sky:dark_oak_powder_snow_cauldron",
+
+    "verdant_sky:mangrove_cauldron",
+    "verdant_sky:mangrove_water_cauldron",
+    "verdant_sky:mangrove_lava_cauldron",
+    "verdant_sky:mangrove_powder_snow_cauldron",
+
+    "verdant_sky:cherry_cauldron",
+    "verdant_sky:cherry_water_cauldron",
+    "verdant_sky:cherry_lava_cauldron",
+    "verdant_sky:cherry_powder_snow_cauldron",
+
+    "verdant_sky:bamboo_cauldron",
+    "verdant_sky:bamboo_water_cauldron",
+    "verdant_sky:bamboo_lava_cauldron",
+    "verdant_sky:bamboo_powder_snow_cauldron",
+
+    "verdant_sky:crimson_cauldron",
+    "verdant_sky:crimson_water_cauldron",
+    "verdant_sky:crimson_lava_cauldron",
+    "verdant_sky:crimson_powder_snow_cauldron",
+
+    "verdant_sky:warped_cauldron",
+    "verdant_sky:warped_water_cauldron",
+    "verdant_sky:warped_lava_cauldron",
+    "verdant_sky:warped_powder_snow_cauldron",
+
+    { "id": "verdant_sky:livingwood_cauldron", "required": false },
+    { "id": "verdant_sky:livingwood_water_cauldron", "required": false },
+    { "id": "verdant_sky:livingwood_lava_cauldron", "required": false },
+    { "id": "verdant_sky:livingwood_powder_snow_cauldron", "required": false },
+
+    { "id": "verdant_sky:dreamwood_cauldron", "required": false },
+    { "id": "verdant_sky:dreamwood_water_cauldron", "required": false },
+    { "id": "verdant_sky:dreamwood_lava_cauldron", "required": false },
+    { "id": "verdant_sky:dreamwood_powder_snow_cauldron", "required": false }
+  ]
+}
