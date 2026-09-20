@@ -20,7 +20,7 @@ public class ModCreativeTabs {
         TABS.register("verdant_sky", () ->
             CreativeTabRegistry.create(
                 Component.translatable("itemGroup.verdant_sky"),
-                () -> new ItemStack(Items.FLOWERING_AZALEA_LEAVES) // 原版的 flowering_azalea_leaves
+                () -> new ItemStack(ModBlocks.FLOATING_DECAY_FLOWER_ITEM.get()) // 原版的 flowering_azalea_leaves
             )
         );
         
@@ -31,6 +31,7 @@ public class ModCreativeTabs {
         CreativeTabRegistry.append(
             VERDANT_TAB,
             ModBlocks.DECAY_FLOWER_ITEM,
+            ModBlocks.FLOATING_DECAY_FLOWER_ITEM,
             ModBlocks.LIVINGWOOD_POOL_ITEM, 
             ModBlocks.APOTHECARY_WOODEN_ITEM
         );

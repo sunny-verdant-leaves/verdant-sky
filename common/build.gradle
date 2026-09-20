@@ -19,4 +19,9 @@ dependencies {
     // Botania - Fabric 端
     modCompileOnly "maven.modrinth:pfjLUfGv:ZbFDx99K"
     modRuntimeOnly "maven.modrinth:pfjLUfGv:ZbFDx99K"
+
+    // JEI
+    modCompileOnly "mezz.jei:jei-1.20.1-common-api:15.20.0.106"
+    modCompileOnly "mezz.jei:jei-1.20.1-forge-api:15.20.0.106"    // Forge 端
+    modCompileOnly "mezz.jei:jei-1.20.1-fabric-api:15.20.0.106"   // Fabric 端
 }
