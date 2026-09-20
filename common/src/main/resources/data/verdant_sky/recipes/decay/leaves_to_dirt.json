@@ -1,0 +1,10 @@
+{
+  "type": "verdant_sky:decay",
+  "input": {
+    "type": "tag",
+    "tag": "minecraft:leaves"
+  },
+  "output": {
+    "name": "minecraft:dirt"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "botania:petal_apothecary",
+  "ingredients": [
+    {
+      "tag": "botania:petals/black"
+    },
+    {
+      "tag": "botania:petals/black"
+    },
+    {
+      "tag": "botania:petals/gray"
+    },
+    {
+      "tag": "botania:petals/brown"
+    },
+    {
+      "item": "botania:manaresource"
+    },
+    {
+      "item": "botania:manaresource"
+    }
+  ],
+  "output": {
+    "item": "botania:pure_daisy"
+  },
+  "reagent": {
+    "tag": "botania:seed_apothecary_reagent"
+  }
+}

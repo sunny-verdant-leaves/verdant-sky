@@ -6,10 +6,16 @@ import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import vazkii.botania.api.block_entity.FunctionalFlowerBlockEntity;
 import vazkii.botania.api.block_entity.RadiusDescriptor;
@@ -21,10 +27,6 @@ import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
 
 public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
-
-    private static final int MANA_COST_PER_CONVERSION = 100;
-    private static final int MAX_MANA = 10000;
-    private static final int DELAY = 40;
 
     /** 由 DecayFlowerBlock.getTicker 每次 tick 更新，避免调用 getLevel() */
     private Level cachedLevel;
@@ -48,13 +50,11 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
 
     @Override
     public int getMaxMana() {
-        return MAX_MANA;
+        return VerdantSkyConfig.decayFlowerMaxMana();
     }
 
     @Override
     public RadiusDescriptor getRadius() {
-        // 窥魔之镜显示：水平面 5×5（Botania 只渲染 X-Z 平面）
-        // 实际作用范围：立体 5×5×5（见 performDecayConversion）
         return RadiusDescriptor.Rectangle.square(
             getEffectivePos(),
             VerdantSkyConfig.decayFlowerRadius()
@@ -63,30 +63,20 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
 
     @Override
     public ItemStack getDefaultHudIcon() {
-        // 森林法杖 HUD 左上角显示的图标
         return new ItemStack(ModBlocks.DECAY_FLOWER_ITEM.get());
     }
 
-    // ══════════════════════════════════════════════════════════════
-    //  可选重写
-    // ══════════════════════════════════════════════════════════════
-
     @Override
     public boolean acceptsRedstone() {
-        return true; // 让基类每 tick 刷新 redstoneSignal
+        return true;
     }
 
     // ══════════════════════════════════════════════════════════════
     //  核心逻辑
     // ══════════════════════════════════════════════════════════════
-
     @Override
     public void tickFlower() {
-        // super.tickFlower() 链条：
-        //   1. FunctionalFlowerBlockEntity  -> drawManaFromPool() + 刷新 redstoneSignal + 客户端粒子
-        //   2. BindableSpecialFlowerBlockEntity -> 首次放置自动绑定魔力池
-        //   3. SpecialFlowerBlockEntity -> ticksExisted++
-        super.tickFlower();
+        super.tickFlower(); // 抽魔 + 红石刷新 + 客户端粒子
 
         if (cachedLevel == null || cachedLevel.isClientSide()) {
             return;
@@ -94,29 +84,79 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
         if (redstoneSignal > 0) {
             return;
         }
-        if (ticksExisted % DELAY != 0) {
+        if (ticksExisted % VerdantSkyConfig.decayFlowerInterval() != 0) {
             return;
         }
-        if (getMana() < MANA_COST_PER_CONVERSION) {
+        if (getMana() < VerdantSkyConfig.decayFlowerManaCost()) {
+            return;
+        }
+        if (!(cachedLevel instanceof ServerLevel serverLevel)) {
             return;
         }
 
-        int converted = performDecayConversion();
+        BlockPos center = getEffectivePos();
+
+        // 先转换
+        int converted = performDecayConversion(serverLevel);
+
+        // 只有真的转换了方块，才响音效 + 上凋零 + 扣魔力
         if (converted > 0) {
-            addMana(-MANA_COST_PER_CONVERSION * converted);
+            playWorkSound(serverLevel, center);
+            applyWitherToNearbyEntities(serverLevel, center);
+            addMana(-VerdantSkyConfig.decayFlowerManaCost() * converted);
             sync();
         }
     }
 
     // ══════════════════════════════════════════════════════════════
-    //  随机转换逻辑（立体 5×5×5）
+    //  音效
     // ══════════════════════════════════════════════════════════════
 
-    private int performDecayConversion() {
-        if (!(cachedLevel instanceof ServerLevel serverLevel)) {
-            return 0;
-        }
+    private void playWorkSound(ServerLevel level, BlockPos pos) {
+        level.playSound(
+            null,
+            pos,
+            SoundEvents.SOUL_ESCAPE,
+            SoundSource.BLOCKS,
+            1.0F,
+            1.0F
+        );
+    }
 
+    // ══════════════════════════════════════════════════════════════
+    //  凋零效果
+    // ══════════════════════════════════════════════════════════════
+
+    private void applyWitherToNearbyEntities(ServerLevel level, BlockPos center) {
+        int radius = VerdantSkyConfig.decayFlowerRadius();
+        AABB area = new AABB(
+            center.getX() - radius,
+            center.getY() - radius,
+            center.getZ() - radius,
+            center.getX() + radius + 1,
+            center.getY() + radius + 1,
+            center.getZ() + radius + 1
+        );
+
+        List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, area);
+        if (entities.isEmpty()) return;
+
+        MobEffectInstance wither = new MobEffectInstance(
+            MobEffects.WITHER,
+            VerdantSkyConfig.decayFlowerWitherDuration(),
+            VerdantSkyConfig.decayFlowerWitherAmplifier()
+        );
+
+        for (LivingEntity entity : entities) {
+            entity.addEffect(new MobEffectInstance(wither));
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    //  转换逻辑
+    // ══════════════════════════════════════════════════════════════
+
+    private int performDecayConversion(ServerLevel serverLevel) {
         List<DecayRecipe> recipes =
             serverLevel.getRecipeManager().getAllRecipesFor(ModRecipeTypes.DECAY.get());
         if (recipes.isEmpty()) return 0;
@@ -125,7 +165,6 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
         int radius = VerdantSkyConfig.decayFlowerRadius();
         int maxConversions = VerdantSkyConfig.decayFlowerMaxConversionsPerTick();
 
-        // 第一步：收集所有可转换的坐标
         List<BlockPos> candidates = new ArrayList<>();
         RandomSource random = serverLevel.getRandom();
 
@@ -141,9 +180,6 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
 
                     for (DecayRecipe recipe : recipes) {
                         if (!recipe.matchesState(targetState)) continue;
-                        // 防止输出仍匹配同一条配方（如 #logs → stripped_logs）
-                        if (recipe.matchesState(recipe.outputState())) continue;
-                        // 防止原地"转换"
                         if (recipe.outputState() == targetState) continue;
 
                         candidates.add(targetPos.immutable());
@@ -155,7 +191,6 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
 
         if (candidates.isEmpty()) return 0;
 
-        // 第二步：随机抽取并转换
         int converted = 0;
         int attempts = Math.min(maxConversions, candidates.size());
 
