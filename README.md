@@ -4,7 +4,8 @@ This is a Minecraft mod for the **Verdant Sky** modpack.
 
 ## Features
 
-- Adds new mana block variants in Botania, such as the Livingwood Mana Pool.
+- Adds new mana block variants in Botania, such as Livingwood Mana Pool.
+- Adds new functional flowers in Botania, such as Decay Agapanthus.
 - Does not modify or replace any original Botania blocks or items.
 
 ## Requirements
