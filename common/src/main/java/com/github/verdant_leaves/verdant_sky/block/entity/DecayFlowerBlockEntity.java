@@ -96,13 +96,15 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
 
         BlockPos center = getEffectivePos();
 
+        // 施加凋零效果
+        applyWitherToNearbyEntities(serverLevel, center);
+
         // 先转换
         int converted = performDecayConversion(serverLevel);
 
-        // 只有真的转换了方块，才响音效 + 上凋零 + 扣魔力
+        // 只有真的转换了方块，才响音效 + 扣魔力
         if (converted > 0) {
             playWorkSound(serverLevel, center);
-            applyWitherToNearbyEntities(serverLevel, center);
             addMana(-VerdantSkyConfig.decayFlowerManaCost() * converted);
             sync();
         }
@@ -118,7 +120,7 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
             pos,
             SoundEvents.SOUL_ESCAPE,
             SoundSource.BLOCKS,
-            1.0F,
+            5.0F,
             1.0F
         );
     }
@@ -202,7 +204,6 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
 
             for (DecayRecipe recipe : recipes) {
                 if (!recipe.matchesState(targetState)) continue;
-                if (recipe.matchesState(recipe.outputState())) continue;
                 if (recipe.outputState() == targetState) continue;
 
                 serverLevel.setBlockAndUpdate(targetPos, recipe.outputState());

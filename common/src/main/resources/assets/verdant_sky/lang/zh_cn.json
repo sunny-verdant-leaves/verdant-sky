@@ -1,8 +1,11 @@
 {
   "itemGroup.verdant_sky": "碧空物语",
 
-  "block.verdant_sky.apothecary_wooden": "木花药台",
+  "block.verdant_sky.decay_flower": "腐朽花",
+  "block.verdant_sky.decay_flower.reference": "万物终将归于腐朽。",
   "block.verdant_sky.livingwood_pool": "活木魔力池",
+  "block.verdant_sky.apothecary_wooden": "木花药台",
+
   "block.verdant_sky.oak_cauldron": "橡木炼药锅",
   "block.verdant_sky.oak_water_cauldron": "装有水的橡木炼药锅",
   "block.verdant_sky.oak_lava_cauldron": "装有熔岩的橡木炼药锅",
