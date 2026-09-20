@@ -42,6 +42,10 @@ public final class VerdantSkyClient {
             RenderType.cutout(),
             ModBlocks.DECAY_FLOWER.get()
         );
+        RenderTypeRegistry.register(
+            RenderType.cutout(),
+            ModBlocks.FLOATING_DECAY_FLOWER.get()
+        );
     }
 
     // ══════════════════════════════════════════════════════════════

@@ -62,11 +62,6 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
     }
 
     @Override
-    public ItemStack getDefaultHudIcon() {
-        return new ItemStack(ModBlocks.DECAY_FLOWER_ITEM.get());
-    }
-
-    @Override
     public boolean acceptsRedstone() {
         return true;
     }
