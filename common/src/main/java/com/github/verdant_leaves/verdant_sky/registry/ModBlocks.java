@@ -21,8 +21,8 @@ import vazkii.botania.common.item.block.SpecialFlowerBlockItem;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodenVariantRegistry;
-import com.github.verdant_leaves.verdant_sky.block.DecayFlowerBlock;
-import com.github.verdant_leaves.verdant_sky.block.FloatingDecayFlowerBlock;
+import com.github.verdant_leaves.verdant_sky.block.DecayAgapanthusBlock;
+import com.github.verdant_leaves.verdant_sky.block.FloatingDecayAgapanthusBlock;
 import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronFamily;
 import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronNames;
 import com.github.verdant_leaves.verdant_sky.block.VerdantPoolBlock;
@@ -53,24 +53,24 @@ public class ModBlocks {
             .sound(SoundType.GRAVEL)
             .lightLevel(s -> 15);
 
-    public static final RegistrySupplier<Block> DECAY_FLOWER =
-        BLOCKS.register("decay_flower", () ->
-            new DecayFlowerBlock(FLOWER_PROPS)
+    public static final RegistrySupplier<Block> DECAY_AGAPANTHUS =
+        BLOCKS.register("decay_agapanthus", () ->
+            new DecayAgapanthusBlock(FLOWER_PROPS)
         );
 
-    public static final RegistrySupplier<Item> DECAY_FLOWER_ITEM =
-        ITEMS.register("decay_flower", () ->
-            new SpecialFlowerBlockItem(DECAY_FLOWER.get(), new Item.Properties())
+    public static final RegistrySupplier<Item> DECAY_AGAPANTHUS_ITEM =
+        ITEMS.register("decay_agapanthus", () ->
+            new SpecialFlowerBlockItem(DECAY_AGAPANTHUS.get(), new Item.Properties())
         );
 
-    public static final RegistrySupplier<Block> FLOATING_DECAY_FLOWER =
-        BLOCKS.register("floating_decay_flower", () ->
-            new FloatingDecayFlowerBlock(FLOATING_PROPS)
+    public static final RegistrySupplier<Block> FLOATING_DECAY_AGAPANTHUS =
+        BLOCKS.register("floating_decay_agapanthus", () ->
+            new FloatingDecayAgapanthusBlock(FLOATING_PROPS)
         );
 
-    public static final RegistrySupplier<Item> FLOATING_DECAY_FLOWER_ITEM =
-        ITEMS.register("floating_decay_flower", () ->
-            new SpecialFlowerBlockItem(FLOATING_DECAY_FLOWER.get(), new Item.Properties())
+    public static final RegistrySupplier<Item> FLOATING_DECAY_AGAPANTHUS_ITEM =
+        ITEMS.register("floating_decay_agapanthus", () ->
+            new SpecialFlowerBlockItem(FLOATING_DECAY_AGAPANTHUS.get(), new Item.Properties())
         );
     
     // ══════════════════════════════════════════════════════════════

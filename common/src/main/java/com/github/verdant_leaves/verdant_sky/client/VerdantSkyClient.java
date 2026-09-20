@@ -23,8 +23,8 @@ public final class VerdantSkyClient {
     private VerdantSkyClient() {}
 
     public static void init() {
-        registerDecayFlowerRenderType();
-        registerDecayFlowerRenderer();
+        registerDecayAgapanthusRenderType();
+        registerDecayAgapanthusRenderer();
         registerCauldronWaterColor();
     }
 
@@ -37,14 +37,14 @@ public final class VerdantSkyClient {
      * Forge 端其实可以从模型自动推断，但 Fabric 端必须显式声明，
      * 走 Architectury 的 RenderTypeRegistry 可以两端通吃。
      */
-    private static void registerDecayFlowerRenderType() {
+    private static void registerDecayAgapanthusRenderType() {
         RenderTypeRegistry.register(
             RenderType.cutout(),
-            ModBlocks.DECAY_FLOWER.get()
+            ModBlocks.DECAY_AGAPANTHUS.get()
         );
         RenderTypeRegistry.register(
             RenderType.cutout(),
-            ModBlocks.FLOATING_DECAY_FLOWER.get()
+            ModBlocks.FLOATING_DECAY_AGAPANTHUS.get()
         );
     }
 
@@ -54,11 +54,11 @@ public final class VerdantSkyClient {
 
     /**
      * 注册 Botania 的花渲染器，让窥魔之镜 / 森林法杖绑定提示
-     * 能调用 DecayFlowerBlockEntity.getRadius() 并绘制范围框。
+     * 能调用 DecayAgapanthusBlockEntity.getRadius() 并绘制范围框。
      */
-    private static void registerDecayFlowerRenderer() {
+    private static void registerDecayAgapanthusRenderer() {
         BlockEntityRendererRegistry.register(
-            ModBlockEntities.DECAY_FLOWER.get(),
+            ModBlockEntities.DECAY_AGAPANTHUS.get(),
             ctx -> new SpecialFlowerBlockEntityRenderer<>(ctx)
         );
     }

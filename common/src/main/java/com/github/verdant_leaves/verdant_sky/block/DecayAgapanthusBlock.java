@@ -16,18 +16,18 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import vazkii.botania.api.block_entity.SpecialFlowerBlockEntity;
 
-import com.github.verdant_leaves.verdant_sky.block.entity.DecayFlowerBlockEntity;
+import com.github.verdant_leaves.verdant_sky.block.entity.DecayAgapanthusBlockEntity;
 
-public class DecayFlowerBlock extends FlowerBlock implements EntityBlock {
+public class DecayAgapanthusBlock extends FlowerBlock implements EntityBlock {
 
-    public DecayFlowerBlock(Properties properties) {
+    public DecayAgapanthusBlock(Properties properties) {
         super(MobEffects.WITHER, 8, properties);
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new DecayFlowerBlockEntity(pos, state);
+        return new DecayAgapanthusBlockEntity(pos, state);
     }
 
     @Nullable
@@ -35,7 +35,7 @@ public class DecayFlowerBlock extends FlowerBlock implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
             Level level, BlockState state, BlockEntityType<T> type) {
         return (lvl, pos, st, be) -> {
-            if (be instanceof DecayFlowerBlockEntity flower) {
+            if (be instanceof DecayAgapanthusBlockEntity flower) {
                 // 缓存 Level 给我们自己的逻辑用（绕开 getLevel 的 remap 问题）
                 flower.setCachedLevel(lvl);
                 // 走 Botania 的标准 tick 入口：红绳转接器、附魔土加速、ticksExisted++ 全在这

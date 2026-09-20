@@ -5,7 +5,7 @@ import net.fabricmc.api.ClientModInitializer;
 import vazkii.botania.api.BotaniaFabricClientCapabilities;
 import vazkii.botania.api.block_entity.BindableSpecialFlowerBlockEntity;
 
-import com.github.verdant_leaves.verdant_sky.block.entity.DecayFlowerBlockEntity;
+import com.github.verdant_leaves.verdant_sky.block.entity.DecayAgapanthusBlockEntity;
 import com.github.verdant_leaves.verdant_sky.client.VerdantSkyClient;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
 
@@ -23,8 +23,8 @@ public final class VerdantSkyFabricClient implements ClientModInitializer {
     private static void registerBotaniaWandHud() {
         BotaniaFabricClientCapabilities.WAND_HUD.registerForBlockEntities(
             (be, ctx) -> new BindableSpecialFlowerBlockEntity
-                .BindableFlowerWandHud<>((DecayFlowerBlockEntity) be),
-            ModBlockEntities.DECAY_FLOWER.get()
+                .BindableFlowerWandHud<>((DecayAgapanthusBlockEntity) be),
+            ModBlockEntities.DECAY_AGAPANTHUS.get()
         );
     }
 }

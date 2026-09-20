@@ -22,25 +22,25 @@ public class VerdantSkyConfig {
     // ── 腐朽花 ──
 
     /** 腐朽花作用半径。2 表示 5×5×5，3 表示 7×7×7。 */
-    public int decayFlowerRadius = 2;
+    public int decayAgapanthusRadius = 2;
 
     /** 单次扫描最多转换多少个方块，防止卡顿。 */
-    public int decayFlowerMaxConversionsPerTick = 2;
+    public int decayAgapanthusMaxConversionsPerTick = 2;
 
     /** 腐朽花触发间隔，单位 tick。 */
-    public int decayFlowerInterval = 100;
+    public int decayAgapanthusInterval = 100;
 
     /** 每次转换方块消耗的魔力。 */
-    public int decayFlowerManaCost = 450;
+    public int decayAgapanthusManaCost = 450;
 
     /** 内部魔力缓存上限。 */
-    public int decayFlowerMaxMana = 10000;
+    public int decayAgapanthusMaxMana = 10000;
 
     /** 每次工作时给范围内生物施加的凋零持续时长，单位 tick。 */
-    public int decayFlowerWitherDuration = 200;
+    public int decayAgapanthusWitherDuration = 200;
 
     /** 凋零效果等级。0 = I 级，1 = II 级。 */
-    public int decayFlowerWitherAmplifier = 1;
+    public int decayAgapanthusWitherAmplifier = 1;
 
     // ── 加载 / 保存 ──
 
@@ -71,31 +71,31 @@ public class VerdantSkyConfig {
 
     // ── 访问器 ──
 
-    public static int decayFlowerRadius() {
-        return Math.max(0, INSTANCE.decayFlowerRadius);
+    public static int decayAgapanthusRadius() {
+        return Math.max(0, INSTANCE.decayAgapanthusRadius);
     }
 
-    public static int decayFlowerMaxConversionsPerTick() {
-        return Math.max(1, INSTANCE.decayFlowerMaxConversionsPerTick);
+    public static int decayAgapanthusMaxConversionsPerTick() {
+        return Math.max(1, INSTANCE.decayAgapanthusMaxConversionsPerTick);
     }
 
-    public static int decayFlowerInterval() {
-        return Math.max(1, INSTANCE.decayFlowerInterval);
+    public static int decayAgapanthusInterval() {
+        return Math.max(1, INSTANCE.decayAgapanthusInterval);
     }
 
-    public static int decayFlowerManaCost() {
-        return Math.max(1, INSTANCE.decayFlowerManaCost);
+    public static int decayAgapanthusManaCost() {
+        return Math.max(1, INSTANCE.decayAgapanthusManaCost);
     }
 
-    public static int decayFlowerMaxMana() {
-        return Math.max(1, INSTANCE.decayFlowerMaxMana);
+    public static int decayAgapanthusMaxMana() {
+        return Math.max(1, INSTANCE.decayAgapanthusMaxMana);
     }
 
-    public static int decayFlowerWitherDuration() {
-        return Math.max(1, INSTANCE.decayFlowerWitherDuration);
+    public static int decayAgapanthusWitherDuration() {
+        return Math.max(1, INSTANCE.decayAgapanthusWitherDuration);
     }
 
-    public static int decayFlowerWitherAmplifier() {
-        return Math.max(0, INSTANCE.decayFlowerWitherAmplifier);
+    public static int decayAgapanthusWitherAmplifier() {
+        return Math.max(0, INSTANCE.decayAgapanthusWitherAmplifier);
     }
 }

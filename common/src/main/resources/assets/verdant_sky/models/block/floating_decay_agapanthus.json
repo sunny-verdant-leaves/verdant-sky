@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/block",
   "flower": {
-    "parent": "verdant_sky:block/decay_flower"
+    "parent": "verdant_sky:block/decay_agapanthus"
   },
   "loader": "botania:floating_flower"
 }

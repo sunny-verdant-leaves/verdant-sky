@@ -13,7 +13,7 @@ import vazkii.botania.api.block_entity.BindableSpecialFlowerBlockEntity;
 import vazkii.botania.forge.CapabilityUtil;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
-import com.github.verdant_leaves.verdant_sky.block.entity.DecayFlowerBlockEntity;
+import com.github.verdant_leaves.verdant_sky.block.entity.DecayAgapanthusBlockEntity;
 import com.github.verdant_leaves.verdant_sky.client.VerdantSkyClient;
 
 @Mod.EventBusSubscriber(
@@ -47,7 +47,7 @@ public final class VerdantSkyForgeClient {
         @SubscribeEvent
         public static void attachWandHud(AttachCapabilitiesEvent<BlockEntity> event) {
             BlockEntity be = event.getObject();
-            if (be instanceof DecayFlowerBlockEntity flower) {
+            if (be instanceof DecayAgapanthusBlockEntity flower) {
                 event.addCapability(
                     new ResourceLocation(VerdantSky.MOD_ID, "wand_hud"),
                     CapabilityUtil.makeProvider(

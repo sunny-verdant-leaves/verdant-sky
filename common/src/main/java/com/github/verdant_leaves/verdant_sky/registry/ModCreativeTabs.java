@@ -20,7 +20,7 @@ public class ModCreativeTabs {
         TABS.register("verdant_sky", () ->
             CreativeTabRegistry.create(
                 Component.translatable("itemGroup.verdant_sky"),
-                () -> new ItemStack(ModBlocks.FLOATING_DECAY_FLOWER_ITEM.get())
+                () -> new ItemStack(ModBlocks.FLOATING_DECAY_AGAPANTHUS_ITEM.get())
             )
         );
         
@@ -30,8 +30,8 @@ public class ModCreativeTabs {
         
         CreativeTabRegistry.append(
             VERDANT_TAB,
-            ModBlocks.DECAY_FLOWER_ITEM,
-            ModBlocks.FLOATING_DECAY_FLOWER_ITEM,
+            ModBlocks.DECAY_AGAPANTHUS_ITEM,
+            ModBlocks.FLOATING_DECAY_AGAPANTHUS_ITEM,
             ModBlocks.LIVINGWOOD_POOL_ITEM, 
             ModBlocks.APOTHECARY_WOODEN_ITEM
         );

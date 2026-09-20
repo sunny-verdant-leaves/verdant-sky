@@ -26,13 +26,13 @@ import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
 
-public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
+public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
 
-    /** 由 DecayFlowerBlock.getTicker 每次 tick 更新，避免调用 getLevel() */
+    /** 由 DecayAgapanthusBlock.getTicker 每次 tick 更新，避免调用 getLevel() */
     private Level cachedLevel;
 
-    public DecayFlowerBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.DECAY_FLOWER.get(), pos, state);
+    public DecayAgapanthusBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.DECAY_AGAPANTHUS.get(), pos, state);
     }
 
     public void setCachedLevel(Level level) {
@@ -45,19 +45,19 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
 
     @Override
     public int getColor() {
-        return 0x6B3A6B; // 暗紫色
+        return 0x44509D; // 暗紫色
     }
 
     @Override
     public int getMaxMana() {
-        return VerdantSkyConfig.decayFlowerMaxMana();
+        return VerdantSkyConfig.decayAgapanthusMaxMana();
     }
 
     @Override
     public RadiusDescriptor getRadius() {
         return RadiusDescriptor.Rectangle.square(
             getEffectivePos(),
-            VerdantSkyConfig.decayFlowerRadius()
+            VerdantSkyConfig.decayAgapanthusRadius()
         );
     }
 
@@ -79,10 +79,10 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
         if (redstoneSignal > 0) {
             return;
         }
-        if (ticksExisted % VerdantSkyConfig.decayFlowerInterval() != 0) {
+        if (ticksExisted % VerdantSkyConfig.decayAgapanthusInterval() != 0) {
             return;
         }
-        if (getMana() < VerdantSkyConfig.decayFlowerManaCost()) {
+        if (getMana() < VerdantSkyConfig.decayAgapanthusManaCost()) {
             return;
         }
         if (!(cachedLevel instanceof ServerLevel serverLevel)) {
@@ -100,7 +100,7 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
         // 只有真的转换了方块，才响音效 + 扣魔力
         if (converted > 0) {
             playWorkSound(serverLevel, center);
-            addMana(-VerdantSkyConfig.decayFlowerManaCost() * converted);
+            addMana(-VerdantSkyConfig.decayAgapanthusManaCost() * converted);
             sync();
         }
     }
@@ -125,7 +125,7 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
     // ══════════════════════════════════════════════════════════════
 
     private void applyWitherToNearbyEntities(ServerLevel level, BlockPos center) {
-        int radius = VerdantSkyConfig.decayFlowerRadius();
+        int radius = VerdantSkyConfig.decayAgapanthusRadius();
         AABB area = new AABB(
             center.getX() - radius,
             center.getY() - radius,
@@ -140,8 +140,8 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
 
         MobEffectInstance wither = new MobEffectInstance(
             MobEffects.WITHER,
-            VerdantSkyConfig.decayFlowerWitherDuration(),
-            VerdantSkyConfig.decayFlowerWitherAmplifier()
+            VerdantSkyConfig.decayAgapanthusWitherDuration(),
+            VerdantSkyConfig.decayAgapanthusWitherAmplifier()
         );
 
         for (LivingEntity entity : entities) {
@@ -159,8 +159,8 @@ public class DecayFlowerBlockEntity extends FunctionalFlowerBlockEntity {
         if (recipes.isEmpty()) return 0;
 
         BlockPos pos = getEffectivePos();
-        int radius = VerdantSkyConfig.decayFlowerRadius();
-        int maxConversions = VerdantSkyConfig.decayFlowerMaxConversionsPerTick();
+        int radius = VerdantSkyConfig.decayAgapanthusRadius();
+        int maxConversions = VerdantSkyConfig.decayAgapanthusMaxConversionsPerTick();
 
         List<BlockPos> candidates = new ArrayList<>();
         RandomSource random = serverLevel.getRandom();

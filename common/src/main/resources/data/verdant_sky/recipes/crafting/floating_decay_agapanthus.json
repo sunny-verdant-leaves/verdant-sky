@@ -7,10 +7,10 @@
       "tag": "botania:floating_flowers"
     },
     {
-      "item": "verdant_sky:decay_flower"
+      "item": "verdant_sky:decay_agapanthus"
     }
   ],
   "result": {
-    "item": "verdant_sky:floating_decay_flower"
+    "item": "verdant_sky:floating_decay_agapanthus"
   }
 }

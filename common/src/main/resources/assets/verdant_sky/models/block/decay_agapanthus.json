@@ -1,6 +1,6 @@
 {
   "parent": "botania:block/shapes/cross",
   "textures": {
-    "cross": "verdant_sky:block/decay_flower"
+    "cross": "verdant_sky:block/decay_agapanthus"
   }
 }

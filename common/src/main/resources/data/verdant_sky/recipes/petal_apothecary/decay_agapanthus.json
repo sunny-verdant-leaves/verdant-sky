@@ -21,7 +21,7 @@
     }
   ],
   "output": {
-    "item": "verdant_sky:decay_flower"
+    "item": "verdant_sky:decay_agapanthus"
   },
   "reagent": {
     "tag": "botania:seed_apothecary_reagent"

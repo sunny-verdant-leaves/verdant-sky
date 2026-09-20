@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "verdant_sky:decay_flower"
+          "name": "verdant_sky:floating_decay_agapanthus"
         }
       ],
       "conditions": [
