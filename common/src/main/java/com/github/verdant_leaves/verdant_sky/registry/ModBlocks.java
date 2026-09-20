@@ -12,6 +12,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -21,6 +22,7 @@ import vazkii.botania.common.item.block.SpecialFlowerBlockItem;
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodenVariantRegistry;
 import com.github.verdant_leaves.verdant_sky.block.DecayFlowerBlock;
+import com.github.verdant_leaves.verdant_sky.block.FloatingDecayFlowerBlock;
 import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronFamily;
 import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronNames;
 import com.github.verdant_leaves.verdant_sky.block.VerdantPoolBlock;
@@ -41,21 +43,34 @@ public class ModBlocks {
     //  腐朽花 Decay Flower
     // ══════════════════════════════════════════════════════════════
 
+    private static final BlockBehaviour.Properties FLOWER_PROPS =
+        BlockBehaviour.Properties.copy(Blocks.POPPY);
+
+    private static final BlockBehaviour.Properties FLOATING_PROPS =
+        BlockBehaviour.Properties.of()
+            .mapColor(MapColor.PLANT)
+            .strength(0.5F)
+            .sound(SoundType.GRAVEL)
+            .lightLevel(s -> 15);
+
     public static final RegistrySupplier<Block> DECAY_FLOWER =
         BLOCKS.register("decay_flower", () ->
-            new DecayFlowerBlock(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.PLANT)
-                .strength(0.0F)
-                .sound(SoundType.GRASS)
-                .noCollission()
-                .instabreak()
-                .noOcclusion()
-            )
+            new DecayFlowerBlock(FLOWER_PROPS)
         );
 
     public static final RegistrySupplier<Item> DECAY_FLOWER_ITEM =
         ITEMS.register("decay_flower", () ->
             new SpecialFlowerBlockItem(DECAY_FLOWER.get(), new Item.Properties())
+        );
+
+    public static final RegistrySupplier<Block> FLOATING_DECAY_FLOWER =
+        BLOCKS.register("floating_decay_flower", () ->
+            new FloatingDecayFlowerBlock(FLOATING_PROPS)
+        );
+
+    public static final RegistrySupplier<Item> FLOATING_DECAY_FLOWER_ITEM =
+        ITEMS.register("floating_decay_flower", () ->
+            new SpecialFlowerBlockItem(FLOATING_DECAY_FLOWER.get(), new Item.Properties())
         );
     
     // ══════════════════════════════════════════════════════════════

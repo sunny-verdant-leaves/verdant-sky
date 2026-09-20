@@ -17,7 +17,8 @@ public class ModBlockEntities {
         BLOCK_ENTITIES.register("decay_flower", () ->
             BlockEntityType.Builder.of(
                 DecayFlowerBlockEntity::new,
-                ModBlocks.DECAY_FLOWER.get()
+                ModBlocks.DECAY_FLOWER.get(),
+                ModBlocks.FLOATING_DECAY_FLOWER.get()
             ).build(null)
         );
 
