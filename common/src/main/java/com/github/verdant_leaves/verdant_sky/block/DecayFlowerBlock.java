@@ -1,31 +1,25 @@
 package com.github.verdant_leaves.verdant_sky.block;
 
-import com.github.verdant_leaves.verdant_sky.block.entity.DecayFlowerBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 
-/**
- * 腐朽花：每 2 秒扫描以自身为中心的 5×5×5 范围，
- * 匹配 DecayRecipe 并把范围内的方块转换为配方指定的输出方块。
- */
-public class DecayFlowerBlock extends BaseEntityBlock {
+import com.github.verdant_leaves.verdant_sky.block.entity.DecayFlowerBlockEntity;
+
+public class DecayFlowerBlock extends FlowerBlock implements EntityBlock {
 
     public DecayFlowerBlock(Properties properties) {
-        super(properties);
-    }
-
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-        // BaseEntityBlock 默认返回 INVISIBLE，需显式改为 MODEL 才会渲染模型
-        return RenderShape.MODEL;
+        super(MobEffects.WITHER, 8, properties);
     }
 
     @Nullable
@@ -38,12 +32,26 @@ public class DecayFlowerBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
             Level level, BlockState state, BlockEntityType<T> type) {
-        // 只在服务端执行转换逻辑
-        if (level.isClientSide()) return null;
         return (lvl, pos, st, be) -> {
             if (be instanceof DecayFlowerBlockEntity flower) {
-                flower.serverTick(lvl, pos, st);
+                flower.setCachedLevel(lvl);
+                flower.tickFlower();
             }
         };
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (random.nextFloat() > 0.2F) return;
+
+        double x = pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.5;
+        double y = pos.getY() + 0.1 + random.nextDouble() * 0.3;
+        double z = pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.5;
+
+        level.addParticle(ParticleTypes.SCULK_SOUL, x, y, z, 0.0, 0.02, 0.0);
+
+        if (random.nextFloat() < 0.3F) {
+            level.addParticle(ParticleTypes.ASH, x, y, z, 0.0, 0.01, 0.0);
+        }
     }
 }
