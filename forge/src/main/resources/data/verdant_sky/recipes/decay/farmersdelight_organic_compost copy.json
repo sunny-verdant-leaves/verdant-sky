@@ -1,16 +1,24 @@
+
 {
-  "conditions": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "type": "forge:mod_loaded",
-      "modid": "farmersdelight"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "farmersdelight"
+        }
+      ],
+      "recipe": {
+        "type": "verdant_sky:decay",
+        "input": {
+          "type": "block",
+          "block": "minecraft:rooted_dirt"
+        },
+        "output": {
+          "name": "farmersdelight:organic_compost"
+        }
+      }
     }
-  ],
-  "type": "verdant_sky:decay",
-  "input": {
-    "type": "block",
-    "block": "minecraft:rooted_dirt"
-  },
-  "output": {
-    "name": "farmersdelight:organic_compost"
-  }
+  ]
 }
