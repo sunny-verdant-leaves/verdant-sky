@@ -156,10 +156,6 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
     private int performDecayConversion(ServerLevel serverLevel) {
         List<DecayRecipe> recipes =
             serverLevel.getRecipeManager().getAllRecipesFor(ModRecipeTypes.DECAY.get());
-        System.out.println("[VerdantSky] Loaded " + recipes.size() + " decay recipes");
-        for (DecayRecipe r : recipes) {
-            System.out.println("  - " + r.getId());
-        }
         if (recipes.isEmpty()) return 0;
 
         BlockPos pos = getEffectivePos();
