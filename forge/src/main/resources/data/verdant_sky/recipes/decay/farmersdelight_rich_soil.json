@@ -1,0 +1,16 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ],
+  "type": "verdant_sky:decay",
+  "input": {
+    "type": "block",
+    "block": "farmersdelight:organic_compost"
+  },
+  "output": {
+    "name": "farmersdelight:rich_soil"
+  }
+}
