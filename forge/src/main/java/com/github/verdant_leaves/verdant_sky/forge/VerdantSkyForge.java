@@ -10,6 +10,7 @@ import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 
+@SuppressWarnings("removal")
 @Mod(VerdantSky.MOD_ID)
 public final class VerdantSkyForge {
     public VerdantSkyForge() {

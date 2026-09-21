@@ -12,7 +12,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -23,7 +22,6 @@ import vazkii.botania.api.block_entity.RadiusDescriptor;
 import com.github.verdant_leaves.verdant_sky.VerdantSkyConfig;
 import com.github.verdant_leaves.verdant_sky.recipe.DecayRecipe;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
-import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
 
 public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
@@ -45,7 +43,7 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
 
     @Override
     public int getColor() {
-        return 0x44509D; // 暗紫色
+        return 0x44509D; // 蓝紫色
     }
 
     @Override
@@ -71,7 +69,7 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
     // ══════════════════════════════════════════════════════════════
     @Override
     public void tickFlower() {
-        super.tickFlower(); // 抽魔 + 红石刷新 + 客户端粒子
+        super.tickFlower(); // 抽取魔力 + 红石刷新 + 客户端粒子
 
         if (cachedLevel == null || cachedLevel.isClientSide()) {
             return;
@@ -82,26 +80,26 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
         if (ticksExisted % VerdantSkyConfig.decayAgapanthusInterval() != 0) {
             return;
         }
-        if (getMana() < VerdantSkyConfig.decayAgapanthusManaCost()) {
-            return;
-        }
         if (!(cachedLevel instanceof ServerLevel serverLevel)) {
             return;
         }
-
+        
+        // 施加凋零效果，无关魔力值
         BlockPos center = getEffectivePos();
-
-        // 施加凋零效果
         applyWitherToNearbyEntities(serverLevel, center);
-
-        // 先转换
+        sync();
+        
+        if (getMana() < VerdantSkyConfig.decayAgapanthusManaCost()) {
+            return;
+        }
+        
+        // 尝试转换
         int converted = performDecayConversion(serverLevel);
 
-        // 只有真的转换了方块，才响音效 + 扣魔力
+        // 只有真的转换了方块 (实际转换的数量>0)，才响音效 + 扣魔力
         if (converted > 0) {
             playWorkSound(serverLevel, center);
             addMana(-VerdantSkyConfig.decayAgapanthusManaCost() * converted);
-            sync();
         }
     }
 

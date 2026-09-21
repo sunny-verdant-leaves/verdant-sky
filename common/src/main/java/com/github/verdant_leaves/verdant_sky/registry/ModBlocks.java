@@ -16,11 +16,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import vazkii.botania.common.item.block.SpecialFlowerBlockItem;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
-import com.github.verdant_leaves.verdant_sky.api.WoodenVariantRegistry;
 import com.github.verdant_leaves.verdant_sky.block.DecayAgapanthusBlock;
 import com.github.verdant_leaves.verdant_sky.block.FloatingDecayAgapanthusBlock;
 import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronFamily;

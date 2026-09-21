@@ -16,6 +16,7 @@ import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.block.entity.DecayAgapanthusBlockEntity;
 import com.github.verdant_leaves.verdant_sky.client.VerdantSkyClient;
 
+@SuppressWarnings("removal")
 @Mod.EventBusSubscriber(
         modid = VerdantSky.MOD_ID,
         value = Dist.CLIENT,

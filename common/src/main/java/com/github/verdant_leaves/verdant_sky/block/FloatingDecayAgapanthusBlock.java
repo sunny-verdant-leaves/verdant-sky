@@ -4,7 +4,6 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -17,7 +16,7 @@ import vazkii.botania.common.block.FloatingSpecialFlowerBlock;
 import com.github.verdant_leaves.verdant_sky.block.entity.DecayAgapanthusBlockEntity;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
 
-public class FloatingDecayAgapanthusBlock extends FloatingSpecialFlowerBlock implements EntityBlock {
+public class FloatingDecayAgapanthusBlock extends FloatingSpecialFlowerBlock {
 
     public FloatingDecayAgapanthusBlock(BlockBehaviour.Properties properties) {
         super(properties, () -> ModBlockEntities.DECAY_AGAPANTHUS.get());

@@ -1,19 +1,15 @@
 package com.github.verdant_leaves.verdant_sky.integration;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -57,7 +53,7 @@ public final class BotaniaIntegration {
         // ── 水锅 + 一碗水 -> 水位 +1，满则 PASS ──
         VerdantCauldronBehavior.VERDANT_WATER_BEHAVIOR.put(WATER_BOWL,
                 (state, level, pos, player, hand, stack) -> {
-            if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
+            if (!(state.getBlock() instanceof VerdantCauldronFamily)) {
                 return InteractionResult.PASS;
             }
             int current = state.getValue(LayeredCauldronBlock.LEVEL);

@@ -37,7 +37,7 @@ public class VerdantSkyConfig {
     public int decayAgapanthusMaxMana = 10000;
 
     /** 每次工作时给范围内生物施加的凋零持续时长，单位 tick。 */
-    public int decayAgapanthusWitherDuration = 200;
+    public int decayAgapanthusWitherDuration = 400;
 
     /** 凋零效果等级。0 = I 级，1 = II 级。 */
     public int decayAgapanthusWitherAmplifier = 1;
