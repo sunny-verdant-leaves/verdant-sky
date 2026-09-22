@@ -1,11 +1,12 @@
 {
   "values": [
-    "verdant_sky:floating_islands",
-    "verdant_sky:void",
-    "minecraft:normal",
-    "minecraft:flat",
-    "minecraft:large_biomes",
-    "minecraft:amplified",
-    "minecraft:single_biome_surface"
+    "verdant_sky:start_island",
+    "verdant_sky:start_island_forest",
+    "verdant_sky:start_island_oak",
+    "verdant_sky:start_island_spruce",
+    "verdant_sky:start_island_birch",
+    "verdant_sky:start_island_jungle",
+    "verdant_sky:start_island_acacia",
+    "verdant_sky:start_island_dark_oak"
   ]
 }

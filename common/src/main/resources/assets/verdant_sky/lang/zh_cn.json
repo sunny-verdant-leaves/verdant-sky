@@ -1,6 +1,9 @@
 {
   "itemGroup.verdant_sky": "碧空物语",
 
+  "generator.verdant_sky.floating_islands": "浮空岛",
+  "generator.verdant_sky.void": "无中生有空岛",
+
   "block.verdant_sky.decay_agapanthus": "腐朽百子莲",
   "block.verdant_sky.decay_agapanthus.reference": "万物终将归于腐朽。",
   "block.verdant_sky.floating_decay_agapanthus": "浮空腐朽百子莲",

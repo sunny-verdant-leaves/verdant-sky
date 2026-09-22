@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "verdant_sky:floating_islands",
+    "verdant_sky:void",
+    "minecraft:normal",
+    "minecraft:flat",
+    "minecraft:large_biomes",
+    "minecraft:amplified",
+    "minecraft:single_biome_surface"
+  ]
+}

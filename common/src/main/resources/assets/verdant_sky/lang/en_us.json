@@ -1,6 +1,9 @@
 {
   "itemGroup.verdant_sky": "Verdant Sky",
 
+  "generator.verdant_sky.floating_islands": "Floating Islands",
+  "generator.verdant_sky.void": "Void World",
+
   "block.verdant_sky.decay_agapanthus": "Decay Agapanthus",
   "block.verdant_sky.decay_agapanthus.reference": "All things shall wither and decay.",
   "block.verdant_sky.floating_decay_agapanthus": "Floating Decay Agapanthus",
