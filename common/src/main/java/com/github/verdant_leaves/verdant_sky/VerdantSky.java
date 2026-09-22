@@ -13,6 +13,7 @@ public final class VerdantSky {
     public static final String MOD_ID = "verdant_sky";
 
     public static void init() {
+        VerdantSkyConfig.load();   // ← 加这行
         ModBlocks.register();
         ModBlockEntities.register();
         ModRecipeTypes.register();

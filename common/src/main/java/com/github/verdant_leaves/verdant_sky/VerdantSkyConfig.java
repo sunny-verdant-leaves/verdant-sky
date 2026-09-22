@@ -32,13 +32,13 @@ public class VerdantSkyConfig {
     public int decayAgapanthusInterval = 100;
 
     /** 每次转换方块消耗的魔力。 */
-    public int decayAgapanthusManaCost = 800;
+    public int decayAgapanthusManaCost = 1200;
 
     /** 内部魔力缓存上限。 */
     public int decayAgapanthusMaxMana = 10000;
 
     /** 每次工作时给范围内生物施加的凋零持续时长，单位 tick。 */
-    public int decayAgapanthusWitherDuration = 400;
+    public int decayAgapanthusWitherDuration = 200;
 
     /** 凋零效果等级。0 = I 级，1 = II 级。 */
     public int decayAgapanthusWitherAmplifier = 1;
