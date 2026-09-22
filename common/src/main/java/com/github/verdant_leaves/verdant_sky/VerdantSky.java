@@ -8,16 +8,21 @@ import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
 import com.github.verdant_leaves.verdant_sky.registry.ModCreativeTabs;
 import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
+import com.github.verdant_leaves.verdant_sky.world.StartIslandSpawner;
 
 public final class VerdantSky {
     public static final String MOD_ID = "verdant_sky";
 
     public static void init() {
-        VerdantSkyConfig.load();   // ← 加这行
+
+        VerdantSkyConfig.load();
+
         ModBlocks.register();
         ModBlockEntities.register();
         ModRecipeTypes.register();
         ModCreativeTabs.register();
+
+        StartIslandSpawner.register();
 
         // 安全地执行软依赖集成
         // 此事件在公共设置阶段触发，此时所有注册表都已填充完毕
