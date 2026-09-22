@@ -8,6 +8,7 @@ import java.nio.file.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import dev.architectury.platform.Platform;
 
@@ -48,8 +49,19 @@ public class VerdantSkyConfig {
         try {
             if (Files.exists(PATH)) {
                 try (Reader reader = Files.newBufferedReader(PATH)) {
-                    VerdantSkyConfig loaded = GSON.fromJson(reader, VerdantSkyConfig.class);
-                    if (loaded != null) INSTANCE = loaded;
+                    JsonObject onDisk = GSON.fromJson(reader, JsonObject.class);
+                    if (onDisk != null) {
+                        // 从"新建的默认配置"导出 JSON，作为默认值的来源
+                        JsonObject defaults = GSON
+                            .toJsonTree(new VerdantSkyConfig())
+                            .getAsJsonObject();
+                        // 用磁盘上的值覆盖默认值
+                        for (var entry : onDisk.entrySet()) {
+                            defaults.add(entry.getKey(), entry.getValue());
+                        }
+                        // 从合并后的 JSON 反序列化——新字段保留默认值
+                        INSTANCE = GSON.fromJson(defaults, VerdantSkyConfig.class);
+                    }
                 }
             }
             save();
