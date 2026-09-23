@@ -62,11 +62,11 @@ public class StartIslandSpawner {
         int targetZ = spawnPos.getZ() + offsetZ;
 
         // ── 按生物群系选模板 ──
-        String templateId = pickTemplateForBiome(overworld, targetX, targetZ);
+        String templateId = pickTemplateForBiome(overworld, targetX, targetY, targetZ);
 
         // ── 生成 ──
         String command = String.format(
-            "place template %s %d %d %d",
+            "place structure %s %d %d %d",
             templateId, targetX, targetY, targetZ
         );
 
@@ -77,15 +77,14 @@ public class StartIslandSpawner {
 
         data.markGenerated();
 
-        System.out.println("[Verdant Sky] Start island (" + templateId + ") at "
-            + targetX + " " + targetY + " " + targetZ);
+        System.out.println("[Verdant Sky] Start island (" + templateId + ") at " + targetX + " " + targetY + " " + targetZ);
     }
     /**
      * 按自定义生物群系标签选择初始岛模板。
      * 标签文件在 data/verdant_sky/tags/worldgen/biome/ 下。
      */
-    private static String pickTemplateForBiome(ServerLevel level, int x, int z) {
-        BlockPos pos = new BlockPos(x, level.getMinBuildHeight(), z);
+    private static String pickTemplateForBiome(ServerLevel level, int x, int y, int z) {
+        BlockPos pos = new BlockPos(x, y, z);
         Holder<Biome> biome = level.getBiome(pos);
 
         // ── 第一层：独特标签（每个树种一个专属初始岛） ──
