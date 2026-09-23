@@ -91,7 +91,7 @@
     {
       "temperature": [-1, 1],
       "humidity": [-1,1],
-      "continentalness": [-0.18, 1],
+      "continentalness": [-0.14, 1],
       "erosion": [-1, 1],
       "weirdness": [-1, 1],
       "depth": [0, 0.5],
