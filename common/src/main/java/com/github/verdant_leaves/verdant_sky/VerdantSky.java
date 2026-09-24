@@ -4,6 +4,7 @@ import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.platform.Platform;
 
 import com.github.verdant_leaves.verdant_sky.integration.BotaniaIntegration;
+import com.github.verdant_leaves.verdant_sky.loot.PlantLootModifier;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
 import com.github.verdant_leaves.verdant_sky.registry.ModCreativeTabs;
@@ -22,6 +23,7 @@ public final class VerdantSky {
         ModRecipeTypes.register();
         ModCreativeTabs.register();
 
+        PlantLootModifier.register();
         StartIslandSpawner.register();
 
         // 安全地执行软依赖集成

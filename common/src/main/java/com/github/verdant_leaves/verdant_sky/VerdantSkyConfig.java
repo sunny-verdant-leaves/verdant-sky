@@ -43,6 +43,9 @@ public class VerdantSkyConfig {
     /** 凋零效果等级。0 = I 级，1 = II 级。 */
     public int decayAgapanthusWitherAmplifier = 1;
 
+    /** 是否启用植物掉落修改（空手打草掉草/蕨等）。 */
+    public boolean enablePlantLootModification = false;
+
     // ── 加载 / 保存 ──
 
     public static void load() {
@@ -110,4 +113,9 @@ public class VerdantSkyConfig {
     public static int decayAgapanthusWitherAmplifier() {
         return Math.max(0, INSTANCE.decayAgapanthusWitherAmplifier);
     }
+    
+    public static boolean enablePlantLootModification() {
+        return INSTANCE.enablePlantLootModification;
+    }
+    
 }

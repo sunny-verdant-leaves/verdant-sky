@@ -23,7 +23,7 @@ public class ModCreativeTabs {
             )
         );
         
-
+    @SuppressWarnings("unchecked")
     public static void register() {
         TABS.register();
         
