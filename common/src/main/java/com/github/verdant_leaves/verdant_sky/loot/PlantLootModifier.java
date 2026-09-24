@@ -47,27 +47,27 @@ public class PlantLootModifier {
                 if (!VerdantSkyConfig.enablePlantLootModification()) return;
 
                 if (Blocks.FERN.getLootTable().equals(id)) {
-                    context.addPool(singleBlockPool(Items.FERN, 0.2f, 0.25f));
+                    context.addPool(singleBlockPool(Items.FERN, 0.1f, 0.15f, 0.2f, 0.25f));
                 }
 
                 if (Blocks.GRASS.getLootTable().equals(id)) {
-                    context.addPool(singleBlockPool(Items.GRASS, 0.2f, 0.25f));
+                    context.addPool(singleBlockPool(Items.GRASS, 0.1f, 0.15f, 0.2f, 0.25f));
                 }
 
                 if (Blocks.SEAGRASS.getLootTable().equals(id)) {
-                    context.addPool(singleBlockPool(Items.SEAGRASS, 0.15f, 0.2f));
+                    context.addPool(singleBlockPool(Items.SEAGRASS, 0.1f, 0.15f, 0.2f, 0.25f));
                 }
 
                 if (Blocks.LARGE_FERN.getLootTable().equals(id)) {
-                    addDoubleBlockPools(context, Items.FERN, Blocks.LARGE_FERN, 0.2f, 0.25f);
+                    addDoubleBlockPools(context, Items.FERN, Blocks.LARGE_FERN, 0.1f, 0.15f, 0.2f, 0.25f);
                 }
 
                 if (Blocks.TALL_GRASS.getLootTable().equals(id)) {
-                    addDoubleBlockPools(context, Items.GRASS, Blocks.TALL_GRASS, 0.2f, 0.25f);
+                    addDoubleBlockPools(context, Items.GRASS, Blocks.TALL_GRASS, 0.1f, 0.15f, 0.2f, 0.25f);
                 }
 
                 if (Blocks.TALL_SEAGRASS.getLootTable().equals(id)) {
-                    addDoubleBlockPools(context, Items.SEAGRASS, Blocks.TALL_SEAGRASS, 0.15f, 0.2f);
+                    addDoubleBlockPools(context, Items.SEAGRASS, Blocks.TALL_SEAGRASS, 0.1f, 0.15f, 0.2f, 0.25f);
                 }
             }
         );
