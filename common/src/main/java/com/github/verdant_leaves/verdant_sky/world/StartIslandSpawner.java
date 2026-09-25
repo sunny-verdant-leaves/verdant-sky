@@ -15,8 +15,7 @@ import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 
 public class StartIslandSpawner {
 
-    private static final ResourceLocation VOID_NOISE_SETTINGS =
-        new ResourceLocation("verdant_sky", "void");
+    private static final ResourceLocation VOID_NOISE_SETTINGS = new ResourceLocation("verdant_sky", "void/overworld");
 
     private static final long NEW_WORLD_GAME_TIME_THRESHOLD = 20;
 
@@ -44,7 +43,7 @@ public class StartIslandSpawner {
         BlockPos spawnPos = overworld.getSharedSpawnPos();
 
         int targetX = spawnPos.getX();
-        int targetY = spawnPos.getY();
+        int targetY = 162;              // = -64 + (196+256)/2, 结构生成位置的理想高度
         int targetZ = spawnPos.getZ();
 
         // ── 提前拿到生物群系，供多处使用 ──
