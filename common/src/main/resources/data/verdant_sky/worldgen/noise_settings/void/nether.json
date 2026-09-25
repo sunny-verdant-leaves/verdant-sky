@@ -33,7 +33,7 @@
       "shift_x": "minecraft:shift_x",
       "shift_y": 0.0,
       "shift_z": "minecraft:shift_z",
-      "xz_scale": 1.0,
+      "xz_scale": 1.5,
       "y_scale": 0.2
     },
     "vegetation": {
@@ -42,7 +42,7 @@
       "shift_x": "minecraft:shift_x",
       "shift_y": 0.0,
       "shift_z": "minecraft:shift_z",
-      "xz_scale": 1.0,
+      "xz_scale": 1.5,
       "y_scale": 0.2
     },
     "vein_gap": 0.0,
