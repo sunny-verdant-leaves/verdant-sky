@@ -1,0 +1,15 @@
+{
+  "values": [
+    "verdant_sky:start_island",
+    "verdant_sky:overworld/start_island_forest",
+    "verdant_sky:overworld/start_island_oak",
+    "verdant_sky:overworld/start_island_spruce",
+    "verdant_sky:overworld/start_island_birch",
+    "verdant_sky:overworld/start_island_jungle",
+    "verdant_sky:overworld/start_island_acacia",
+    "verdant_sky:overworld/start_island_dark_oak",
+    "verdant_sky:the_nether/start_island_crimson",
+    "verdant_sky:the_nether/start_island_nether",
+    "verdant_sky:the_nether/start_island_warped"
+  ]
+}

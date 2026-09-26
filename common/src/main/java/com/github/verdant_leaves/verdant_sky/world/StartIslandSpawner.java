@@ -13,18 +13,19 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.phys.Vec3;
 
 public class StartIslandSpawner {
 
-    private static final ResourceLocation VOID_NOISE_SETTINGS =
-        new ResourceLocation("verdant_sky", "void/overworld");
+    private static final ResourceLocation VOID_NOISE_SETTINGS = new ResourceLocation("verdant_sky", "void/overworld");
 
     private static final long NEW_WORLD_GAME_TIME_THRESHOLD = 20;
     private static final int XZ_OFFSET = 8;
@@ -77,6 +78,16 @@ public class StartIslandSpawner {
         int targetZ = spawnPos.getZ() + offsetZ;
 
         BlockPos targetPos = new BlockPos(targetX, targetY, targetZ);
+        
+        // 区块强加载
+        ChunkPos centerChunk = new ChunkPos(targetPos);
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                level.getChunk(centerChunk.x + dx, centerChunk.z + dz);
+            }
+        }
+
+        // 获取生物群系
         Holder<Biome> biome = level.getBiome(targetPos);
 
         // 放置结构
@@ -86,7 +97,9 @@ public class StartIslandSpawner {
             structureId, targetX, targetY, targetZ
         );
         server.getCommands().performPrefixedCommand(
-            server.createCommandSourceStack().withSuppressedOutput(),
+            server.createCommandSourceStack()
+                .withLevel(level)
+                .withPosition(Vec3.atCenterOf(targetPos)),
             structureCommand
         );
 
@@ -94,7 +107,7 @@ public class StartIslandSpawner {
 
         // 放置地物（featureIndex = 0）
         if (biome.is(biomeTag("start_flowers"))) {
-            placeFeature(level, targetX, targetZ, "minecraft:forest_flowers", 0);
+            placeFeature(level, targetX, targetZ, 0, "minecraft:forest_flowers");
         }
 
         data.markGenerated();
@@ -124,6 +137,16 @@ public class StartIslandSpawner {
         int targetZ = spawnPos.getZ() + offsetZ;
 
         BlockPos targetPos = new BlockPos(targetX, targetY, targetZ);
+        
+        // 区块强加载
+        ChunkPos centerChunk = new ChunkPos(targetPos);
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                level.getChunk(centerChunk.x + dx, centerChunk.z + dz);
+            }
+        }
+
+        // 获取生物群系
         Holder<Biome> biome = level.getBiome(targetPos);
 
         // 放置结构
@@ -133,18 +156,24 @@ public class StartIslandSpawner {
             structureId, targetX, targetY, targetZ
         );
         server.getCommands().performPrefixedCommand(
-            server.createCommandSourceStack().withSuppressedOutput(),
+            server.createCommandSourceStack()
+                .withLevel(level)
+                .withPosition(Vec3.atCenterOf(targetPos)),
             structureCommand
         );
 
         System.out.println("[Verdant Sky] Nether start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
 
         // 放置地物（featureIndex = 1，与主世界区分）
+        // 用可变参数列表做优先级回退：Botania 神秘蘑菇 → 原版棕色蘑菇
         if (biome.is(biomeTag("start_flowers"))) {
             if (Platform.isModLoaded("botania")) {
-                placeFeature(level, targetX, targetZ, "botania:mystical_mushrooms", 1);
+                placeFeature(level, targetX, targetZ, 1,
+                    "botania:mystical_mushrooms",
+                    "minecraft:patch_brown_mushroom");
             } else {
-                placeFeature(level, targetX, targetZ, "minecraft:patch_brown_mushroom", 1);
+                placeFeature(level, targetX, targetZ, 1,
+                    "minecraft:patch_brown_mushroom");
             }
         }
 
@@ -157,24 +186,39 @@ public class StartIslandSpawner {
 
     /**
      * 用 MOTION_BLOCKING_NO_LEAVES 高度图定位 Y 坐标，
-     * 并用世界种子构造可复现的 WorldgenRandom 放置指定 PlacedFeature。
+     * 并用世界种子构造可复现的 WorldgenRandom 直接放置 ConfiguredFeature。
      *
-     * @param featureId    PlacedFeature 的完整 ID，如 "minecraft:forest_flowers"
+     * 与原版 /place feature 命令行为一致：直接调用 ConfiguredFeature.place()，
+     * 不经过 PlacedFeature 的放置修饰器链（count / in_square / heightmap / biome）。
+     *
      * @param featureIndex 用于区分不同地物的种子索引（主世界=0，下界=1）
+     * @param featureIds   按优先级排列的 ConfiguredFeature ID，第一个存在的被使用
      */
-    private static void placeFeature(ServerLevel level, int x, int z, String featureId, int featureIndex) {
-        // 1. 解析 featureId
-        ResourceLocation loc = parseResourceLocation(featureId);
-        ResourceKey<PlacedFeature> key = ResourceKey.create(Registries.PLACED_FEATURE, loc);
+    private static void placeFeature(ServerLevel level, int x, int z, int featureIndex, String... featureIds) {
+        var registry = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
 
-        var registry = level.registryAccess().registryOrThrow(Registries.PLACED_FEATURE);
-        Holder<PlacedFeature> feature = registry.getHolderOrThrow(key);
+        // 按优先级依次尝试，第一个在注册表中存在的即使用
+        Holder<ConfiguredFeature<?, ?>> feature = null;
+        String usedId = null;
+        for (String id : featureIds) {
+            ResourceLocation loc = parseResourceLocation(id);
+            ResourceKey<ConfiguredFeature<?, ?>> key =
+                ResourceKey.create(Registries.CONFIGURED_FEATURE, loc);
+            var holder = registry.getHolder(key);
+            if (holder.isPresent()) {
+                feature = holder.get();
+                usedId = id;
+                break;
+            }
+        }
 
-        // 2. 用 MOTION_BLOCKING_NO_LEAVES 计算放置起点
+        if (feature == null) return;
+
+        // 用 MOTION_BLOCKING_NO_LEAVES 计算放置起点
         int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
         BlockPos placePos = new BlockPos(x, y, z);
 
-        // 3. 构造可控随机源
+        // 构造可控随机源，种子完全由世界种子 + featureIndex + 装饰阶段决定
         long seed = level.getSeed();
         WorldgenRandom random = new WorldgenRandom(RandomSource.create(seed));
         random.setFeatureSeed(
@@ -183,7 +227,7 @@ public class StartIslandSpawner {
             GenerationStep.Decoration.VEGETAL_DECORATION.ordinal()
         );
 
-        // 4. 执行放置
+        // 直接调用 ConfiguredFeature.place()，绕过 PlacedFeature 的修饰器链
         boolean placed = feature.value().place(
             level,
             level.getChunkSource().getGenerator(),
@@ -191,7 +235,7 @@ public class StartIslandSpawner {
             placePos
         );
 
-        System.out.println("[Verdant Sky] Feature " + featureId  + " at " + placePos + " (success=" + placed + ")");
+        System.out.println("[Verdant Sky] Feature " + usedId + " at " + placePos + " (success=" + placed + ")");
     }
 
     private static ResourceLocation parseResourceLocation(String id) {
@@ -203,7 +247,7 @@ public class StartIslandSpawner {
     }
 
     // ─────────────────────────────────────────────
-    // 结构 / 地物选择
+    // 结构选择
     // ─────────────────────────────────────────────
 
     private static String pickOverworldStructureForBiome(Holder<Biome> biome) {
