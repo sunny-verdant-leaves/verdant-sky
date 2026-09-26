@@ -40,14 +40,15 @@ public class StartIslandSpawner {
     private static void onServerStarted(MinecraftServer server) {
         // ── 主世界 ──
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
+        BlockPos overworldTarget = null;
         if (overworld != null) {
-            spawnStartIslandOverworld(server, overworld);
+            overworldTarget = spawnStartIslandOverworld(server, overworld);
         }
 
-        // ── 下界 ──
+        // ── 下界（传入主世界目标坐标用于换算） ──
         ServerLevel nether = server.getLevel(Level.NETHER);
         if (nether != null) {
-            spawnStartIslandNether(server, nether);
+            spawnStartIslandNether(server, nether, overworldTarget);
         }
     }
 
@@ -55,17 +56,17 @@ public class StartIslandSpawner {
     // 主世界
     // ─────────────────────────────────────────────
 
-    private static void spawnStartIslandOverworld(MinecraftServer server, ServerLevel level) {
+    private static BlockPos spawnStartIslandOverworld(MinecraftServer server, ServerLevel level) {
         StartIslandData data = StartIslandData.get(level);
-        if (data.isGenerated()) return;
+        if (data.isGenerated()) return null;
 
         if (!isMyWorldPreset(level)) {
             data.markGenerated();
-            return;
+            return null;
         }
         if (level.getGameTime() > NEW_WORLD_GAME_TIME_THRESHOLD) {
             data.markGenerated();
-            return;
+            return null;
         }
 
         BlockPos spawnPos = level.getSharedSpawnPos();
@@ -78,7 +79,7 @@ public class StartIslandSpawner {
         int targetZ = spawnPos.getZ() + offsetZ;
 
         BlockPos targetPos = new BlockPos(targetX, targetY, targetZ);
-        
+
         // 区块强加载
         ChunkPos centerChunk = new ChunkPos(targetPos);
         for (int dx = -1; dx <= 1; dx++) {
@@ -98,12 +99,14 @@ public class StartIslandSpawner {
         );
         server.getCommands().performPrefixedCommand(
             server.createCommandSourceStack()
+                .withSuppressedOutput()
                 .withLevel(level)
                 .withPosition(Vec3.atCenterOf(targetPos)),
             structureCommand
         );
 
-        System.out.println("[Verdant Sky] Start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
+        // Enable during debugging
+        // System.out.println("[Verdant Sky] Start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
 
         // 放置地物（featureIndex = 0）
         if (biome.is(biomeTag("start_flowers"))) {
@@ -111,13 +114,14 @@ public class StartIslandSpawner {
         }
 
         data.markGenerated();
+        return targetPos;
     }
 
     // ─────────────────────────────────────────────
     // 下界
     // ─────────────────────────────────────────────
 
-    private static void spawnStartIslandNether(MinecraftServer server, ServerLevel level) {
+    private static void spawnStartIslandNether(MinecraftServer server, ServerLevel level, BlockPos overworldTarget) {
         StartIslandData data = StartIslandData.get(level);
         if (data.isGenerated()) return;
 
@@ -126,18 +130,26 @@ public class StartIslandSpawner {
             return;
         }
 
-        BlockPos spawnPos = level.getSharedSpawnPos();
-        // 用与主世界不同的种子组合，避免结果与主世界完全相同
-        RandomSource random = RandomSource.create(level.getSeed() ^ 0x9E3779B97F4A7C15L);
-        int offsetX = Mth.nextInt(random, -XZ_OFFSET, XZ_OFFSET);
-        int offsetZ = Mth.nextInt(random, -XZ_OFFSET, XZ_OFFSET);
-
-        int targetX = spawnPos.getX() + offsetX;
+        // ── 坐标换算 ──
+        int targetX;
+        int targetZ;
+        if (overworldTarget != null) {
+            // 主世界坐标除以 8 得到下界对应坐标（正确处理负数）
+            targetX = Math.floorDiv(overworldTarget.getX(), 8);
+            targetZ = Math.floorDiv(overworldTarget.getZ(), 8);
+        } else {
+            // 回退：主世界未生成时，使用下界出生点加偏移
+            BlockPos spawnPos = level.getSharedSpawnPos();
+            RandomSource random = RandomSource.create(level.getSeed() ^ 0x9E3779B97F4A7C15L);
+            int offsetX = Mth.nextInt(random, -XZ_OFFSET, XZ_OFFSET);
+            int offsetZ = Mth.nextInt(random, -XZ_OFFSET, XZ_OFFSET);
+            targetX = spawnPos.getX() + offsetX;
+            targetZ = spawnPos.getZ() + offsetZ;
+        }
         int targetY = NETHER_TARGET_Y;
-        int targetZ = spawnPos.getZ() + offsetZ;
 
         BlockPos targetPos = new BlockPos(targetX, targetY, targetZ);
-        
+
         // 区块强加载
         ChunkPos centerChunk = new ChunkPos(targetPos);
         for (int dx = -1; dx <= 1; dx++) {
@@ -157,15 +169,16 @@ public class StartIslandSpawner {
         );
         server.getCommands().performPrefixedCommand(
             server.createCommandSourceStack()
+                .withSuppressedOutput()
                 .withLevel(level)
                 .withPosition(Vec3.atCenterOf(targetPos)),
             structureCommand
         );
 
-        System.out.println("[Verdant Sky] Nether start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
+        // Enable during debugging
+        // System.out.println("[Verdant Sky] Nether start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
 
         // 放置地物（featureIndex = 1，与主世界区分）
-        // 用可变参数列表做优先级回退：Botania 神秘蘑菇 → 原版棕色蘑菇
         if (biome.is(biomeTag("start_flowers"))) {
             if (Platform.isModLoaded("botania")) {
                 placeFeature(level, targetX, targetZ, 1,
@@ -184,20 +197,9 @@ public class StartIslandSpawner {
     // 通用地物放置（可控随机）
     // ─────────────────────────────────────────────
 
-    /**
-     * 用 MOTION_BLOCKING_NO_LEAVES 高度图定位 Y 坐标，
-     * 并用世界种子构造可复现的 WorldgenRandom 直接放置 ConfiguredFeature。
-     *
-     * 与原版 /place feature 命令行为一致：直接调用 ConfiguredFeature.place()，
-     * 不经过 PlacedFeature 的放置修饰器链（count / in_square / heightmap / biome）。
-     *
-     * @param featureIndex 用于区分不同地物的种子索引（主世界=0，下界=1）
-     * @param featureIds   按优先级排列的 ConfiguredFeature ID，第一个存在的被使用
-     */
     private static void placeFeature(ServerLevel level, int x, int z, int featureIndex, String... featureIds) {
         var registry = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
 
-        // 按优先级依次尝试，第一个在注册表中存在的即使用
         Holder<ConfiguredFeature<?, ?>> feature = null;
         String usedId = null;
         for (String id : featureIds) {
@@ -214,11 +216,9 @@ public class StartIslandSpawner {
 
         if (feature == null) return;
 
-        // 用 MOTION_BLOCKING_NO_LEAVES 计算放置起点
         int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
         BlockPos placePos = new BlockPos(x, y, z);
 
-        // 构造可控随机源，种子完全由世界种子 + featureIndex + 装饰阶段决定
         long seed = level.getSeed();
         WorldgenRandom random = new WorldgenRandom(RandomSource.create(seed));
         random.setFeatureSeed(
@@ -227,7 +227,6 @@ public class StartIslandSpawner {
             GenerationStep.Decoration.VEGETAL_DECORATION.ordinal()
         );
 
-        // 直接调用 ConfiguredFeature.place()，绕过 PlacedFeature 的修饰器链
         boolean placed = feature.value().place(
             level,
             level.getChunkSource().getGenerator(),
@@ -235,7 +234,8 @@ public class StartIslandSpawner {
             placePos
         );
 
-        System.out.println("[Verdant Sky] Feature " + usedId + " at " + placePos + " (success=" + placed + ")");
+        // Enable during debugging
+        // System.out.println("[Verdant Sky] Feature " + usedId + " at " + placePos + " (success=" + placed + ")");
     }
 
     private static ResourceLocation parseResourceLocation(String id) {
