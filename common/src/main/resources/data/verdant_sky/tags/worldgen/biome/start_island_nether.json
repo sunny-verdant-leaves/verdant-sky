@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_nether",
+    "minecraft:nether_wastes",
+    "minecraft:soul_sand_valley",
+    "minecraft:basalt_deltas",
+    "verdant_sky:start_island_crimson",
+    "verdant_sky:start_island_warped"
+  ]
+}
