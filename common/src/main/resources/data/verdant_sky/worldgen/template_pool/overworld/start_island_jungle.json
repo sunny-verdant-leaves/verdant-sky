@@ -9,6 +9,15 @@
         "processors": "minecraft:empty",
         "projection": "rigid"
       }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "verdant_sky:overworld/start_island_jungle_mega",
+        "processors": "minecraft:empty",
+        "projection": "rigid"
+      }
     }
   ]
 }
