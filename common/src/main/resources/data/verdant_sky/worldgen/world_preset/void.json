@@ -16,7 +16,7 @@
                 "continentalness": [-1.0, -0.6],
                 "erosion": [-1.0, 1.0],
                 "weirdness": [0.7, 1.0],
-                "depth": [0.0, 0.3],
+                "depth": [0.2, 0.3],
                 "offset": 0.0
               }
             },
@@ -28,7 +28,7 @@
                 "continentalness": [-1.0, -0.6],
                 "erosion": [-1.0, 1.0],
                 "weirdness": [-1.0, 1.0],
-                "depth": [0.0, 0.3],
+                "depth": [0.2, 0.3],
                 "offset": 0.0
               }
             },
@@ -40,7 +40,7 @@
                 "continentalness": [-1.0, -0.6],
                 "erosion": [-1.0, 1.0],
                 "weirdness": [-1.0, 1.0],
-                "depth": [0.0, 0.3],
+                "depth": [0.2, 0.3],
                 "offset": 0.0
               }
             },
@@ -52,7 +52,7 @@
                 "continentalness": [-0.6, -0.4],
                 "erosion": [-0.6, 0.6],
                 "weirdness": [-1.0, 1.0],
-                "depth": [0.0, 0.3],
+                "depth": [0.2, 0.3],
                 "offset": 0.0
               }
             },
@@ -60,7 +60,7 @@
             {
               "biome": "minecraft:snowy_plains",
               "parameters": {
-                "temperature": [-1.0, -0.35],
+                "temperature": [-1.0, -0.2],
                 "humidity": [-1.0, -0.15],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [0.0, 1.0],
@@ -72,7 +72,7 @@
             {
               "biome": "minecraft:snowy_taiga",
               "parameters": {
-                "temperature": [-1.0, -0.35],
+                "temperature": [-1.0, -0.2],
                 "humidity": [-0.15, 1.0],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [-1.0, 0.0],
@@ -84,7 +84,7 @@
             {
               "biome": "minecraft:snowy_taiga",
               "parameters": {
-                "temperature": [-1.0, -0.35],
+                "temperature": [-1.0, -0.2],
                 "humidity": [-0.15, 1.0],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [0.0, 1.0],
@@ -93,10 +93,11 @@
                 "offset": 0.0
               }
             },
+          
             {
               "biome": "minecraft:sunflower_plains",
               "parameters": {
-                "temperature": [-0.35, -0.05],
+                "temperature": [-0.2, 0.05],
                 "humidity": [-1.0, -0.15],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [0.0, 1.0],
@@ -108,7 +109,7 @@
             {
               "biome": "minecraft:birch_forest",
               "parameters": {
-                "temperature": [-0.35, -0.05],
+                "temperature": [-0.2, 0.05],
                 "humidity": [-0.15, 1.0],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [-1.0, 0.0],
@@ -118,21 +119,9 @@
               }
             },
             {
-              "biome": "minecraft:dark_forest",
-              "parameters": {
-                "temperature": [-0.35, -0.05],
-                "humidity": [-0.15, 1.0],
-                "continentalness": [-0.4, 1.0],
-                "erosion": [0.0, 1.0],
-                "weirdness": [-1.0, 1.0],
-                "depth": [-0.8, 0.3],
-                "offset": 0.0
-              }
-            },
-            {
               "biome": "minecraft:flower_forest",
               "parameters": {
-                "temperature": [-0.05, 0.3],
+                "temperature": [0.05, 0.35],
                 "humidity": [-1.0, -0.15],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [0.0, 1.0],
@@ -144,7 +133,7 @@
             {
               "biome": "minecraft:swamp",
               "parameters": {
-                "temperature": [-0.05, 0.3],
+                "temperature": [0.05, 0.35],
                 "humidity": [-0.15, 0.15],
                 "continentalness": [-0.4, 0.4],
                 "erosion": [-1.0, 0.0],
@@ -154,21 +143,22 @@
               }
             },
             {
-              "biome": "minecraft:mangrove_swamp",
+              "biome": "minecraft:dark_forest",
               "parameters": {
-                "temperature": [-0.05, 0.3],
+                "temperature": [0.05, 0.35],
                 "humidity": [0.15, 1.0],
-                "continentalness": [-0.4, 0.0],
-                "erosion": [-1.0, 0.0],
+                "continentalness": [-0.4, 1.0],
+                "erosion": [0.0, 1.0],
                 "weirdness": [-1.0, 1.0],
                 "depth": [-0.8, 0.3],
                 "offset": 0.0
               }
             },
+          
             {
               "biome": "minecraft:desert",
               "parameters": {
-                "temperature": [0.3, 1.0],
+                "temperature": [0.35, 1.0],
                 "humidity": [-1.0, -0.15],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [0.0, 1.0],
@@ -180,7 +170,7 @@
             {
               "biome": "minecraft:savanna",
               "parameters": {
-                "temperature": [0.3, 1.0],
+                "temperature": [0.35, 1.0],
                 "humidity": [-0.15, 0.15],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [-1.0, 0.2],
@@ -192,10 +182,22 @@
             {
               "biome": "minecraft:bamboo_jungle",
               "parameters": {
-                "temperature": [0.3, 1.0],
+                "temperature": [0.35, 1.0],
                 "humidity": [0.15, 1.0],
-                "continentalness": [-0.4, 1.0],
+                "continentalness": [0.0, 1.0],
                 "erosion": [-1.0, 0.3],
+                "weirdness": [-1.0, 1.0],
+                "depth": [-0.8, 0.3],
+                "offset": 0.0
+              }
+            },
+            {
+              "biome": "minecraft:mangrove_swamp",
+              "parameters": {
+                "temperature": [0.35, 1.0],
+                "humidity": [0.15, 1.0],
+                "continentalness": [-0.4, 0.0],
+                "erosion": [-1.0, 0.0],
                 "weirdness": [-1.0, 1.0],
                 "depth": [-0.8, 0.3],
                 "offset": 0.0
@@ -203,21 +205,9 @@
             },
           
             {
-              "biome": "minecraft:savanna_plateau",
-              "parameters": {
-                "temperature": [0.3, 1.0],
-                "humidity": [-0.15, 0.15],
-                "continentalness": [-0.4, 1.0],
-                "erosion": [-1.0, 0.2],
-                "weirdness": [-1.0, 1.0],
-                "depth": [-0.9, -0.8],
-                "offset": 0.0
-              }
-            },
-            {
               "biome": "minecraft:sunflower_plains",
               "parameters": {
-                "temperature": [-0.35, 0.3],
+                "temperature": [-0.2, 0.05],
                 "humidity": [-1.0, -0.15],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [0.0, 1.0],
@@ -229,7 +219,7 @@
             {
               "biome": "minecraft:birch_forest",
               "parameters": {
-                "temperature": [-0.35, 0.3],
+                "temperature": [-0.2, 0.05],
                 "humidity": [-0.15, 0.15],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [-1.0, 0.0],
@@ -241,7 +231,7 @@
             {
               "biome": "minecraft:dark_forest",
               "parameters": {
-                "temperature": [-0.35, 0.3],
+                "temperature": [0.05, 0.35],
                 "humidity": [0.15, 1.0],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [-1.0, 0.0],
@@ -251,24 +241,12 @@
               }
             },
             {
-              "biome": "minecraft:desert",
+              "biome": "minecraft:savanna_plateau",
               "parameters": {
-                "temperature": [0.3, 1.0],
-                "humidity": [-1.0, -0.15],
+                "temperature": [0.35, 1.0],
+                "humidity": [-1.0, 1.0],
                 "continentalness": [-0.4, 1.0],
-                "erosion": [0.0, 1.0],
-                "weirdness": [-1.0, 1.0],
-                "depth": [-0.9, -0.8],
-                "offset": 0.0
-              }
-            },
-            {
-              "biome": "minecraft:bamboo_jungle",
-              "parameters": {
-                "temperature": [0.3, 1.0],
-                "humidity": [0.15, 1.0],
-                "continentalness": [-0.4, 1.0],
-                "erosion": [-1.0, 0.3],
+                "erosion": [-1.0, 1.0],
                 "weirdness": [-1.0, 1.0],
                 "depth": [-0.9, -0.8],
                 "offset": 0.0
@@ -278,20 +256,8 @@
             {
               "biome": "minecraft:frozen_peaks",
               "parameters": {
-                "temperature": [-1.0, -0.35],
-                "humidity": [-1.0, -0.15],
-                "continentalness": [-0.4, 1.0],
-                "erosion": [-0.5, 0.5],
-                "weirdness": [-1.0, 1.0],
-                "depth": [-1.0, -0.9],
-                "offset": 0.0
-              }
-            },
-            {
-              "biome": "minecraft:frozen_peaks",
-              "parameters": {
-                "temperature": [-1.0, -0.35],
-                "humidity": [-0.15, 1.0],
+                "temperature": [-1.0, -0.2],
+                "humidity": [-1.0, 1.0],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [-0.5, 0.5],
                 "weirdness": [-1.0, 1.0],
@@ -302,7 +268,7 @@
             {
               "biome": "minecraft:savanna_plateau",
               "parameters": {
-                "temperature": [0.3, 1.0],
+                "temperature": [0.35, 1.0],
                 "humidity": [-1.0, 1.0],
                 "continentalness": [-0.4, 1.0],
                 "erosion": [-1.0, 1.0],
