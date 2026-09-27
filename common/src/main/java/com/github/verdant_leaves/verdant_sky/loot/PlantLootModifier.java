@@ -69,6 +69,10 @@ public class PlantLootModifier {
                 if (Blocks.TALL_SEAGRASS.getLootTable().equals(id)) {
                     addDoubleBlockPools(context, Items.SEAGRASS, Blocks.TALL_SEAGRASS, 0.1f, 0.15f, 0.2f, 0.25f);
                 }
+
+                if (Blocks.TALL_SEAGRASS.getLootTable().equals(id)) {
+                    addDoubleBlockPools(context, Items.VINE, Blocks.TALL_SEAGRASS, 0.1f, 0.15f, 0.2f, 0.25f);
+                }
             }
         );
     }

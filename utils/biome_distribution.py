@@ -3,8 +3,8 @@
 """
 修正版生物群系分布估算器 / Biome Distribution Estimator
 =================================================
-用法: python biome_estimator.py <world_preset.json> [采样数]
-      兼容旧写法: python biome_estimator.py <world_preset.json> <noise_settings.json> [采样数]
+用法: python utils/biome_distribution.py <world_preset.json> [采样数]
+      兼容旧写法: python utils/biome_distribution.py <world_preset.json> <noise_settings.json> [采样数]
 
 参数:
     world_preset.json    世界预设文件（包含 dimensions.minecraft:overworld.generator.biome_source.biomes），

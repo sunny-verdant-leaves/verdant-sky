@@ -201,7 +201,7 @@ public class StartIslandSpawner {
         var registry = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
 
         Holder<ConfiguredFeature<?, ?>> feature = null;
-        String usedId = null;
+        // String usedId = null;
         for (String id : featureIds) {
             ResourceLocation loc = parseResourceLocation(id);
             ResourceKey<ConfiguredFeature<?, ?>> key =
@@ -209,7 +209,7 @@ public class StartIslandSpawner {
             var holder = registry.getHolder(key);
             if (holder.isPresent()) {
                 feature = holder.get();
-                usedId = id;
+                // usedId = id;
                 break;
             }
         }
@@ -227,7 +227,8 @@ public class StartIslandSpawner {
             GenerationStep.Decoration.VEGETAL_DECORATION.ordinal()
         );
 
-        boolean placed = feature.value().place(
+        // boolean placed = 
+        feature.value().place(
             level,
             level.getChunkSource().getGenerator(),
             random,
