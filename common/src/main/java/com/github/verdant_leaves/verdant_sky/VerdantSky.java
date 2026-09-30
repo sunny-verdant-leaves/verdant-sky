@@ -31,6 +31,7 @@ public final class VerdantSky {
         LifecycleEvent.SETUP.register(() -> {
             // 再次确认 Botania 是否加载，避免不必要的类加载
             if (Platform.isModLoaded("botania")) {
+                ModBlockEntities.injectIntoBotania();
                 BotaniaIntegration.register();
             }
         });

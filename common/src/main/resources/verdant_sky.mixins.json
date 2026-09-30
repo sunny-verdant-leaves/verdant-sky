@@ -6,7 +6,7 @@
   "client": [
   ],
   "mixins": [
-    "BotaniaBlockEntitiesMixin"
+    "BlockEntityTypeAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
