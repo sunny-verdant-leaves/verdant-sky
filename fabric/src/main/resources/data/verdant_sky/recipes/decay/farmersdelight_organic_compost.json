@@ -6,14 +6,12 @@
       "values": ["farmersdelight"]
     }
   ],
-  "recipe": {
-    "type": "verdant_sky:decay",
-    "input": {
-      "type": "block",
-      "block": "minecraft:rooted_dirt"
-    },
-    "output": {
-      "name": "farmersdelight:organic_compost"
-    }
+  "type": "verdant_sky:decay",
+  "input": {
+    "type": "block",
+    "block": "minecraft:rooted_dirt"
+  },
+  "output": {
+    "name": "farmersdelight:organic_compost"
   }
 }
