@@ -6,14 +6,12 @@
       "values": ["farmersdelight"]
     }
   ],
-  "recipe": {
-    "type": "verdant_sky:decay",
-    "input": {
-      "type": "block",
-      "block": "farmersdelight:organic_compost"
-    },
-    "output": {
-      "name": "farmersdelight:rich_soil"
-    }
+  "type": "verdant_sky:decay",
+  "input": {
+    "type": "block",
+    "block": "farmersdelight:organic_compost"
+  },
+  "output": {
+    "name": "farmersdelight:rich_soil"
   }
 }
