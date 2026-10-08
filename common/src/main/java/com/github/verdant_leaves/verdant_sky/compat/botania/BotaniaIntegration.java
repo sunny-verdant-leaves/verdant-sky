@@ -1,4 +1,4 @@
-package com.github.verdant_leaves.verdant_sky.integration;
+package com.github.verdant_leaves.verdant_sky.compat.botania;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;

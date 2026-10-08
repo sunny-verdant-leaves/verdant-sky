@@ -3,7 +3,7 @@ package com.github.verdant_leaves.verdant_sky;
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.platform.Platform;
 
-import com.github.verdant_leaves.verdant_sky.integration.BotaniaIntegration;
+import com.github.verdant_leaves.verdant_sky.compat.botania.BotaniaIntegration;
 import com.github.verdant_leaves.verdant_sky.loot.PlantLootModifier;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;

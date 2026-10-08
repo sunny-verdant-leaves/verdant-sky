@@ -61,5 +61,9 @@
   "block.verdant_sky.dreamwood_cauldron": "Dreamwood Cauldron",
   "block.verdant_sky.dreamwood_water_cauldron": "Dreamwood Water Cauldron",
   "block.verdant_sky.dreamwood_lava_cauldron": "Dreamwood Lava Cauldron",
-  "block.verdant_sky.dreamwood_powder_snow_cauldron": "Dreamwood Powder Snow Cauldron"
+  "block.verdant_sky.dreamwood_powder_snow_cauldron": "Dreamwood Powder Snow Cauldron",
+
+  "jei.verdant_sky.decay": "Decay Agapanthus",
+
+  "emi.category.verdant_sky.decay": "Decay Agapanthus"
 }
