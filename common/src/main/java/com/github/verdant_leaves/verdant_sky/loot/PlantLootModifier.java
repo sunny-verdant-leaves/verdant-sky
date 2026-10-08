@@ -58,6 +58,10 @@ public class PlantLootModifier {
                     context.addPool(singleBlockPool(Items.SEAGRASS, 0.1f, 0.15f, 0.2f, 0.25f));
                 }
 
+                if (Blocks.VINE.getLootTable().equals(id)) {
+                    context.addPool(singleBlockPool(Items.VINE, 0.1f, 0.15f, 0.2f, 0.25f));
+                }
+
                 if (Blocks.LARGE_FERN.getLootTable().equals(id)) {
                     addDoubleBlockPools(context, Items.FERN, Blocks.LARGE_FERN, 0.1f, 0.15f, 0.2f, 0.25f);
                 }
@@ -68,10 +72,6 @@ public class PlantLootModifier {
 
                 if (Blocks.TALL_SEAGRASS.getLootTable().equals(id)) {
                     addDoubleBlockPools(context, Items.SEAGRASS, Blocks.TALL_SEAGRASS, 0.1f, 0.15f, 0.2f, 0.25f);
-                }
-
-                if (Blocks.TALL_SEAGRASS.getLootTable().equals(id)) {
-                    addDoubleBlockPools(context, Items.VINE, Blocks.TALL_SEAGRASS, 0.1f, 0.15f, 0.2f, 0.25f);
                 }
             }
         );
