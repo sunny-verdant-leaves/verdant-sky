@@ -25,20 +25,20 @@ public class VerdantSkyConfig {
     /** 腐朽花作用半径。2 表示 5×5×5，3 表示 7×7×7。 */
     public int decayAgapanthusRadius = 2;
 
-    /** 单次扫描最多转换多少个方块，防止卡顿。 */
+    /** 单次工作最多转换多少个方块，防止卡顿。 */
     public int decayAgapanthusMaxConversionsPerTick = 2;
 
     /** 腐朽花触发间隔，单位 tick。 */
     public int decayAgapanthusInterval = 100;
 
     /** 每次转换方块消耗的魔力。 */
-    public int decayAgapanthusManaCost = 1200;
+    public int decayAgapanthusManaCost = 900;
 
     /** 内部魔力缓存上限。 */
-    public int decayAgapanthusMaxMana = 10000;
+    public int decayAgapanthusMaxMana = 5000;
 
     /** 每次工作时给范围内生物施加的凋零持续时长，单位 tick。 */
-    public int decayAgapanthusWitherDuration = 200;
+    public int decayAgapanthusWitherDuration = 120;
 
     /** 凋零效果等级。0 = I 级，1 = II 级。 */
     public int decayAgapanthusWitherAmplifier = 1;

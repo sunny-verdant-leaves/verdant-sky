@@ -84,22 +84,20 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
             return;
         }
         
-        // 施加凋零效果，无关魔力值
-        BlockPos center = getEffectivePos();
-        applyWitherToNearbyEntities(serverLevel, center);
-        sync();
-        
         if (getMana() < VerdantSkyConfig.decayAgapanthusManaCost()) {
             return;
         }
         
         // 尝试转换
+        BlockPos center = getEffectivePos();
         int converted = performDecayConversion(serverLevel);
 
-        // 只有真的转换了方块 (实际转换的数量>0)，才响音效 + 扣魔力
+        // 只有真的转换了方块 (实际转换的数量>0)，才响施加凋零效果 + 音效 + 扣魔力
         if (converted > 0) {
             playWorkSound(serverLevel, center);
             addMana(-VerdantSkyConfig.decayAgapanthusManaCost() * converted);
+            applyWitherToNearbyEntities(serverLevel, center);
+            sync();
         }
     }
 
@@ -203,9 +201,9 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
                 serverLevel.sendParticles(
                     ParticleTypes.SCULK_SOUL,
                     targetPos.getX() + 0.5,
-                    targetPos.getY() + 1.05,
+                    targetPos.getY() + 1.1,
                     targetPos.getZ() + 0.5,
-                    6, 0.25, 0.15, 0.25, 0.01
+                    10, 0.4, 0.3, 0.4, 0.01
                 );
                 converted++;
                 break;
