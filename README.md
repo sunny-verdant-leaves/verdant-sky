@@ -1,33 +1,41 @@
 # Verdant Sky
 
-This is a Minecraft mod for the **Verdant Sky** modpack.
+This mod is for the modpack **Verdant Sky**, but it can also be used standalone or added to sky block modpacks. It adds some block variants and configurable modifications.
 
-## Features
-
-- Adds new mana block variants in Botania, such as Livingwood Mana Pool.
-- Adds new functional flowers in Botania, such as Decay Agapanthus.
-- Does not modify or replace any original Botania blocks or items.
+Built with the [Architectury](https://docs.architectury.dev/api) framework, this mod supports both Fabric and Forge.
 
 ## Requirements
 
-- Minecraft 1.20.1
-- Botania
-- Architectury API
+| Dependency | Version |
+| :--- | :--- |
+| Minecraft | 1.20.1 |
+| Botania | 1.20.1-453+ |
+| Architectury API | 9.2.14+ |
 
-## Installation
+## Usage
+
+### For Players
 
 1. Install Minecraft Forge or Fabric for 1.20.1.
-2. Place Botania, Architectury API, and this mod's jar into the `mods` folder.
-3. Launch the game.
+2. Download the latest jar from the Releases page.
+3. Place the mod jar, Botania, and Architectury API into your `mods` folder.
+4. Launch the game and enable the desired modifications in the mod config.
 
-## License
+### For Developers
 
-This mod is licensed under the MIT License. See [LICENSE](LICENSE) for details.
-
-Botania is licensed under the [Botania License](https://botaniamod.net/license.php).
-Please respect Botania's license when using or modifying this addon.
+1. Clone the repository.
+2. Import the project into your IDE as a Gradle project.
+3. The project is structured into `common`, `fabric`, and `forge` modules.
+4. Use `./gradlew build` to build the mod. The final production jars will be generated in `fabric/build/libs` and `forge/build/libs`.
+5. Use the `-dev-shadow.jar` for testing in the IDE, and the standard `-*.jar` for publishing.
 
 ## Credits
 
-- Author: Sunny Verdant Leaves
-- Botania by Vazkii and contributors
+*   **Author**: [Sunny Verdant Leaves](https://github.com/sunny-verdant-leaves)
+*   **Botania**: by Vazkii and contributors
+
+## License
+
+This mod is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+Botania is licensed under the [Botania License](https://botaniamod.net/license.php). Please respect Botania's license when using or modifying this addon.
