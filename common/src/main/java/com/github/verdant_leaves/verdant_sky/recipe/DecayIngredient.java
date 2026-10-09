@@ -128,16 +128,12 @@ public abstract class DecayIngredient {
 
         @Override
         public List<ItemStack> getDisplayedStacks() {
-            Optional<HolderSet.Named<Block>> optionalTag =
-                BuiltInRegistries.BLOCK.getTag(tag);
+            Optional<HolderSet.Named<Block>> optionalTag = BuiltInRegistries.BLOCK.getTag(tag);
             if (optionalTag.isEmpty()) return List.of();
-
             return optionalTag.get().stream()
-                .map(holder -> new ItemStack(holder.value().asItem()))
-                .filter(stack -> !stack.isEmpty())
-                .findFirst()
-                .map(List::of)
-                .orElse(List.of());
+                    .map(holder -> new ItemStack(holder.value().asItem()))
+                    .filter(stack -> !stack.isEmpty())
+                    .toList();
         }
 
         @Override
