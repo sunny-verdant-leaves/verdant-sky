@@ -150,11 +150,19 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
     // ══════════════════════════════════════════════════════════════
 
     private int performDecayConversion(ServerLevel serverLevel) {
-        List<DecayRecipe> recipes =
-            serverLevel.getRecipeManager().getAllRecipesFor(ModRecipeTypes.DECAY.get());
+        List<DecayRecipe> allRecipes = serverLevel.getRecipeManager().getAllRecipesFor(ModRecipeTypes.DECAY.get());
+        if (allRecipes.isEmpty()) return 0;
+    
+        BlockPos flowerPos = getEffectivePos();
+    
+        List<DecayRecipe> recipes = new ArrayList<>();
+        for (DecayRecipe recipe : allRecipes) {
+            if (recipe.matchesLocation(serverLevel, flowerPos)) {
+                recipes.add(recipe);
+            }
+        }
         if (recipes.isEmpty()) return 0;
 
-        BlockPos pos = getEffectivePos();
         int radius = VerdantSkyConfig.decayAgapanthusRadius();
         int maxConversions = VerdantSkyConfig.decayAgapanthusMaxConversionsPerTick();
 
@@ -166,7 +174,7 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
                 for (int dz = -radius; dz <= radius; dz++) {
                     if (dx == 0 && dy == 0 && dz == 0) continue;
 
-                    BlockPos targetPos = pos.offset(dx, dy, dz);
+                    BlockPos targetPos = flowerPos.offset(dx, dy, dz);
                     BlockState targetState = serverLevel.getBlockState(targetPos);
 
                     if (targetState.isAir()) continue;

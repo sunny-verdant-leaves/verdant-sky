@@ -73,6 +73,10 @@ public class VerdantSkyJEIPlugin implements IModPlugin {
             new ItemStack(ModBlocks.DECAY_AGAPANTHUS.get()),
             DecayRecipeCategory.TYPE
         );
+        registration.addRecipeCatalyst(
+            new ItemStack(ModBlocks.FLOATING_DECAY_AGAPANTHUS.get()),
+            DecayRecipeCategory.TYPE
+        );
 
         // 仅 Botania 加载时才注册
         if (Platform.isModLoaded("botania")) {

@@ -59,8 +59,7 @@ public class DecayRecipe implements Recipe<Container> {
         if (locationPredicate == null) {
             return true;
         }
-        return locationPredicate.matches(level,
-                pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+        return locationPredicate.matches(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
     }
 
     public boolean matchesState(BlockState state) {

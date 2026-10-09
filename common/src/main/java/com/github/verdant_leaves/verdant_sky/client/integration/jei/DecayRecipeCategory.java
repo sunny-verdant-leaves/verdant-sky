@@ -17,8 +17,8 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.critereon.LocationPredicate;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,9 +29,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
+import com.github.verdant_leaves.verdant_sky.client.integration.jei.helper.LocationPredicateFormatter;
 import com.github.verdant_leaves.verdant_sky.recipe.DecayRecipe;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 
@@ -39,10 +39,6 @@ import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 public class DecayRecipeCategory implements IRecipeCategory<DecayRecipe> {
 
     public static final RecipeType<DecayRecipe> TYPE = RecipeType.create(VerdantSky.MOD_ID, "decay", DecayRecipe.class);
-
-    /** 条件提示文字在背景上的位置（相对背景左上角） */
-    private static final int CONDITION_TEXT_X = 4;
-    private static final int CONDITION_TEXT_Y = 34;
 
     private final IDrawable background;
     private final Component localizedName;
@@ -119,8 +115,7 @@ public class DecayRecipeCategory implements IRecipeCategory<DecayRecipe> {
 
         // 催化剂
         builder.addSlot(RecipeIngredientRole.CATALYST, 39, 12)
-            .addItemStack(new ItemStack(ModBlocks.DECAY_AGAPANTHUS.get()))
-            .addItemStack(new ItemStack(ModBlocks.FLOATING_DECAY_AGAPANTHUS.get()));
+            .addItemStack(new ItemStack(ModBlocks.DECAY_AGAPANTHUS.get()));
 
         // 输出
         Block outBlock = recipe.outputState().getBlock();
@@ -150,17 +145,12 @@ public class DecayRecipeCategory implements IRecipeCategory<DecayRecipe> {
         overlay.draw(gui, 17, 0);
         RenderSystem.disableBlend();
 
-        // 有位置条件时，在背景底部显示一行提示文字
         if (recipe.locationPredicate() != null) {
-            Component hint = Component.translatable("jei.verdant_sky.decay.condition_required")
-                .withStyle(ChatFormatting.DARK_GRAY);
-            gui.drawString(
-                net.minecraft.client.Minecraft.getInstance().font,
-                hint,
-                CONDITION_TEXT_X, CONDITION_TEXT_Y,
-                0x404040,
-                false
-            );
+            Font font = Minecraft.getInstance().font;
+            Component shortHint = Component.translatable("jei.verdant_sky.condition.required.short");
+            int xOffset = background.getWidth() - font.width(shortHint) - 2;
+            int yOffset = 2;
+            gui.drawString(font, shortHint, xOffset, yOffset, 0x808080, false);
         }
     }
 
@@ -176,109 +166,22 @@ public class DecayRecipeCategory implements IRecipeCategory<DecayRecipe> {
             return List.of();
         }
 
-        // 判断鼠标是否悬停在提示文字区域
-        int textWidth = net.minecraft.client.Minecraft.getInstance().font
-            .width(Component.translatable("jei.verdant_sky.decay.condition_required"));
-        if (mouseX >= CONDITION_TEXT_X && mouseX <= CONDITION_TEXT_X + textWidth
-                && mouseY >= CONDITION_TEXT_Y && mouseY <= CONDITION_TEXT_Y + 10) {
-            return formatPredicateTooltip(recipe.locationPredicate());
+        Font font = Minecraft.getInstance().font;
+        Component shortHint = Component.translatable("jei.verdant_sky.condition.required.short");
+        int xOffset = background.getWidth() - font.width(shortHint) - 2;
+        int yOffset = 2;
+        int width = font.width(shortHint);
+        int height = font.lineHeight;
+
+        if (mouseX >= xOffset && mouseX <= xOffset + width
+            && mouseY >= yOffset && mouseY <= yOffset + height) {
+
+            List<Component> tooltip = new ArrayList<>();
+            tooltip.add(Component.translatable("jei.verdant_sky.condition.required"));
+            tooltip.addAll(LocationPredicateFormatter.format(recipe.locationPredicate()));
+            return tooltip;
         }
 
         return List.of();
-    }
-
-    /**
-     * 把 LocationPredicate 转成一行行可读的 Component。
-     * 通过序列化 JSON 反推条件内容，避免反射。
-     *
-     * <p> TODO: 后续把条件显示逻辑抽象到独立的 helper 类，
-     * 让其他配方类别也能复用同一套格式化规则。
-     */
-    private static List<Component> formatPredicateTooltip(@Nullable LocationPredicate predicate) {
-        if (predicate == null) {
-            return List.of();
-        }
-    
-        List<Component> lines = new ArrayList<>();
-        com.google.gson.JsonObject json = predicate.serializeToJson().getAsJsonObject();
-    
-        // 维度
-        if (json.has("dimension")) {
-            lines.add(Component.translatable(
-                "jei.verdant_sky.decay.condition.dimension",
-                json.get("dimension").getAsString()
-            ).withStyle(ChatFormatting.GRAY));
-        }
-    
-        // 生物群系
-        if (json.has("biome")) {
-            lines.add(Component.translatable(
-                "jei.verdant_sky.decay.condition.biome",
-                json.get("biome").getAsString()
-            ).withStyle(ChatFormatting.GRAY));
-        }
-    
-        // 结构
-        if (json.has("structure")) {
-            lines.add(Component.translatable(
-                "jei.verdant_sky.decay.condition.structure",
-                json.get("structure").getAsString()
-            ).withStyle(ChatFormatting.GRAY));
-        }
-    
-        // 坐标范围
-        if (json.has("position")) {
-            lines.add(Component.translatable(
-                "jei.verdant_sky.decay.condition.position",
-                json.getAsJsonObject("position").toString()
-            ).withStyle(ChatFormatting.GRAY));
-        }
-    
-        // 光照等级
-        if (json.has("light")) {
-            lines.add(Component.translatable(
-                "jei.verdant_sky.decay.condition.light",
-                json.get("light").toString()
-            ).withStyle(ChatFormatting.GRAY));
-        }
-    
-        // 天空可见
-        if (json.has("can_see_sky")) {
-            lines.add(Component.translatable(
-                "jei.verdant_sky.decay.condition.can_see_sky",
-                json.get("can_see_sky").getAsBoolean()
-            ).withStyle(ChatFormatting.GRAY));
-        }
-    
-        // 方块状态
-        if (json.has("block")) {
-            lines.add(Component.translatable(
-                "jei.verdant_sky.decay.condition.block",
-                json.get("block").toString()
-            ).withStyle(ChatFormatting.GRAY));
-        }
-    
-        // 流体状态
-        if (json.has("fluid")) {
-            lines.add(Component.translatable(
-                "jei.verdant_sky.decay.condition.fluid",
-                json.get("fluid").toString()
-            ).withStyle(ChatFormatting.GRAY));
-        }
-    
-        // 营火上方
-        if (json.has("smokey")) {
-            lines.add(Component.translatable(
-                "jei.verdant_sky.decay.condition.smokey",
-                json.get("smokey").getAsBoolean()
-            ).withStyle(ChatFormatting.GRAY));
-        }
-    
-        if (lines.isEmpty()) {
-            lines.add(Component.translatable("jei.verdant_sky.decay.condition.empty")
-                .withStyle(ChatFormatting.GRAY));
-        }
-    
-        return lines;
     }
 }
