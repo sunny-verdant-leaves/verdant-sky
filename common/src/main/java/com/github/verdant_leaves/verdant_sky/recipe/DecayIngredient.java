@@ -28,6 +28,8 @@ public abstract class DecayIngredient {
 
     public abstract List<ItemStack> getDisplayedStacks();
 
+    public abstract List<BlockState> getDisplayed();
+
     public List<Component> descriptionTooltip() {
         return List.of();
     }
@@ -89,6 +91,11 @@ public abstract class DecayIngredient {
             ItemStack stack = new ItemStack(block.asItem());
             return stack.isEmpty() ? List.of() : List.of(stack);
         }
+
+        @Override
+        public List<BlockState> getDisplayed() {
+            return List.of(block.defaultBlockState());
+        }
     }
 
     //  标签原料
@@ -133,6 +140,15 @@ public abstract class DecayIngredient {
             return optionalTag.get().stream()
                     .map(holder -> new ItemStack(holder.value().asItem()))
                     .filter(stack -> !stack.isEmpty())
+                    .toList();
+        }
+
+        @Override
+        public List<BlockState> getDisplayed() {
+            Optional<HolderSet.Named<Block>> optionalTag = BuiltInRegistries.BLOCK.getTag(tag);
+            if (optionalTag.isEmpty()) return List.of();
+            return optionalTag.get().stream()
+                    .map(holder -> holder.value().defaultBlockState())
                     .toList();
         }
 

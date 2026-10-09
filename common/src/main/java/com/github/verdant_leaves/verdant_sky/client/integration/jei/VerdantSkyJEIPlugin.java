@@ -35,11 +35,13 @@ public class VerdantSkyJEIPlugin implements IModPlugin {
     // ══════════════════════════════════════════════════════════════
     //  注册配方类别
     // ══════════════════════════════════════════════════════════════
-
     @Override
     public void registerCategories(@NotNull IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(
-            new DecayRecipeCategory(registration.getJeiHelpers().getGuiHelper())
+            new DecayRecipeCategory(
+                registration.getJeiHelpers().getGuiHelper(),
+                registration.getJeiHelpers().getPlatformFluidHelper()
+            )
         );
     }
 

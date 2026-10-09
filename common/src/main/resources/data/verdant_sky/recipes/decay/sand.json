@@ -1,0 +1,13 @@
+{
+  "type": "verdant_sky:decay",
+  "input": {
+    "type": "block",
+    "block": "minecraft:sand"
+  },
+  "output": {
+    "name": "minecraft:soul_sand"
+  },
+  "location": {
+    "dimension": "minecraft:the_nether"
+  }
+}

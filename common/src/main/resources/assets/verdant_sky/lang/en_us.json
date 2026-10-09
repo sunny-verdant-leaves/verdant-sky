@@ -64,6 +64,17 @@
   "block.verdant_sky.dreamwood_powder_snow_cauldron": "Dreamwood Powder Snow Cauldron",
 
   "jei.verdant_sky.decay": "Decay Agapanthus",
+  "jei.verdant_sky.decay.condition_required": "§7Requires specific conditions",
+  "jei.verdant_sky.decay.condition.dimension": "Dimension: %s",
+  "jei.verdant_sky.decay.condition.biome": "Biome: %s",
+  "jei.verdant_sky.decay.condition.structure": "Structure: %s",
+  "jei.verdant_sky.decay.condition.position": "Position: %s",
+  "jei.verdant_sky.decay.condition.light": "Light: %s",
+  "jei.verdant_sky.decay.condition.can_see_sky": "Can See Sky: %s",
+  "jei.verdant_sky.decay.condition.block": "Block: %s",
+  "jei.verdant_sky.decay.condition.fluid": "Fluid: %s",
+  "jei.verdant_sky.decay.condition.smokey": "Smokey: %s",
+  "jei.verdant_sky.decay.condition.empty": "(empty condition)",
 
   "emi.category.verdant_sky.decay": "Decay Agapanthus"
 }

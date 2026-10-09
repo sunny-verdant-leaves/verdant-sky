@@ -1,0 +1,10 @@
+{
+  "type": "verdant_sky:decay",
+  "input": {
+    "type": "block",
+    "block": "botania:livingwood_log"
+  },
+  "output": {
+    "name": "minecraft:oak_log"
+  }
+}

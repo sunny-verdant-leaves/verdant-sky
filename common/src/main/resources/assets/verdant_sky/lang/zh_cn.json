@@ -64,6 +64,17 @@
   "block.verdant_sky.dreamwood_powder_snow_cauldron": "装有细雪的梦之木炼药锅",
 
   "jei.verdant_sky.decay": "腐朽百子莲",
+  "jei.verdant_sky.decay.condition_required": "§7需要特定条件",
+  "jei.verdant_sky.decay.condition.dimension": "维度: %s",
+  "jei.verdant_sky.decay.condition.biome": "生物群系: %s",
+  "jei.verdant_sky.decay.condition.structure": "结构: %s",
+  "jei.verdant_sky.decay.condition.position": "坐标: %s",
+  "jei.verdant_sky.decay.condition.light": "光照: %s",
+  "jei.verdant_sky.decay.condition.can_see_sky": "可见天空: %s",
+  "jei.verdant_sky.decay.condition.block": "方块: %s",
+  "jei.verdant_sky.decay.condition.fluid": "流体: %s",
+  "jei.verdant_sky.decay.condition.smokey": "营火上方: %s",
+  "jei.verdant_sky.decay.condition.empty": "(空条件)",
 
   "emi.category.verdant_sky.decay": "腐朽百子莲"
 }

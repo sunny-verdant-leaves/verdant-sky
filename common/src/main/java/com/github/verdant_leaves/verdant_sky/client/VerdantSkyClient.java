@@ -32,11 +32,6 @@ public final class VerdantSkyClient {
     //  腐朽花的渲染层（透明）
     // ══════════════════════════════════════════════════════════════
 
-    /**
-     * 使用 cutout 渲染层，让十字模型（cross）的透明部分正确显示。
-     * Forge 端其实可以从模型自动推断，但 Fabric 端必须显式声明，
-     * 走 Architectury 的 RenderTypeRegistry 可以两端通吃。
-     */
     private static void registerDecayAgapanthusRenderType() {
         RenderTypeRegistry.register(
             RenderType.cutout(),
@@ -52,10 +47,6 @@ public final class VerdantSkyClient {
     //  腐朽花的范围渲染器
     // ══════════════════════════════════════════════════════════════
 
-    /**
-     * 注册 Botania 的花渲染器，让窥魔之镜 / 森林法杖绑定提示
-     * 能调用 DecayAgapanthusBlockEntity.getRadius() 并绘制范围框。
-     */
     private static void registerDecayAgapanthusRenderer() {
         BlockEntityRendererRegistry.register(
             ModBlockEntities.DECAY_AGAPANTHUS.get(),
@@ -76,7 +67,6 @@ public final class VerdantSkyClient {
                 .map(RegistrySupplier::get)
                 .toArray(Block[]::new);
 
-        // tintIndex 0 对应模型里的水面
         // 与原版水锅一致，使用生物群系水色
         BlockColor waterColor = (state, level, pos, tintIndex) -> {
             if (tintIndex != 0) {

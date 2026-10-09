@@ -1,11 +1,16 @@
 package com.github.verdant_leaves.verdant_sky.recipe;
 
 import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import net.minecraft.advancements.critereon.LocationPredicate;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -16,16 +21,21 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
+import org.jetbrains.annotations.Nullable;
+
 public class DecayRecipe implements Recipe<Container> {
 
     private final ResourceLocation id;
     private final DecayIngredient input;
     private final BlockState output;
+    @Nullable
+    private final LocationPredicate locationPredicate;
 
-    public DecayRecipe(ResourceLocation id, DecayIngredient input, BlockState output) {
+    public DecayRecipe(ResourceLocation id, DecayIngredient input, BlockState output, @Nullable LocationPredicate locationPredicate) {
         this.id = id;
         this.input = input;
         this.output = output;
+        this.locationPredicate = locationPredicate;
     }
 
     public DecayIngredient input() {
@@ -34,6 +44,23 @@ public class DecayRecipe implements Recipe<Container> {
 
     public BlockState outputState() {
         return output;
+    }
+
+    @Nullable
+    public LocationPredicate locationPredicate() {
+        return locationPredicate;
+    }
+
+    /**
+     * 检查给定位置是否满足配方的条件。
+     * 如果配方未定义条件，则始终返回 true。
+     */
+    public boolean matchesLocation(ServerLevel level, BlockPos pos) {
+        if (locationPredicate == null) {
+            return true;
+        }
+        return locationPredicate.matches(level,
+                pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
     }
 
     public boolean matchesState(BlockState state) {
@@ -83,20 +110,40 @@ public class DecayRecipe implements Recipe<Container> {
                 GsonHelper.getAsJsonObject(json, "input"));
             BlockState output = DecayOutput.fromJson(
                 GsonHelper.getAsJsonObject(json, "output"));
-            return new DecayRecipe(id, input, output);
+
+            LocationPredicate locationPredicate = null;
+            if (json.has("location")) {
+                locationPredicate = LocationPredicate.fromJson(json.get("location"));
+            }
+
+            return new DecayRecipe(id, input, output, locationPredicate);
         }
 
         @Override
         public DecayRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             DecayIngredient input = DecayIngredient.fromNetwork(buf);
             BlockState output = Block.stateById(buf.readVarInt());
-            return new DecayRecipe(id, input, output);
+
+            LocationPredicate locationPredicate = null;
+            if (buf.readBoolean()) {
+                String jsonStr = buf.readUtf();
+                JsonElement element = JsonParser.parseString(jsonStr);
+                locationPredicate = LocationPredicate.fromJson(element);
+            }
+
+            return new DecayRecipe(id, input, output, locationPredicate);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, DecayRecipe recipe) {
             recipe.input.toNetwork(buf);
             buf.writeVarInt(Block.getId(recipe.output));
+
+            boolean hasLocation = recipe.locationPredicate != null;
+            buf.writeBoolean(hasLocation);
+            if (hasLocation) {
+                buf.writeUtf(recipe.locationPredicate.serializeToJson().toString());
+            }
         }
     }
 }
