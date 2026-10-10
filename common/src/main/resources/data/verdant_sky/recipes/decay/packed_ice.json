@@ -2,9 +2,9 @@
   "type": "verdant_sky:decay",
   "input": {
     "type": "block",
-    "block": "minecraft:ice"
+    "block": "minecraft:packed_ice"
   },
   "output": {
-    "name": "minecraft:packed_ice"
+    "name": "minecraft:ice"
   }
 }

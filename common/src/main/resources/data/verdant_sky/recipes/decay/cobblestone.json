@@ -5,6 +5,9 @@
     "block": "minecraft:cobblestone"
   },
   "output": {
-    "name": "minecraft:cobbled_deepslate"
+    "name": "minecraft:netherrack"
+  },
+  "location": {
+    "dimension": "minecraft:the_nether"
   }
 }
