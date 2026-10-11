@@ -1,5 +1,7 @@
 package com.github.verdant_leaves.verdant_sky.client.integration.jei;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import mezz.jei.api.IModPlugin;
@@ -25,6 +27,7 @@ import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
 public class VerdantSkyJEIPlugin implements IModPlugin {
 
     private static final ResourceLocation UID = new ResourceLocation(VerdantSky.MOD_ID, "jei_plugin");
+    private static final Comparator<DecayRecipe> BY_ID = Comparator.comparing(DecayRecipe::getId);
 
     @NotNull
     @Override
@@ -32,9 +35,7 @@ public class VerdantSkyJEIPlugin implements IModPlugin {
         return UID;
     }
 
-    // ══════════════════════════════════════════════════════════════
-    //  注册配方类别
-    // ══════════════════════════════════════════════════════════════
+    //  注册类别
     @Override
     public void registerCategories(@NotNull IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(
@@ -45,27 +46,25 @@ public class VerdantSkyJEIPlugin implements IModPlugin {
         );
     }
 
-    // ══════════════════════════════════════════════════════════════
-    //  注册配方数据
-    // ══════════════════════════════════════════════════════════════
-
+    //  注册配方
     @Override
     public void registerRecipes(@NotNull IRecipeRegistration registration) {
         Level level = Minecraft.getInstance().level;
         if (level == null) return;
 
-        List<DecayRecipe> decayRecipes = level.getRecipeManager()
-            .getAllRecipesFor(ModRecipeTypes.DECAY.get());
+        List<DecayRecipe> decayRecipes = new ArrayList<>(
+            level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.DECAY.get())
+        );
 
-        if (!decayRecipes.isEmpty()) {
-            registration.addRecipes(DecayRecipeCategory.TYPE, decayRecipes);
-        }
+        if (decayRecipes.isEmpty()) return;
+
+        // 按配方 ID 排序，和 EMI 侧保持一致
+        decayRecipes.sort(BY_ID);
+
+        registration.addRecipes(DecayRecipeCategory.TYPE, decayRecipes);
     }
 
-    // ══════════════════════════════════════════════════════════════
-    //  注册配方催化剂
-    // ══════════════════════════════════════════════════════════════
-
+    //  注册催化剂
     @Override
     public void registerRecipeCatalysts(@NotNull IRecipeCatalystRegistration registration) {
         // 本模组的催化剂

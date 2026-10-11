@@ -65,7 +65,7 @@
 
   "jei.verdant_sky.decay": "腐朽百子莲",
   "jei.verdant_sky.condition.required.short": "位置要求",
-  "jei.verdant_sky.condition.required": "花需要在特定位置",
+  "jei.verdant_sky.condition.required": "§8花需要在特定位置",
   "jei.verdant_sky.condition.dimension": "维度: %s",
   "jei.verdant_sky.condition.biome": "生物群系: %s",
   "jei.verdant_sky.condition.structure": "结构: %s",

@@ -65,7 +65,7 @@
 
   "jei.verdant_sky.decay": "Decay Agapanthus",
   "jei.verdant_sky.condition.required.short": "Location Requirements",
-  "jei.verdant_sky.condition.required": "Flower need to be at specific location",
+  "jei.verdant_sky.condition.required": "§8Flower need to be at specific location",
   "jei.verdant_sky.condition.dimension": "Dimension: %s",
   "jei.verdant_sky.condition.biome": "Biome: %s",
   "jei.verdant_sky.condition.structure": "Structure: %s",
