@@ -7,11 +7,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
-import dev.emi.emi.api.widget.TextureWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -22,14 +20,13 @@ import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 
 public class DecayEmiRecipe extends VerdantEmiRecipe {
 
-    private static final ResourceLocation TEXTURE =
-        new ResourceLocation(VerdantSky.MOD_ID, "textures/gui/decay_overlay.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(VerdantSky.MOD_ID, "textures/gui/decay_overlay.png");
     private static final EmiStack DECAY_FLOWER = EmiStack.of(ModBlocks.DECAY_AGAPANTHUS.get());
 
     private final DecayRecipe recipe;
 
     public DecayEmiRecipe(DecayRecipe recipe) {
-        super(DecayEmiCategory.INSTANCE, recipe);
+        super(VerdantSkyEmiPlugin.DECAY, recipe);
         this.recipe = recipe;
 
         // 输入
@@ -64,7 +61,12 @@ public class DecayEmiRecipe extends VerdantEmiRecipe {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         // overlay
-        widgets.add(new BlendTextureWidget(TEXTURE, 17, 0, 65, 44, 0, 0));
+        widgets.addDrawable(17, 0, 64, 44, (gui, mouseX, mouseY, delta) -> {
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            gui.blit(TEXTURE, 0, 0, 0, 0, 64, 44, 256, 256);
+            RenderSystem.disableBlend();
+        });
 
         // 槽位
         widgets.addSlot(input.get(0), 10, 13).drawBack(false);
@@ -95,19 +97,5 @@ public class DecayEmiRecipe extends VerdantEmiRecipe {
         lines.add(Component.translatable("jei.verdant_sky.condition.required"));
         lines.addAll(LocationPredicateFormatter.format(recipe.locationPredicate()));
         widgets.addTooltipText(lines, x, 2, font.width(shortHint), font.lineHeight);
-    }
-
-    // 混合 widget
-    private static class BlendTextureWidget extends TextureWidget {
-        BlendTextureWidget(ResourceLocation texture, int x, int y, int w, int h, int u, int v) {
-            super(texture, x, y, w, h, u, v);
-        }
-
-        @Override
-        public void render(GuiGraphics gui, int mouseX, int mouseY, float delta) {
-            RenderSystem.enableBlend();
-            super.render(gui, mouseX, mouseY, delta);
-            RenderSystem.disableBlend();
-        }
     }
 }
