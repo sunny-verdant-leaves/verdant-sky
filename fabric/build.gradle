@@ -37,6 +37,9 @@ dependencies {
     modCompileOnly "maven.modrinth:pfjLUfGv:ZbFDx99K"
     modRuntimeOnly "maven.modrinth:pfjLUfGv:ZbFDx99K"
 
+    // JEI
+    modLocalRuntime "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
+
     // EMI
     modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
 
