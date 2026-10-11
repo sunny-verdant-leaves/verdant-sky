@@ -45,6 +45,15 @@ subprojects {
                 includeGroup "maven.modrinth"
             }
         }
+        
+        // EMI
+        maven {
+            name = "Sleeping Town"
+            url = "https://repo.sleeping.town/"
+            content {
+                includeGroup "dev.emi"
+            }
+        }
     }
 
     loom {
