@@ -1,0 +1,10 @@
+{
+  "type": "verdant_sky:decay",
+  "input": {
+    "type": "block",
+    "block": "minecraft:snow_block"
+  },
+  "output": {
+    "name": "minecraft:water"
+  }
+}

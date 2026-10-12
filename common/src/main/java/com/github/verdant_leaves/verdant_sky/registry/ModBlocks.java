@@ -125,7 +125,7 @@ public class ModBlocks {
     public static final List<RegistrySupplier<Item>> CAULDRON_ITEMS = new ArrayList<>();
 
     static {
-        // ── 原版木材 ──
+        // 原版木材
         CAULDRON_WOODS.addAll(List.of(
             "oak",
             "spruce",
@@ -140,13 +140,12 @@ public class ModBlocks {
             "warped"
         ));
 
-        // ── 软依赖：Botania 加载时才加活木 / 梦之木 ──
+        // Botania 的木材
         if (Platform.isModLoaded("botania")) {
             CAULDRON_WOODS.add("livingwood");
             CAULDRON_WOODS.add("dreamwood");
         }
 
-        // ── 统一注册 ──
         for (String wood : CAULDRON_WOODS) {
             registerCauldronSet(wood);
         }

@@ -1,0 +1,13 @@
+{
+  "type": "verdant_sky:decay",
+  "input": {
+    "type": "block",
+    "block": "minecraft:cobblestone"
+  },
+  "output": {
+    "name": "minecraft:netherrack"
+  },
+  "location": {
+    "dimension": "minecraft:the_nether"
+  }
+}

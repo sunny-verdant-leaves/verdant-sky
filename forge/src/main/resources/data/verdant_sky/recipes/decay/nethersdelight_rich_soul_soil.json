@@ -1,0 +1,24 @@
+
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "nethersdelight"
+        }
+      ],
+      "recipe": {
+        "type": "verdant_sky:decay",
+        "input": {
+          "type": "block",
+          "block": "nethersdelight:soul_compost"
+        },
+        "output": {
+          "name": "nethersdelight:rich_soul_soil"
+        }
+      }
+    }
+  ]
+}

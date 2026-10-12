@@ -20,6 +20,12 @@
     ],
     "client": [
       "com.github.verdant_leaves.verdant_sky.fabric.client.VerdantSkyFabricClient"
+    ],
+    "jei_mod_plugin": [
+      "com.github.verdant_leaves.verdant_sky.client.integration.jei.VerdantSkyJEIPlugin"
+    ],
+    "emi": [
+      "com.github.verdant_leaves.verdant_sky.client.integration.emi.VerdantSkyEmiPlugin"
     ]
   },
   "mixins": [

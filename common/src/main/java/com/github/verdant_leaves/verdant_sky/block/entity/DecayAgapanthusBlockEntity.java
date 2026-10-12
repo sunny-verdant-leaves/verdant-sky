@@ -26,7 +26,7 @@ import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
 
 public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
 
-    /** 由 DecayAgapanthusBlock.getTicker 每次 tick 更新，避免调用 getLevel() */
+    // 由 DecayAgapanthusBlock.getTicker 每次 tick 更新，避免调用 getLevel()
     private Level cachedLevel;
 
     public DecayAgapanthusBlockEntity(BlockPos pos, BlockState state) {
@@ -36,10 +36,6 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
     public void setCachedLevel(Level level) {
         this.cachedLevel = level;
     }
-
-    // ══════════════════════════════════════════════════════════════
-    //  必须实现（基类 abstract）
-    // ══════════════════════════════════════════════════════════════
 
     @Override
     public int getColor() {
@@ -84,22 +80,20 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
             return;
         }
         
-        // 施加凋零效果，无关魔力值
-        BlockPos center = getEffectivePos();
-        applyWitherToNearbyEntities(serverLevel, center);
-        sync();
-        
         if (getMana() < VerdantSkyConfig.decayAgapanthusManaCost()) {
             return;
         }
         
         // 尝试转换
+        BlockPos center = getEffectivePos();
         int converted = performDecayConversion(serverLevel);
 
-        // 只有真的转换了方块 (实际转换的数量>0)，才响音效 + 扣魔力
+        // 只有真的转换了方块 (实际转换的数量>0)，才响施加凋零效果 + 音效 + 扣魔力
         if (converted > 0) {
             playWorkSound(serverLevel, center);
             addMana(-VerdantSkyConfig.decayAgapanthusManaCost() * converted);
+            applyWitherToNearbyEntities(serverLevel, center);
+            sync();
         }
     }
 
@@ -123,6 +117,11 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
     // ══════════════════════════════════════════════════════════════
 
     private void applyWitherToNearbyEntities(ServerLevel level, BlockPos center) {
+        int duration = VerdantSkyConfig.decayAgapanthusWitherDuration();
+        if (duration <= 0) {
+            return;
+        }
+    
         int radius = VerdantSkyConfig.decayAgapanthusRadius();
         AABB area = new AABB(
             center.getX() - radius,
@@ -132,16 +131,16 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
             center.getY() + radius + 1,
             center.getZ() + radius + 1
         );
-
+    
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, area);
         if (entities.isEmpty()) return;
-
+    
         MobEffectInstance wither = new MobEffectInstance(
             MobEffects.WITHER,
-            VerdantSkyConfig.decayAgapanthusWitherDuration(),
+            duration,
             VerdantSkyConfig.decayAgapanthusWitherAmplifier()
         );
-
+    
         for (LivingEntity entity : entities) {
             entity.addEffect(new MobEffectInstance(wither));
         }
@@ -152,11 +151,19 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
     // ══════════════════════════════════════════════════════════════
 
     private int performDecayConversion(ServerLevel serverLevel) {
-        List<DecayRecipe> recipes =
-            serverLevel.getRecipeManager().getAllRecipesFor(ModRecipeTypes.DECAY.get());
+        List<DecayRecipe> allRecipes = serverLevel.getRecipeManager().getAllRecipesFor(ModRecipeTypes.DECAY.get());
+        if (allRecipes.isEmpty()) return 0;
+    
+        BlockPos flowerPos = getEffectivePos();
+    
+        List<DecayRecipe> recipes = new ArrayList<>();
+        for (DecayRecipe recipe : allRecipes) {
+            if (recipe.matchesLocation(serverLevel, flowerPos)) {
+                recipes.add(recipe);
+            }
+        }
         if (recipes.isEmpty()) return 0;
 
-        BlockPos pos = getEffectivePos();
         int radius = VerdantSkyConfig.decayAgapanthusRadius();
         int maxConversions = VerdantSkyConfig.decayAgapanthusMaxConversionsPerTick();
 
@@ -168,7 +175,7 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
                 for (int dz = -radius; dz <= radius; dz++) {
                     if (dx == 0 && dy == 0 && dz == 0) continue;
 
-                    BlockPos targetPos = pos.offset(dx, dy, dz);
+                    BlockPos targetPos = flowerPos.offset(dx, dy, dz);
                     BlockState targetState = serverLevel.getBlockState(targetPos);
 
                     if (targetState.isAir()) continue;
@@ -203,9 +210,9 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
                 serverLevel.sendParticles(
                     ParticleTypes.SCULK_SOUL,
                     targetPos.getX() + 0.5,
-                    targetPos.getY() + 1.05,
+                    targetPos.getY() + 1.1,
                     targetPos.getZ() + 0.5,
-                    6, 0.25, 0.15, 0.25, 0.01
+                    10, 0.4, 0.3, 0.4, 0.01
                 );
                 converted++;
                 break;

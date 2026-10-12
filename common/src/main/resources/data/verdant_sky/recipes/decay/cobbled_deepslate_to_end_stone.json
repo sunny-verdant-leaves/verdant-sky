@@ -1,0 +1,13 @@
+{
+  "type": "verdant_sky:decay",
+  "input": {
+    "type": "block",
+    "block": "minecraft:cobbled_deepslate"
+  },
+  "output": {
+    "name": "minecraft:end_stone"
+  },
+  "location": {
+    "dimension": "minecraft:the_end"
+  }
+}

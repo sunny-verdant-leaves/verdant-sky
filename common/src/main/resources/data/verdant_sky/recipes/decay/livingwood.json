@@ -2,9 +2,9 @@
   "type": "verdant_sky:decay",
   "input": {
     "type": "block",
-    "block": "minecraft:dirt"
+    "block": "botania:livingwood_log"
   },
   "output": {
-    "name": "minecraft:rooted_dirt"
+    "name": "minecraft:oak_log"
   }
 }

@@ -61,5 +61,32 @@
   "block.verdant_sky.dreamwood_cauldron": "梦之木炼药锅",
   "block.verdant_sky.dreamwood_water_cauldron": "装有水的梦之木炼药锅",
   "block.verdant_sky.dreamwood_lava_cauldron": "装有熔岩的梦之木炼药锅",
-  "block.verdant_sky.dreamwood_powder_snow_cauldron": "装有细雪的梦之木炼药锅"
+  "block.verdant_sky.dreamwood_powder_snow_cauldron": "装有细雪的梦之木炼药锅",
+
+  "jei.verdant_sky.decay": "腐朽百子莲",
+  "jei.verdant_sky.condition.required.short": "§8位置要求",
+  "jei.verdant_sky.condition.required": "花需要在特定位置",
+  "jei.verdant_sky.condition.dimension": "维度: %s",
+  "jei.verdant_sky.condition.biome": "生物群系: %s",
+  "jei.verdant_sky.condition.structure": "结构: %s",
+  "jei.verdant_sky.condition.position.axis": "%s: %s",
+  "jei.verdant_sky.condition.light": "光照: %s",
+  "jei.verdant_sky.condition.can_see_sky.yes": "露天",
+  "jei.verdant_sky.condition.can_see_sky.no": "不露天",
+  "jei.verdant_sky.condition.block": "方块: %s",
+  "jei.verdant_sky.condition.fluid": "流体: %s",
+  "jei.verdant_sky.condition.smokey.yes": "在营火上方",
+  "jei.verdant_sky.condition.smokey.no": "不在营火上方",
+  "jei.verdant_sky.condition.empty": "(空)",
+  "jei.verdant_sky.condition.value.range": "%s ~ %s",
+  "jei.verdant_sky.condition.value.min": "≥ %s",
+  "jei.verdant_sky.condition.value.max": "≤ %s",
+
+  "emi.category.verdant_sky.decay": "腐朽百子莲",
+
+  "verdant_sky.entry.decay_agapanthus": "腐朽百子莲",
+  "verdant_sky.tagline.decay_agapanthus": "白雏菊的反转版",
+  "verdant_sky.page.decay_agapanthus.0": "$(item)腐朽百子莲$(0)是一种重要的花。$(p)这种花会将附近的$(item)树叶$(0)、下界中的$(item)圆石$(0)以及其他方块腐化成对应的腐化形态：$(item)泥土$(0)、$(item)下界岩$(0)等。它提供了在特殊环境中获取和再生某些材料的方法。",
+  "verdant_sky.page.decay_agapanthus.1": "……化作春泥更护花。",
+  "verdant_sky.page.decay_agapanthus.2": "此外还有一些方块放在这朵花旁边时也能被腐化。尽管它们并不像泥土那样独特且必要，但这些配方仍然很有用。$(p)$(item)蓝冰$(0)变为$(item)浮冰$(0)，$(item)浮冰$(0)变为$(item)冰$(0)，$(item)雪块$(0)变为$(item)水$(0)，$(item)黑曜石$(0)变为$(item)哭泣的黑曜石$(0)。在下界中，$(item)沙子$(0)变为$(item)灵魂沙$(0)；在末地中，$(item)深板岩圆石$(0)变为$(item)末地石$(0)。"
 }

@@ -52,9 +52,8 @@ public class DecayAgapanthusBlock extends FlowerBlock implements EntityBlock {
             Level level, BlockState state, BlockEntityType<T> type) {
         return (lvl, pos, st, be) -> {
             if (be instanceof DecayAgapanthusBlockEntity flower) {
-                // 缓存 Level 给我们自己的逻辑用（绕开 getLevel 的 remap 问题）
+                // 缓存 Level （绕开 getLevel 的 remap 问题）
                 flower.setCachedLevel(lvl);
-                // 走 Botania 的标准 tick 入口：红绳转接器、附魔土加速、ticksExisted++ 全在这
                 SpecialFlowerBlockEntity.commonTick(lvl, pos, st, flower);
             }
         };
