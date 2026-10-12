@@ -43,7 +43,7 @@ public class ModBlockEntities {
     public static void injectIntoBotania() {
         if (!Platform.isModLoaded("botania")) return;
 
-        // ── 追加木花药台到 ALTAR ──
+        // 追加木花药台
         BlockEntityType<?> altar = BotaniaBlockEntities.ALTAR;
         Set<Block> altarBlocks = new HashSet<>(
             ((BlockEntityTypeAccessor) (Object) altar).getValidBlocks()
@@ -51,7 +51,7 @@ public class ModBlockEntities {
         altarBlocks.add(ModBlocks.APOTHECARY_WOODEN.get());
         ((BlockEntityTypeAccessor) (Object) altar).setValidBlocks(altarBlocks);
 
-        // ── 追加活木魔力池到 POOL ──
+        // 追加活木魔力池
         BlockEntityType<?> pool = BotaniaBlockEntities.POOL;
         Set<Block> poolBlocks = new HashSet<>(
             ((BlockEntityTypeAccessor) (Object) pool).getValidBlocks()

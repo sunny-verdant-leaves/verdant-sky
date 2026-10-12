@@ -35,7 +35,6 @@ import com.github.verdant_leaves.verdant_sky.client.integration.jei.helper.Locat
 import com.github.verdant_leaves.verdant_sky.recipe.DecayRecipe;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 
-@SuppressWarnings("removal")
 public class DecayRecipeCategory implements IRecipeCategory<DecayRecipe> {
 
     public static final RecipeType<DecayRecipe> TYPE = RecipeType.create(VerdantSky.MOD_ID, "decay", DecayRecipe.class);

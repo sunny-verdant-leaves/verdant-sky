@@ -1,0 +1,28 @@
+{
+  "name": "verdant_sky.entry.decay_agapanthus",
+  "category": "botania:functional_flowers",
+  "icon": "verdant_sky:decay_agapanthus",
+  "priority": true,
+  "advancement": "botania:main/pure_daisy_pickup",
+  "pages": [
+    {
+      "type": "text",
+      "text": "verdant_sky.page.decay_agapanthus.0"
+    },
+    {
+      "type": "botania:petal_apothecary",
+      "text": "verdant_sky.page.decay_agapanthus.1",
+      "recipe": "verdant_sky:petal_apothecary/decay_agapanthus"
+    },
+    {
+      "type": "text",
+      "text": "verdant_sky.page.decay_agapanthus.2"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "verdant_sky:floating_decay_agapanthus": 1,
+    "minecraft:crying_obsidian": 2,
+    "minecraft:dirt": 1,
+    "minecraft:soul_sand": 2
+  }
+}

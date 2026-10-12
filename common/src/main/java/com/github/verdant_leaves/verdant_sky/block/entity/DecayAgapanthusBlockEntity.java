@@ -26,7 +26,7 @@ import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
 
 public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
 
-    /** 由 DecayAgapanthusBlock.getTicker 每次 tick 更新，避免调用 getLevel() */
+    // 由 DecayAgapanthusBlock.getTicker 每次 tick 更新，避免调用 getLevel()
     private Level cachedLevel;
 
     public DecayAgapanthusBlockEntity(BlockPos pos, BlockState state) {
@@ -36,10 +36,6 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
     public void setCachedLevel(Level level) {
         this.cachedLevel = level;
     }
-
-    // ══════════════════════════════════════════════════════════════
-    //  必须实现（基类 abstract）
-    // ══════════════════════════════════════════════════════════════
 
     @Override
     public int getColor() {
@@ -121,6 +117,11 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
     // ══════════════════════════════════════════════════════════════
 
     private void applyWitherToNearbyEntities(ServerLevel level, BlockPos center) {
+        int duration = VerdantSkyConfig.decayAgapanthusWitherDuration();
+        if (duration <= 0) {
+            return;
+        }
+    
         int radius = VerdantSkyConfig.decayAgapanthusRadius();
         AABB area = new AABB(
             center.getX() - radius,
@@ -130,16 +131,16 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
             center.getY() + radius + 1,
             center.getZ() + radius + 1
         );
-
+    
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, area);
         if (entities.isEmpty()) return;
-
+    
         MobEffectInstance wither = new MobEffectInstance(
             MobEffects.WITHER,
-            VerdantSkyConfig.decayAgapanthusWitherDuration(),
+            duration,
             VerdantSkyConfig.decayAgapanthusWitherAmplifier()
         );
-
+    
         for (LivingEntity entity : entities) {
             entity.addEffect(new MobEffectInstance(wither));
         }

@@ -82,5 +82,11 @@
   "jei.verdant_sky.condition.value.min": "≥ %s",
   "jei.verdant_sky.condition.value.max": "≤ %s",
 
-  "emi.category.verdant_sky.decay": "Decay Agapanthus"
+  "emi.category.verdant_sky.decay": "Decay Agapanthus",
+
+  "verdant_sky.entry.decay_agapanthus": "Decay Agapanthus",
+  "verdant_sky.tagline.decay_agapanthus": "Reverse version of the Pure Daisy",
+  "verdant_sky.page.decay_agapanthus.0": "The $(item)Decay Agapanthus$(0) is an important flower.$(p)This flower will decay any nearby $(item)Leaves$(0), $(item)Cobblestone$(0) in the Nether and other blocks into their decayed counterparts, $(item)Dirt$(0), $(item)Netherrack$(0) and more. It provides ways to obtain and regenerate some materials in special environments.",
+  "verdant_sky.page.decay_agapanthus.1": "The fallen blossoms are not an unfeeling thing;$(p)Though turned to mud, they'd nurture flowers' growth next spring.",
+  "verdant_sky.page.decay_agapanthus.2": "A few other blocks can also be decayed by placing them around the flower. While not as unique or essential as Dirt, these recipes can still come in handy. $(item)Blue Ice$(0) decays into $(item)Packed Ice$(0), $(item)Packed Ice$(0) into $(item)Ice$(0), $(item)Snow Block$(0) into $(item)Water$(0), and $(item)Obsidian$(0) into $(item)Crying Obsidian$(0). In the Nether, $(item)Sand$(0) decays into $(item)Soul Sand$(0); in the End, $(item)Cobbled Deepslate$(0) decays into $(item)End Stone$(0)."
 }
