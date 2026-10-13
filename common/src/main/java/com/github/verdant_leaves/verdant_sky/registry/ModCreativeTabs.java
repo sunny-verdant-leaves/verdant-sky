@@ -14,13 +14,12 @@ import com.github.verdant_leaves.verdant_sky.VerdantSky;
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.CREATIVE_MODE_TAB);
 
-    public static final RegistrySupplier<CreativeModeTab> VERDANT_TAB =
-        TABS.register("verdant_sky", () ->
-            CreativeTabRegistry.create(
-                Component.translatable("itemGroup.verdant_sky"),
-                () -> new ItemStack(ModBlocks.FLOATING_DECAY_AGAPANTHUS_ITEM.get())
-            )
-        );
+    public static final RegistrySupplier<CreativeModeTab> VERDANT_TAB = TABS.register("verdant_sky", () ->
+        CreativeTabRegistry.create(
+            Component.translatable("itemGroup.verdant_sky"),
+            () -> new ItemStack(ModBlocks.FLOATING_DECAY_AGAPANTHUS_ITEM.get())
+        )
+    );
         
     @SuppressWarnings("unchecked")
     public static void register() {

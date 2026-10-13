@@ -35,8 +35,8 @@ public final class ModWoods {
     public static final WoodVariant WARPED   = add(WoodVariant.nether("warped"));
 
     // Botania 木材
-    public static final WoodVariant LIVINGWOOD = addIf("botania", () -> new WoodVariant("livingwood", true, MapColor.WOOD, SoundType.WOOD));
-    public static final WoodVariant DREAMWOOD = addIf("botania", () -> new WoodVariant("dreamwood", true, MapColor.WOOD, SoundType.WOOD));
+    public static final WoodVariant LIVINGWOOD = addIf("botania", () -> new WoodVariant("livingwood", false, MapColor.WOOD, SoundType.WOOD));
+    public static final WoodVariant DREAMWOOD = addIf("botania", () -> new WoodVariant("dreamwood", false, MapColor.WOOD, SoundType.WOOD));
 
     private static WoodVariant add(WoodVariant variant) {
         ALL.add(variant);

@@ -19,15 +19,16 @@ public class VerdantSkyConfig {
 
     private static VerdantSkyConfig INSTANCE = new VerdantSkyConfig();
 
-    // ── 腐朽花 ──
-
-    /** 腐朽花作用半径。2 表示 5×5×5，3 表示 7×7×7。 */
+    // ══════════════════════════════════════════════════════════════
+    //  腐朽百子莲
+    // ══════════════════════════════════════════════════════════════
+    /** 腐朽百子莲作用半径。2 表示 5×5×5，3 表示 7×7×7。 */
     public int decayAgapanthusRadius = 2;
 
     /** 单次工作最多转换多少个方块，防止卡顿。 */
     public int decayAgapanthusMaxConversionsPerTick = 2;
 
-    /** 腐朽花触发间隔，单位 tick。 */
+    /** 腐朽百子莲触发间隔，单位 tick。 */
     public int decayAgapanthusInterval = 100;
 
     /** 每次转换方块消耗的魔力。 */
@@ -42,11 +43,20 @@ public class VerdantSkyConfig {
     /** 凋零效果等级。0 = I 级，1 = II 级。 */
     public int decayAgapanthusWitherAmplifier = 1;
 
+
+    // ══════════════════════════════════════════════════════════════
+    //  修改项
+    // ══════════════════════════════════════════════════════════════
     /** 是否启用植物掉落修改（空手打草掉草/蕨等）。 */
     public boolean enablePlantLootModification = false;
 
-    // ── 加载 / 保存 ──
+    /** 是否启用一碗水修改（从炼药锅里舀水），仅在 water_bowl 被注册时生效。 */
+    public boolean enableWaterBowlModification = false;
 
+
+    // ══════════════════════════════════════════════════════════════
+    //  加载 / 保存
+    // ══════════════════════════════════════════════════════════════
     public static void load() {
         try {
             if (Files.exists(PATH)) {
@@ -83,8 +93,10 @@ public class VerdantSkyConfig {
         }
     }
 
-    // ── 访问器 ──
 
+    // ══════════════════════════════════════════════════════════════
+    //  访问器
+    // ══════════════════════════════════════════════════════════════
     public static int decayAgapanthusRadius() {
         return Math.max(0, INSTANCE.decayAgapanthusRadius);
     }
@@ -115,6 +127,10 @@ public class VerdantSkyConfig {
     
     public static boolean enablePlantLootModification() {
         return INSTANCE.enablePlantLootModification;
+    }
+    
+    public static boolean enableWaterBowlModification() {
+        return INSTANCE.enableWaterBowlModification;
     }
     
 }

@@ -16,7 +16,7 @@ public final class VerdantSkyFabricClient implements ClientModInitializer {
         // 通用客户端初始化
         VerdantSkyClient.init();
 
-        // 平台特有：给 Botania 注册腐朽花的 WandHUD
+        // 平台特有：给 Botania 注册腐朽百子莲的 WandHUD
         registerBotaniaWandHud();
     }
 

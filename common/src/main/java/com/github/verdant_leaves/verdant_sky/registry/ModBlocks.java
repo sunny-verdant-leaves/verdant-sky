@@ -23,8 +23,8 @@ import com.github.verdant_leaves.verdant_sky.block.DecayAgapanthusBlock;
 import com.github.verdant_leaves.verdant_sky.block.FloatingDecayAgapanthusBlock;
 import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronNames;
 import com.github.verdant_leaves.verdant_sky.block.VerdantPoolBlock;
-import com.github.verdant_leaves.verdant_sky.block.WoodenEmptyCauldronBlock;
 import com.github.verdant_leaves.verdant_sky.block.WoodenCauldronBlock;
+import com.github.verdant_leaves.verdant_sky.block.WoodenWaterCauldronBlock;
 import com.github.verdant_leaves.verdant_sky.block.WoodenLavaCauldronBlock;
 import com.github.verdant_leaves.verdant_sky.block.WoodenPowderSnowCauldronBlock;
 import com.github.verdant_leaves.verdant_sky.block.WoodenPetalApothecaryBlock;
@@ -36,7 +36,7 @@ public class ModBlocks {
     public static final int WOOD_BURN_TIME = 300;
 
     // ══════════════════════════════════════════════════════════════
-    //  腐朽花 Decay Flower
+    //  腐朽百子莲 Decay Agapanthus
     // ══════════════════════════════════════════════════════════════
 
     private static final BlockBehaviour.Properties FLOWER_PROPS =
@@ -128,9 +128,9 @@ public class ModBlocks {
     private static void registerCauldronSet(WoodVariant wood) {
         String id = wood.name();
 
-        RegistrySupplier<Block> empty = BLOCKS.register(VerdantCauldronNames.empty(id), () -> new WoodenEmptyCauldronBlock(props(wood), wood));
+        RegistrySupplier<Block> empty = BLOCKS.register(VerdantCauldronNames.empty(id), () -> new WoodenCauldronBlock(props(wood), wood));
         EMPTY_CAULDRONS.put(id, empty);
-        RegistrySupplier<Block> water = BLOCKS.register(VerdantCauldronNames.water(id), () -> new WoodenCauldronBlock(props(wood), wood));
+        RegistrySupplier<Block> water = BLOCKS.register(VerdantCauldronNames.water(id), () -> new WoodenWaterCauldronBlock(props(wood), wood));
         WATER_CAULDRONS.put(id, water);
         RegistrySupplier<Block> lava = BLOCKS.register(VerdantCauldronNames.lava(id), () -> new WoodenLavaCauldronBlock(props(wood), wood));
         LAVA_CAULDRONS.put(id, lava);

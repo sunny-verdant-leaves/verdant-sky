@@ -204,8 +204,7 @@ public class StartIslandSpawner {
         // String usedId = null;
         for (String id : featureIds) {
             ResourceLocation loc = parseResourceLocation(id);
-            ResourceKey<ConfiguredFeature<?, ?>> key =
-                ResourceKey.create(Registries.CONFIGURED_FEATURE, loc);
+            ResourceKey<ConfiguredFeature<?, ?>> key = ResourceKey.create(Registries.CONFIGURED_FEATURE, loc);
             var holder = registry.getHolder(key);
             if (holder.isPresent()) {
                 feature = holder.get();
