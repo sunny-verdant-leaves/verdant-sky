@@ -10,13 +10,17 @@
       "text": "verdant_sky.page.decay_agapanthus.0"
     },
     {
-      "type": "botania:petal_apothecary",
-      "text": "verdant_sky.page.decay_agapanthus.1",
-      "recipe": "verdant_sky:petal_apothecary/decay_agapanthus"
+      "type": "text",
+      "text": "verdant_sky.page.decay_agapanthus.1"
     },
     {
       "type": "text",
       "text": "verdant_sky.page.decay_agapanthus.2"
+    },
+    {
+      "type": "botania:petal_apothecary",
+      "text": "verdant_sky.page.decay_agapanthus.3",
+      "recipe": "verdant_sky:petal_apothecary/decay_agapanthus"
     }
   ],
   "extra_recipe_mappings": {

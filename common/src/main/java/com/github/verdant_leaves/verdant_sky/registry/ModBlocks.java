@@ -31,11 +31,8 @@ import com.github.verdant_leaves.verdant_sky.block.WoodenPowderSnowCauldronBlock
 import com.github.verdant_leaves.verdant_sky.block.WoodenPetalApothecaryBlock;
 
 public class ModBlocks {
-    public static final DeferredRegister<Block> BLOCKS =
-        DeferredRegister.create(VerdantSky.MOD_ID, Registries.BLOCK);
-
-    public static final DeferredRegister<Item> ITEMS =
-        DeferredRegister.create(VerdantSky.MOD_ID, Registries.ITEM);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.BLOCK);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.ITEM);
     
     // ══════════════════════════════════════════════════════════════
     //  腐朽花 Decay Flower
@@ -95,14 +92,14 @@ public class ModBlocks {
     // ══════════════════════════════════════════════════════════════
 
     public static final RegistrySupplier<Block> APOTHECARY_WOODEN =
-    BLOCKS.register("apothecary_wooden", () ->
-        new WoodenPetalApothecaryBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.WOOD)
-            .strength(2.5F)
-            .sound(SoundType.WOOD)
-            .noOcclusion()
-        )
-    );
+        BLOCKS.register("apothecary_wooden", () ->
+            new WoodenPetalApothecaryBlock(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.WOOD)
+                .strength(2.5F)
+                .sound(SoundType.WOOD)
+                .noOcclusion()
+            )
+        );
 
     public static final RegistrySupplier<Item> APOTHECARY_WOODEN_ITEM =
         ITEMS.register("apothecary_wooden", () ->
@@ -152,24 +149,24 @@ public class ModBlocks {
     }
 
     private static void registerCauldronSet(String wood) {
-        RegistrySupplier<Block> empty = BLOCKS.register(VerdantCauldronNames.empty(wood),
-            () -> new WoodenEmptyCauldronBlock(props(wood), wood));
+        RegistrySupplier<Block> empty = BLOCKS.register(VerdantCauldronNames.empty(wood), () -> new WoodenEmptyCauldronBlock(props(wood), wood));
         EMPTY_CAULDRONS.put(wood, empty);
 
-        RegistrySupplier<Block> water = BLOCKS.register(VerdantCauldronNames.water(wood),
-            () -> new WoodenCauldronBlock(props(wood), wood));
+        RegistrySupplier<Block> water = BLOCKS.register(VerdantCauldronNames.water(wood), () -> new WoodenCauldronBlock(props(wood), wood));
         WATER_CAULDRONS.put(wood, water);
 
-        RegistrySupplier<Block> lava = BLOCKS.register(VerdantCauldronNames.lava(wood),
-            () -> new WoodenLavaCauldronBlock(props(wood), wood));
+        RegistrySupplier<Block> lava = BLOCKS.register(VerdantCauldronNames.lava(wood), () -> new WoodenLavaCauldronBlock(props(wood), wood));
         LAVA_CAULDRONS.put(wood, lava);
 
-        RegistrySupplier<Block> powder = BLOCKS.register(VerdantCauldronNames.powderSnow(wood),
-            () -> new WoodenPowderSnowCauldronBlock(props(wood), wood));
+        RegistrySupplier<Block> powder = BLOCKS.register(VerdantCauldronNames.powderSnow(wood), () -> new WoodenPowderSnowCauldronBlock(props(wood), wood));
         POWDER_SNOW_CAULDRONS.put(wood, powder);
 
-        CAULDRON_ITEMS.add(ITEMS.register(VerdantCauldronNames.empty(wood),
-            () -> new BlockItem(empty.get(), new Item.Properties())));
+        CAULDRON_ITEMS.add(
+            ITEMS.register(
+                VerdantCauldronNames.empty(wood),
+                () -> new BlockItem(empty.get(), new Item.Properties())
+            )
+        );
     }
 
     // 给定木材，返回燃烧时间（tick）。

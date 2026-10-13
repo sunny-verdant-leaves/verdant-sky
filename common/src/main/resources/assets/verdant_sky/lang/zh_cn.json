@@ -87,6 +87,7 @@
   "verdant_sky.entry.decay_agapanthus": "腐朽百子莲",
   "verdant_sky.tagline.decay_agapanthus": "白雏菊的反转版",
   "verdant_sky.page.decay_agapanthus.0": "$(item)腐朽百子莲$(0)是一种重要的花。$(p)这种花会将附近的$(item)树叶$(0)、下界中的$(item)圆石$(0)以及其他方块腐化成对应的腐化形态：$(item)泥土$(0)、$(item)下界岩$(0)等。它提供了在特殊环境中获取和再生某些材料的方法。",
-  "verdant_sky.page.decay_agapanthus.1": "……化作春泥更护花。",
-  "verdant_sky.page.decay_agapanthus.2": "此外还有一些方块放在这朵花旁边时也能被腐化。尽管它们并不像泥土那样独特且必要，但这些配方仍然很有用。$(p)$(item)蓝冰$(0)变为$(item)浮冰$(0)，$(item)浮冰$(0)变为$(item)冰$(0)，$(item)雪块$(0)变为$(item)水$(0)，$(item)黑曜石$(0)变为$(item)哭泣的黑曜石$(0)。在下界中，$(item)沙子$(0)变为$(item)灵魂沙$(0)；在末地中，$(item)深板岩圆石$(0)变为$(item)末地石$(0)。"
+  "verdant_sky.page.decay_agapanthus.1": "还有一些方块放在这朵花旁边时也能被腐化。尽管它们并不像泥土那样独特且必要，但这些配方仍然很有用。$(p)$(item)蓝冰$(0)变为$(item)浮冰$(0)，$(item)浮冰$(0)变为$(item)冰$(0)，$(item)雪块$(0)变为$(item)水$(0)，$(item)黑曜石$(0)变为$(item)哭泣的黑曜石$(0)。在下界中，$(item)沙子$(0)变为$(item)灵魂沙$(0)；在末地中，$(item)深板岩圆石$(0)变为$(item)末地石$(0)。",
+  "verdant_sky.page.decay_agapanthus.2": "除此之外，腐朽百子莲工作的时候，也会为附近的生物施加凋零效果。",
+  "verdant_sky.page.decay_agapanthus.3": "……化作春泥更护花。"
 }

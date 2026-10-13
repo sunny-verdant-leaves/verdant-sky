@@ -12,8 +12,7 @@ import net.minecraft.world.item.Item;
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 
 public class ModCreativeTabs {
-    public static final DeferredRegister<CreativeModeTab> TABS =
-        DeferredRegister.create(VerdantSky.MOD_ID, Registries.CREATIVE_MODE_TAB);
+    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.CREATIVE_MODE_TAB);
 
     public static final RegistrySupplier<CreativeModeTab> VERDANT_TAB =
         TABS.register("verdant_sky", () ->

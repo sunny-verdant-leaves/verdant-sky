@@ -18,8 +18,7 @@ import vazkii.botania.common.block.block_entity.BotaniaBlockEntities;
 
 public class ModBlockEntities {
 
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-        DeferredRegister.create(VerdantSky.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(VerdantSky.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
 
     public static final RegistrySupplier<BlockEntityType<DecayAgapanthusBlockEntity>> DECAY_AGAPANTHUS =
         BLOCK_ENTITIES.register("decay_agapanthus", () ->
@@ -32,13 +31,11 @@ public class ModBlockEntities {
 
     public static void register() {
         BLOCK_ENTITIES.register();
-        // 注意：injectIntoBotania() 不在这里调用
-        // 它必须在 LifecycleEvent.SETUP 阶段执行，那时所有注册都已完成
     }
 
     /**
      * 往 Botania 已有的 BE 类型里追加我们的方块。
-     * 必须在 LifecycleEvent.SETUP 阶段调用，因为那时注册已完成。
+     * 在 LifecycleEvent.SETUP 阶段调用，此时注册已完成。
      */
     public static void injectIntoBotania() {
         if (!Platform.isModLoaded("botania")) return;
@@ -59,6 +56,6 @@ public class ModBlockEntities {
         poolBlocks.add(ModBlocks.LIVINGWOOD_POOL.get());
         ((BlockEntityTypeAccessor) (Object) pool).setValidBlocks(poolBlocks);
 
-        System.out.println("[Verdant Sky] Injected blocks into Botania BE types");
+        // System.out.println("[Verdant Sky] Injected blocks into Botania BE types");
     }
 }

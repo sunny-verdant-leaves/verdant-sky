@@ -15,8 +15,7 @@ import dev.architectury.platform.Platform;
 public class VerdantSkyConfig {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Path PATH =
-        Platform.getConfigFolder().resolve("verdant_sky.json");
+    private static final Path PATH = Platform.getConfigFolder().resolve("verdant_sky.json");
 
     private static VerdantSkyConfig INSTANCE = new VerdantSkyConfig();
 

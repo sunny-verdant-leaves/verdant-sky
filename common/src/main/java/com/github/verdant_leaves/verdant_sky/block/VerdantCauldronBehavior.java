@@ -30,14 +30,10 @@ import net.minecraft.world.level.gameevent.GameEvent;
 
 public class VerdantCauldronBehavior {
 
-    public static final Map<Item, CauldronInteraction> VERDANT_EMPTY_BEHAVIOR =
-            CauldronInteraction.newInteractionMap();
-    public static final Map<Item, CauldronInteraction> VERDANT_WATER_BEHAVIOR =
-            CauldronInteraction.newInteractionMap();
-    public static final Map<Item, CauldronInteraction> VERDANT_LAVA_BEHAVIOR =
-            CauldronInteraction.newInteractionMap();
-    public static final Map<Item, CauldronInteraction> VERDANT_POWDER_SNOW_BEHAVIOR =
-            CauldronInteraction.newInteractionMap();
+    public static final Map<Item, CauldronInteraction> VERDANT_EMPTY_BEHAVIOR =     CauldronInteraction.newInteractionMap();
+    public static final Map<Item, CauldronInteraction> VERDANT_WATER_BEHAVIOR =     CauldronInteraction.newInteractionMap();
+    public static final Map<Item, CauldronInteraction> VERDANT_LAVA_BEHAVIOR =     CauldronInteraction.newInteractionMap();
+    public static final Map<Item, CauldronInteraction> VERDANT_POWDER_SNOW_BEHAVIOR =     CauldronInteraction.newInteractionMap();
 
     static {
         initEmpty();
