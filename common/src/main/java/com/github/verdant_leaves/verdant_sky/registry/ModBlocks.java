@@ -10,6 +10,7 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -32,15 +33,14 @@ import com.github.verdant_leaves.verdant_sky.block.WoodenPetalApothecaryBlock;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.BLOCK);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.ITEM);
-    
+
     public static final int WOOD_BURN_TIME = 300;
 
     // ══════════════════════════════════════════════════════════════
     //  腐朽百子莲 Decay Agapanthus
     // ══════════════════════════════════════════════════════════════
 
-    private static final BlockBehaviour.Properties FLOWER_PROPS =
-        BlockBehaviour.Properties.copy(Blocks.POPPY);
+    private static final BlockBehaviour.Properties FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY);
 
     private static final BlockBehaviour.Properties FLOATING_PROPS =
         BlockBehaviour.Properties.of()
@@ -118,6 +118,7 @@ public class ModBlocks {
 
     /** 所有炼药锅的物品，供创造模式物品栏遍历。 */
     public static final List<RegistrySupplier<Item>> CAULDRON_ITEMS = new ArrayList<>();
+    public static final Map<String, RegistrySupplier<Item>> CAULDRON_ITEMS_BY_WOOD = new LinkedHashMap<>();
 
     static {
         for (WoodVariant wood : ModWoods.ALL) {
@@ -137,12 +138,33 @@ public class ModBlocks {
         RegistrySupplier<Block> powder = BLOCKS.register(VerdantCauldronNames.powderSnow(id), () -> new WoodenPowderSnowCauldronBlock(props(wood), wood));
         POWDER_SNOW_CAULDRONS.put(id, powder);
 
-        CAULDRON_ITEMS.add(
-            ITEMS.register(
-                VerdantCauldronNames.empty(id),
-                () -> new BlockItem(empty.get(), new Item.Properties())
-            )
+        // 只给空锅注册 BlockItem
+        RegistrySupplier<Item> item = ITEMS.register(
+            VerdantCauldronNames.empty(id),
+            () -> new BlockItem(empty.get(), new Item.Properties())
         );
+        CAULDRON_ITEMS.add(item);
+        CAULDRON_ITEMS_BY_WOOD.put(id, item);
+    }
+    
+    // 炼药锅方块映射到同一物品
+    public static void bindCauldronItems() {
+        for (WoodVariant wood : ModWoods.ALL) {
+            String id = wood.name();
+    
+            Item emptyItem = CAULDRON_ITEMS_BY_WOOD.get(id).get();
+            if (emptyItem == Items.AIR) {
+                continue;
+            }
+            
+            Block water = WATER_CAULDRONS.get(id).get();
+            Block lava = LAVA_CAULDRONS.get(id).get();
+            Block powder = POWDER_SNOW_CAULDRONS.get(id).get();
+            Item.BY_BLOCK.put(water,    emptyItem);
+            Item.BY_BLOCK.put(lava,     emptyItem);
+            Item.BY_BLOCK.put(powder,   emptyItem);
+            
+        }
     }
 
     private static BlockBehaviour.Properties props(WoodVariant wood) {

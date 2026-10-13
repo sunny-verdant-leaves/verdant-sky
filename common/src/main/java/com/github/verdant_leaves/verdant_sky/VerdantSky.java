@@ -26,8 +26,8 @@ public final class VerdantSky {
         PlantLootModifier.register();
         StartIslandSpawner.register();
 
-        // 安全地执行软依赖集成
         // 此事件在公共设置阶段触发，此时所有注册表都已填充完毕
+
         LifecycleEvent.SETUP.register(() -> {
             // 再次确认 Botania 是否加载，避免不必要的类加载
             if (Platform.isModLoaded("botania")) {
@@ -35,5 +35,6 @@ public final class VerdantSky {
                 BotaniaIntegration.register();
             }
         });
+        LifecycleEvent.SETUP.register(ModBlocks::bindCauldronItems);
     }
 }

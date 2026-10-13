@@ -2,14 +2,14 @@ package com.github.verdant_leaves.verdant_sky.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
 import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
+import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 
 public class WoodenLavaCauldronBlock extends AbstractCauldronBlock implements VerdantCauldronFamily {
 
@@ -26,8 +26,9 @@ public class WoodenLavaCauldronBlock extends AbstractCauldronBlock implements Ve
     @Override public WoodVariant variant() { return variant; }
 
     @Override
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        return getCloneStack();
+    public Item asItem() {
+        Item item = ModBlocks.CAULDRON_ITEMS_BY_WOOD.get(wood()).get();
+        return item;
     }
 
     @Override
