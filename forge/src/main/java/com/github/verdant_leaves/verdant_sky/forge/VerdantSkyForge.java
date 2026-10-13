@@ -3,12 +3,14 @@ package com.github.verdant_leaves.verdant_sky.forge;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
+import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
+import com.github.verdant_leaves.verdant_sky.registry.ModWoods;
 
 @SuppressWarnings("removal")
 @Mod(VerdantSky.MOD_ID)
@@ -29,18 +31,20 @@ public final class VerdantSkyForge {
         ItemStack stack = event.getItemStack();
 
         if (stack.is(ModBlocks.LIVINGWOOD_POOL_ITEM.get())) {
-            event.setBurnTime(300);
+            event.setBurnTime(ModBlocks.WOOD_BURN_TIME);
+            return;
         }
-        else if (stack.is(ModBlocks.APOTHECARY_WOODEN_ITEM.get())) {
-            event.setBurnTime(300);
+        if (stack.is(ModBlocks.APOTHECARY_WOODEN_ITEM.get())) {
+            event.setBurnTime(ModBlocks.WOOD_BURN_TIME);
+            return;
         }
-        for (String wood : ModBlocks.CAULDRON_WOODS) {
-            int time = ModBlocks.burnTimeFor(wood);
-            if (time <= 0) continue;
 
-            // 检查是否是这一种木材的某个炼药锅
-            if (stack.is(ModBlocks.EMPTY_CAULDRONS.get(wood).get().asItem())) {
-                event.setBurnTime(time);
+        for (WoodVariant wood : ModWoods.ALL) {
+            if (wood.fireResistant()) continue;
+            var empty = ModBlocks.EMPTY_CAULDRONS.get(wood.name());
+            if (empty == null) continue;
+            if (stack.is(empty.get().asItem())) {
+                event.setBurnTime(ModBlocks.WOOD_BURN_TIME);
                 return;
             }
         }

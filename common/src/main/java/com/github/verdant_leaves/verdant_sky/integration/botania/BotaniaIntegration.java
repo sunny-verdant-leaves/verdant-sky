@@ -1,4 +1,4 @@
-package com.github.verdant_leaves.verdant_sky.compat.botania;
+package com.github.verdant_leaves.verdant_sky.integration.botania;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -29,30 +29,25 @@ public final class BotaniaIntegration {
             return;
         }
 
-        // ── 空锅 + 一碗水 -> level 1 水锅 ──
-        VerdantCauldronBehavior.VERDANT_EMPTY_BEHAVIOR.put(WATER_BOWL,
-                (state, level, pos, player, hand, stack) -> {
+        // 空锅 + 一碗水 -> level 1 水锅
+        VerdantCauldronBehavior.VERDANT_EMPTY_BEHAVIOR.put(WATER_BOWL, (state, level, pos, player, hand, stack) -> {
             if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
                 return InteractionResult.PASS;
             }
             if (!level.isClientSide) {
                 Item item = stack.getItem();
-                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
-                        new ItemStack(Items.BOWL)));
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.BOWL)));
                 player.awardStat(Stats.USE_CAULDRON);
                 player.awardStat(Stats.ITEM_USED.get(item));
-                level.setBlockAndUpdate(pos, family.getWaterBlock().defaultBlockState()
-                        .setValue(LayeredCauldronBlock.LEVEL, 1));
-                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY,
-                        SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.setBlockAndUpdate(pos, family.getWaterBlock().defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 1));
+                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         });
 
-        // ── 水锅 + 一碗水 -> 水位 +1，满则 PASS ──
-        VerdantCauldronBehavior.VERDANT_WATER_BEHAVIOR.put(WATER_BOWL,
-                (state, level, pos, player, hand, stack) -> {
+        // 水锅 + 一碗水 -> 水位 +1，满则 PASS
+        VerdantCauldronBehavior.VERDANT_WATER_BEHAVIOR.put(WATER_BOWL, (state, level, pos, player, hand, stack) -> {
             if (!(state.getBlock() instanceof VerdantCauldronFamily)) {
                 return InteractionResult.PASS;
             }
@@ -62,21 +57,18 @@ public final class BotaniaIntegration {
             }
             if (!level.isClientSide) {
                 Item item = stack.getItem();
-                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
-                        new ItemStack(Items.BOWL)));
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.BOWL)));
                 player.awardStat(Stats.USE_CAULDRON);
                 player.awardStat(Stats.ITEM_USED.get(item));
                 level.setBlockAndUpdate(pos, state.setValue(LayeredCauldronBlock.LEVEL, current + 1));
-                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY,
-                        SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         });
 
-        // ── 水锅 + 碗 -> 水位 -1，归零变空锅 ──
-        VerdantCauldronBehavior.VERDANT_WATER_BEHAVIOR.put(Items.BOWL,
-                (state, level, pos, player, hand, stack) -> {
+        // 水锅 + 碗 -> 水位 -1，归零变空锅
+        VerdantCauldronBehavior.VERDANT_WATER_BEHAVIOR.put(Items.BOWL, (state, level, pos, player, hand, stack) -> {
             if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
                 return InteractionResult.PASS;
             }
@@ -85,18 +77,16 @@ public final class BotaniaIntegration {
             }
             if (!level.isClientSide) {
                 Item item = stack.getItem();
-                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
-                        new ItemStack(WATER_BOWL)));
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(WATER_BOWL)));
                 player.awardStat(Stats.USE_CAULDRON);
                 player.awardStat(Stats.ITEM_USED.get(item));
 
                 int newLevel = state.getValue(LayeredCauldronBlock.LEVEL) - 1;
                 BlockState newState = newLevel == 0
-                        ? family.getEmptyBlock().defaultBlockState()
-                        : state.setValue(LayeredCauldronBlock.LEVEL, newLevel);
+                    ? family.getEmptyBlock().defaultBlockState()
+                    : state.setValue(LayeredCauldronBlock.LEVEL, newLevel);
                 level.setBlockAndUpdate(pos, newState);
-                level.playSound(null, pos, SoundEvents.BUCKET_FILL,
-                        SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);

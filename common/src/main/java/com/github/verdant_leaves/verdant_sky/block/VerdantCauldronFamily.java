@@ -1,33 +1,24 @@
 package com.github.verdant_leaves.verdant_sky.block;
 
-import java.util.Set;
-
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
+import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
 
 public interface VerdantCauldronFamily {
+    /** 该炼药锅对应的木材定义。 */
+    WoodVariant variant();
 
-    /**
-     * 特殊木材列表。列在这里的木材：
-     * <ul>
-     *  <li>防火</li>
-     *  <li>允许用熔岩桶填充</li>
-     * </ul>
-     * <br>
-     * 加新木材时，普通木材不用动；下界型/特殊木材往这里加一行。
-     */
-    Set<String> SPECIAL_WOODS = Set.of(
-        "crimson", 
-        "warped"
-    );
+    default String wood() {
+        return variant().name();
+    }
 
-    String wood();
-
-    default boolean isSpecial() {
-        return SPECIAL_WOODS.contains(wood());
+    /** 是否防火。防火的木材才允许用熔岩桶填充。 */
+    default boolean fireResistant() {
+        return variant().fireResistant();
     }
 
     default Block lookup(String name) {
@@ -38,4 +29,7 @@ public interface VerdantCauldronFamily {
     default Block getWaterBlock()      { return lookup(VerdantCauldronNames.water(wood())); }
     default Block getLavaBlock()       { return lookup(VerdantCauldronNames.lava(wood())); }
     default Block getPowderSnowBlock() { return lookup(VerdantCauldronNames.powderSnow(wood())); }
+    default ItemStack getCloneStack() {
+        return new ItemStack(getEmptyBlock().asItem());
+    }
 }

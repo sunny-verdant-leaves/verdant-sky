@@ -4,7 +4,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
+import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
+import com.github.verdant_leaves.verdant_sky.registry.ModWoods;
 
 public final class VerdantSkyFabric implements ModInitializer {
     @Override
@@ -17,13 +19,14 @@ public final class VerdantSkyFabric implements ModInitializer {
         VerdantSky.init();
 
         // 注册燃料燃烧时间
-        FuelRegistry.INSTANCE.add(ModBlocks.LIVINGWOOD_POOL_ITEM.get(), 300);
-        FuelRegistry.INSTANCE.add(ModBlocks.APOTHECARY_WOODEN_ITEM.get(), 300);
-        for (String wood : ModBlocks.CAULDRON_WOODS) {
-            int time = ModBlocks.burnTimeFor(wood);
-            if (time <= 0) continue;
+        FuelRegistry.INSTANCE.add(ModBlocks.LIVINGWOOD_POOL_ITEM.get(), ModBlocks.WOOD_BURN_TIME);
+        FuelRegistry.INSTANCE.add(ModBlocks.APOTHECARY_WOODEN_ITEM.get(), ModBlocks.WOOD_BURN_TIME);
 
-            FuelRegistry.INSTANCE.add(ModBlocks.EMPTY_CAULDRONS.get(wood).get().asItem(), time);
+        for (WoodVariant wood : ModWoods.ALL) {
+            if (wood.fireResistant()) continue;
+            var empty = ModBlocks.EMPTY_CAULDRONS.get(wood.name());
+            if (empty == null) continue;
+            FuelRegistry.INSTANCE.add(empty.get().asItem(), ModBlocks.WOOD_BURN_TIME);
         }
     }
 }

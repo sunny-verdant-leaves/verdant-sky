@@ -2,23 +2,33 @@ package com.github.verdant_leaves.verdant_sky.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
+import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
+
 public class WoodenLavaCauldronBlock extends AbstractCauldronBlock implements VerdantCauldronFamily {
 
-    private final String wood;
+    private final WoodVariant variant;
 
-    public WoodenLavaCauldronBlock(BlockBehaviour.Properties props, String wood) {
+    public WoodenLavaCauldronBlock(BlockBehaviour.Properties props, WoodVariant variant) {
         super(props, VerdantCauldronBehavior.VERDANT_LAVA_BEHAVIOR);
-        this.wood = wood;
+        this.variant = variant;
     }
 
     @Override public boolean isFull(BlockState state) { return true; }
     @Override protected double getContentHeight(BlockState state) { return 0.9375; }
     @Override public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) { return 3; }
+    @Override public WoodVariant variant() { return variant; }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return getCloneStack();
+    }
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
@@ -26,6 +36,4 @@ public class WoodenLavaCauldronBlock extends AbstractCauldronBlock implements Ve
             entity.lavaHurt();
         }
     }
-
-    @Override public String wood() { return wood; }
 }

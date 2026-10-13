@@ -29,7 +29,7 @@ public final class VerdantSkyClient {
     }
 
     // ══════════════════════════════════════════════════════════════
-    //  腐朽花的渲染层（透明）
+    //  腐朽百子莲的渲染层（透明）
     // ══════════════════════════════════════════════════════════════
 
     private static void registerDecayAgapanthusRenderType() {
@@ -44,7 +44,7 @@ public final class VerdantSkyClient {
     }
 
     // ══════════════════════════════════════════════════════════════
-    //  腐朽花的范围渲染器
+    //  腐朽百子莲的范围渲染器
     // ══════════════════════════════════════════════════════════════
 
     private static void registerDecayAgapanthusRenderer() {

@@ -1,26 +1,36 @@
 package com.github.verdant_leaves.verdant_sky.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LayeredCauldronBlock;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+
+import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
 
 public class WoodenEmptyCauldronBlock extends AbstractCauldronBlock implements VerdantCauldronFamily {
 
-    private final String wood;
+    private final WoodVariant variant;
 
-    public WoodenEmptyCauldronBlock(BlockBehaviour.Properties props, String wood) {
+    public WoodenEmptyCauldronBlock(BlockBehaviour.Properties props, WoodVariant variant) {
         super(props, VerdantCauldronBehavior.VERDANT_EMPTY_BEHAVIOR);
-        this.wood = wood;
+        this.variant = variant;
     }
 
     @Override public boolean isFull(BlockState state) { return false; }
-    @Override public String wood() { return wood; }
-    
+
+    @Override public WoodVariant variant() { return variant; }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return getCloneStack();
+    }
+
     @Override
     public void handlePrecipitation(BlockState state, Level level, BlockPos pos, Biome.Precipitation precipitation) {
         if (!(state.getBlock() instanceof VerdantCauldronFamily family)) {
