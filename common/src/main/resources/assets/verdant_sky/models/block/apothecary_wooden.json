@@ -1,8 +1,0 @@
-{
-  "parent": "botania:block/shapes/petal_apothecary",
-  "textures": {
-    "bottom": "verdant_sky:block/apothecary_wooden_bottom",
-    "side": "verdant_sky:block/apothecary_wooden_side",
-    "top": "verdant_sky:block/apothecary_wooden_top"
-  }
-}

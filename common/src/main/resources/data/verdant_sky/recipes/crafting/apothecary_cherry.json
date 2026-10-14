@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "C": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:cherry_planks"
     },
     "P": {
       "tag": "botania:petals"
@@ -15,7 +15,7 @@
     "CCC"
   ],
   "result": {
-    "item": "verdant_sky:apothecary_wooden"
+    "item": "verdant_sky:apothecary_cherry"
   },
   "show_notification": true
 }

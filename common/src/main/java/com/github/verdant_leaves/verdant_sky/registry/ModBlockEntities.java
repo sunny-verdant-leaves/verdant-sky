@@ -45,7 +45,9 @@ public class ModBlockEntities {
         Set<Block> altarBlocks = new HashSet<>(
             ((BlockEntityTypeAccessor) (Object) altar).getValidBlocks()
         );
-        altarBlocks.add(ModBlocks.APOTHECARY_WOODEN.get());
+        for (RegistrySupplier<Block> apothecary : ModBlocks.PETAL_APOTHECARIES.values()) {
+            altarBlocks.add(apothecary.get());
+        }
         ((BlockEntityTypeAccessor) (Object) altar).setValidBlocks(altarBlocks);
 
         // 追加活木魔力池

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "water=false": {
+      "model": "verdant_sky:block/apothecary_warped"
+    },
+    "water=true": {
+      "model": "verdant_sky:block/apothecary_warped"
+    }
+  }
+}

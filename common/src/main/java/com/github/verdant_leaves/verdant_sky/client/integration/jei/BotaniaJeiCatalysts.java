@@ -2,6 +2,9 @@ package com.github.verdant_leaves.verdant_sky.client.integration.jei;
 
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+
+import dev.architectury.registry.registries.RegistrySupplier;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,10 +29,12 @@ final class BotaniaJeiCatalysts {
             ManaPoolRecipeCategory.TYPE
         );
 
-        // 花瓣炼制
-        registration.addRecipeCatalyst(
-            new ItemStack(ModBlocks.APOTHECARY_WOODEN.get()),
-            PetalApothecaryRecipeCategory.TYPE
-        );
+        // 花瓣炼制：所有木材变种都注册为催化剂
+        for (RegistrySupplier<Block> apothecary : ModBlocks.PETAL_APOTHECARIES.values()) {
+            registration.addRecipeCatalyst(
+                new ItemStack(apothecary.get()),
+                PetalApothecaryRecipeCategory.TYPE
+            );
+        }
     }
 }

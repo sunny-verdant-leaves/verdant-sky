@@ -87,21 +87,31 @@ public class ModBlocks {
     // ══════════════════════════════════════════════════════════════
     //  木花药台
     // ══════════════════════════════════════════════════════════════
+    
+    public static final Map<String, RegistrySupplier<Block>> PETAL_APOTHECARIES = new LinkedHashMap<>();
+    public static final Map<String, RegistrySupplier<Item>> PETAL_APOTHECARY_ITEMS = new LinkedHashMap<>();
 
-    public static final RegistrySupplier<Block> APOTHECARY_WOODEN =
-        BLOCKS.register("apothecary_wooden", () ->
-            new WoodenPetalApothecaryBlock(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.WOOD)
-                .strength(2.5F)
-                .sound(SoundType.WOOD)
-                .noOcclusion()
-            )
+    private static void registerPetalApothecary(WoodVariant wood) {
+        String id = "apothecary_" + wood.name();
+    
+        RegistrySupplier<Block> block = BLOCKS.register(id, () ->
+            new WoodenPetalApothecaryBlock(apothecaryProps(wood))
         );
-
-    public static final RegistrySupplier<Item> APOTHECARY_WOODEN_ITEM =
-        ITEMS.register("apothecary_wooden", () ->
-            new BlockItem(APOTHECARY_WOODEN.get(), new Item.Properties())
-        );
+        PETAL_APOTHECARIES.put(wood.name(), block);
+    
+        PETAL_APOTHECARY_ITEMS.put(wood.name(), ITEMS.register(id, () ->
+            new BlockItem(block.get(), new Item.Properties())
+        ));
+    }
+    
+    private static BlockBehaviour.Properties apothecaryProps(WoodVariant wood) {
+        BlockBehaviour.Properties props = BlockBehaviour.Properties.of()
+            .mapColor(wood.mapColor())
+            .strength(2.5F)
+            .sound(wood.soundType())
+            .noOcclusion();
+        return props;
+    }
 
     // ══════════════════════════════════════════════════════════════
     //  木炼药锅
@@ -111,26 +121,18 @@ public class ModBlocks {
     public static final Map<String, RegistrySupplier<Block>> WATER_CAULDRONS = new LinkedHashMap<>();
     public static final Map<String, RegistrySupplier<Block>> LAVA_CAULDRONS = new LinkedHashMap<>();
     public static final Map<String, RegistrySupplier<Block>> POWDER_SNOW_CAULDRONS = new LinkedHashMap<>();
-
-    /** 所有炼药锅的物品，供创造模式物品栏遍历。 */
     public static final Map<String, RegistrySupplier<Item>> CAULDRON_ITEMS = new LinkedHashMap<>();
-
-    static {
-        for (WoodVariant wood : ModWoods.ALL) {
-            registerCauldronSet(wood);
-        }
-    }
 
     private static void registerCauldronSet(WoodVariant wood) {
         String id = wood.name();
 
-        RegistrySupplier<Block> empty = BLOCKS.register(VerdantCauldronNames.empty(id), () -> new WoodenCauldronBlock(props(wood), wood));
+        RegistrySupplier<Block> empty = BLOCKS.register(VerdantCauldronNames.empty(id), () -> new WoodenCauldronBlock(cauldronProps(wood), wood));
         EMPTY_CAULDRONS.put(id, empty);
-        RegistrySupplier<Block> water = BLOCKS.register(VerdantCauldronNames.water(id), () -> new WoodenWaterCauldronBlock(props(wood), wood));
+        RegistrySupplier<Block> water = BLOCKS.register(VerdantCauldronNames.water(id), () -> new WoodenWaterCauldronBlock(cauldronProps(wood), wood));
         WATER_CAULDRONS.put(id, water);
-        RegistrySupplier<Block> lava = BLOCKS.register(VerdantCauldronNames.lava(id), () -> new WoodenLavaCauldronBlock(props(wood), wood));
+        RegistrySupplier<Block> lava = BLOCKS.register(VerdantCauldronNames.lava(id), () -> new WoodenLavaCauldronBlock(cauldronProps(wood), wood));
         LAVA_CAULDRONS.put(id, lava);
-        RegistrySupplier<Block> powder = BLOCKS.register(VerdantCauldronNames.powderSnow(id), () -> new WoodenPowderSnowCauldronBlock(props(wood), wood));
+        RegistrySupplier<Block> powder = BLOCKS.register(VerdantCauldronNames.powderSnow(id), () -> new WoodenPowderSnowCauldronBlock(cauldronProps(wood), wood));
         POWDER_SNOW_CAULDRONS.put(id, powder);
 
         // 只给空锅注册 BlockItem
@@ -161,12 +163,22 @@ public class ModBlocks {
         }
     }
 
-    private static BlockBehaviour.Properties props(WoodVariant wood) {
+    private static BlockBehaviour.Properties cauldronProps(WoodVariant wood) {
         return BlockBehaviour.Properties.of()
             .mapColor(wood.mapColor())
             .strength(2.0F)
             .sound(wood.soundType())
             .noOcclusion();
+    }
+    
+    // ══════════════════════════════════════════════════════════════
+    //  注册所有木质的方块变体及物品。
+    // ══════════════════════════════════════════════════════════════
+    static {
+        for (WoodVariant wood : ModWoods.ALL) {
+            registerCauldronSet(wood);
+            registerPetalApothecary(wood);
+        }
     }
 
     public static void register() {

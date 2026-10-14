@@ -29,9 +29,13 @@ public class ModCreativeTabs {
             VERDANT_TAB,
             ModBlocks.DECAY_AGAPANTHUS_ITEM,
             ModBlocks.FLOATING_DECAY_AGAPANTHUS_ITEM,
-            ModBlocks.LIVINGWOOD_POOL_ITEM, 
-            ModBlocks.APOTHECARY_WOODEN_ITEM
+            ModBlocks.LIVINGWOOD_POOL_ITEM
         );
+
+        for (RegistrySupplier<Item> item : ModBlocks.PETAL_APOTHECARY_ITEMS.values()) {
+            CreativeTabRegistry.append(VERDANT_TAB, item);
+        }
+
 
         for (RegistrySupplier<Item> item : ModBlocks.CAULDRON_ITEMS.values()) {
             CreativeTabRegistry.append(VERDANT_TAB, item);

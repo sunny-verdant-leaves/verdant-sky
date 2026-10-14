@@ -8,7 +8,6 @@
   "block.verdant_sky.decay_agapanthus.reference": "All things shall wither and decay.",
   "block.verdant_sky.floating_decay_agapanthus": "Floating Decay Agapanthus",
   "block.verdant_sky.livingwood_pool": "Livingwood Mana Pool",
-  "block.verdant_sky.apothecary_wooden": "Wooden Petal Apothecary",
   
   "block.verdant_sky.oak_cauldron": "Oak Cauldron",
   "block.verdant_sky.oak_water_cauldron": "Oak Water Cauldron",
@@ -62,6 +61,20 @@
   "block.verdant_sky.dreamwood_water_cauldron": "Dreamwood Water Cauldron",
   "block.verdant_sky.dreamwood_lava_cauldron": "Dreamwood Lava Cauldron",
   "block.verdant_sky.dreamwood_powder_snow_cauldron": "Dreamwood Powder Snow Cauldron",
+
+  "block.verdant_sky.apothecary_oak": "Oak Petal Apothecary",
+  "block.verdant_sky.apothecary_spruce": "Spruce Petal Apothecary",
+  "block.verdant_sky.apothecary_birch": "Birch Petal Apothecary",
+  "block.verdant_sky.apothecary_jungle": "Jungle Petal Apothecary",
+  "block.verdant_sky.apothecary_acacia": "Acacia Petal Apothecary",
+  "block.verdant_sky.apothecary_dark_oak": "Dark Oak Petal Apothecary",
+  "block.verdant_sky.apothecary_mangrove": "Mangrove Petal Apothecary",
+  "block.verdant_sky.apothecary_cherry": "Cherry Petal Apothecary",
+  "block.verdant_sky.apothecary_bamboo": "Bamboo Petal Apothecary",
+  "block.verdant_sky.apothecary_crimson": "Crimson Petal Apothecary",
+  "block.verdant_sky.apothecary_warped": "Warped Petal Apothecary",
+  "block.verdant_sky.apothecary_livingwood": "Livingwood Petal Apothecary",
+  "block.verdant_sky.apothecary_dreamwood": "Dreamwood Petal Apothecary",
 
   "jei.verdant_sky.decay": "Decay Agapanthus",
   "jei.verdant_sky.condition.required.short": "§8Location Requirements",

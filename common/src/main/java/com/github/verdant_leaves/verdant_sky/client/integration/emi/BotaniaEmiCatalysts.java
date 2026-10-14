@@ -2,6 +2,9 @@ package com.github.verdant_leaves.verdant_sky.client.integration.emi;
 
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.architectury.registry.registries.RegistrySupplier;
+
+import net.minecraft.world.level.block.Block;
 
 import vazkii.botania.client.integration.emi.BotaniaEmiPlugin;
 
@@ -22,11 +25,13 @@ final class BotaniaEmiCatalysts {
             BotaniaEmiPlugin.MANA_INFUSION,
             EmiStack.of(ModBlocks.LIVINGWOOD_POOL.get())
         );
-        
+
         // 花瓣炼制
-        registry.addWorkstation(
-            BotaniaEmiPlugin.PETAL_APOTHECARY,
-            EmiStack.of(ModBlocks.APOTHECARY_WOODEN.get())
-        );
+        for (RegistrySupplier<Block> apothecary : ModBlocks.PETAL_APOTHECARIES.values()) {
+            registry.addWorkstation(
+                BotaniaEmiPlugin.PETAL_APOTHECARY,
+                EmiStack.of(apothecary.get())
+            );
+        }
     }
 }
