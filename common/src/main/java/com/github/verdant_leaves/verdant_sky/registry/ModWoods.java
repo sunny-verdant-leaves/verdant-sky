@@ -47,4 +47,23 @@ public final class ModWoods {
         if (!Platform.isModLoaded(modId)) return null;
         return add(factory.get());
     }
+
+    /** 按木材 id 查找。找不到返回 null。 */
+    public static WoodVariant byName(String name) {
+        for (WoodVariant wood : ALL) {
+            if (wood.name().equals(name)) {
+                return wood;
+            }
+        }
+        return null;
+    }
+
+    /** 按木材 id 查找。找不到则抛出异常。 */
+    public static WoodVariant requireByName(String name) {
+        WoodVariant variant = byName(name);
+        if (variant == null) {
+            throw new IllegalArgumentException("Unknown wood: " + name);
+        }
+        return variant;
+    }
 }

@@ -33,7 +33,7 @@ public class ModCreativeTabs {
             ModBlocks.APOTHECARY_WOODEN_ITEM
         );
 
-        for (RegistrySupplier<Item> item : ModBlocks.CAULDRON_ITEMS) {
+        for (RegistrySupplier<Item> item : ModBlocks.CAULDRON_ITEMS.values()) {
             CreativeTabRegistry.append(VERDANT_TAB, item);
         }
     }

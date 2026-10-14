@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
+import com.github.verdant_leaves.verdant_sky.registry.ModWoods;
 
 public class WoodenLavaCauldronBlock extends AbstractCauldronBlock implements VerdantCauldronFamily {
 
@@ -20,6 +21,10 @@ public class WoodenLavaCauldronBlock extends AbstractCauldronBlock implements Ve
         this.variant = variant;
     }
 
+    public WoodenLavaCauldronBlock(BlockBehaviour.Properties props, String wood) {
+        this(props, ModWoods.requireByName(wood));
+    }
+
     @Override public boolean isFull(BlockState state) { return true; }
     @Override protected double getContentHeight(BlockState state) { return 0.9375; }
     @Override public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) { return 3; }
@@ -27,7 +32,7 @@ public class WoodenLavaCauldronBlock extends AbstractCauldronBlock implements Ve
 
     @Override
     public Item asItem() {
-        Item item = ModBlocks.CAULDRON_ITEMS_BY_WOOD.get(wood()).get();
+        Item item = ModBlocks.CAULDRON_ITEMS.get(wood()).get();
         return item;
     }
 

@@ -1,7 +1,5 @@
 package com.github.verdant_leaves.verdant_sky.registry;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -34,20 +32,18 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.BLOCK);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.ITEM);
 
+    private static final BlockBehaviour.Properties FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY);
+    private static final BlockBehaviour.Properties FLOATING_PROPS = BlockBehaviour.Properties.of()
+        .mapColor(MapColor.PLANT)
+        .strength(0.5F)
+        .sound(SoundType.GRAVEL)
+        .lightLevel(s -> 15);
+
     public static final int WOOD_BURN_TIME = 300;
 
     // ══════════════════════════════════════════════════════════════
     //  腐朽百子莲 Decay Agapanthus
     // ══════════════════════════════════════════════════════════════
-
-    private static final BlockBehaviour.Properties FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY);
-
-    private static final BlockBehaviour.Properties FLOATING_PROPS =
-        BlockBehaviour.Properties.of()
-            .mapColor(MapColor.PLANT)
-            .strength(0.5F)
-            .sound(SoundType.GRAVEL)
-            .lightLevel(s -> 15);
 
     public static final RegistrySupplier<Block> DECAY_AGAPANTHUS =
         BLOCKS.register("decay_agapanthus", () ->
@@ -117,8 +113,7 @@ public class ModBlocks {
     public static final Map<String, RegistrySupplier<Block>> POWDER_SNOW_CAULDRONS = new LinkedHashMap<>();
 
     /** 所有炼药锅的物品，供创造模式物品栏遍历。 */
-    public static final List<RegistrySupplier<Item>> CAULDRON_ITEMS = new ArrayList<>();
-    public static final Map<String, RegistrySupplier<Item>> CAULDRON_ITEMS_BY_WOOD = new LinkedHashMap<>();
+    public static final Map<String, RegistrySupplier<Item>> CAULDRON_ITEMS = new LinkedHashMap<>();
 
     static {
         for (WoodVariant wood : ModWoods.ALL) {
@@ -143,8 +138,7 @@ public class ModBlocks {
             VerdantCauldronNames.empty(id),
             () -> new BlockItem(empty.get(), new Item.Properties())
         );
-        CAULDRON_ITEMS.add(item);
-        CAULDRON_ITEMS_BY_WOOD.put(id, item);
+        CAULDRON_ITEMS.put(id, item);
     }
     
     // 炼药锅方块映射到同一物品
@@ -152,7 +146,7 @@ public class ModBlocks {
         for (WoodVariant wood : ModWoods.ALL) {
             String id = wood.name();
     
-            Item emptyItem = CAULDRON_ITEMS_BY_WOOD.get(id).get();
+            Item emptyItem = CAULDRON_ITEMS.get(id).get();
             if (emptyItem == Items.AIR) {
                 continue;
             }
