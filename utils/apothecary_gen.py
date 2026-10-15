@@ -249,9 +249,9 @@ def gen_resources(root: Path):
         write_json(block_dir / f"apothecary_{wood}.json", {
             "parent": APOTHECARY_SHAPE,
             "textures": {
-                "bottom": texture,
-                "side":   texture,
-                "top":    texture
+                "bottom": f"verdant_sky:block/apothecary_{wood}_bottom",
+                "side":   f"verdant_sky:block/apothecary_{wood}_side",
+                "top":    f"verdant_sky:block/apothecary_{wood}_top"
             }
         })
 

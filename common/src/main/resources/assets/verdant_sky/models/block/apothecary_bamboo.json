@@ -1,8 +1,8 @@
 {
   "parent": "botania:block/shapes/petal_apothecary",
   "textures": {
-    "bottom": "minecraft:block/bamboo_planks",
-    "side": "minecraft:block/bamboo_planks",
-    "top": "minecraft:block/bamboo_planks"
+    "bottom": "verdant_sky:block/apothecary_bamboo_bottom",
+    "side": "verdant_sky:block/apothecary_bamboo_side",
+    "top": "verdant_sky:block/apothecary_bamboo_top"
   }
 }

@@ -1,8 +1,8 @@
 {
   "parent": "botania:block/shapes/petal_apothecary",
   "textures": {
-    "bottom": "minecraft:block/crimson_planks",
-    "side": "minecraft:block/crimson_planks",
-    "top": "minecraft:block/crimson_planks"
+    "bottom": "verdant_sky:block/apothecary_crimson_bottom",
+    "side": "verdant_sky:block/apothecary_crimson_side",
+    "top": "verdant_sky:block/apothecary_crimson_top"
   }
 }
