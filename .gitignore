@@ -6,6 +6,7 @@ out/
 !gradle/wrapper/gradle-wrapper.properties
 
 # ── IDE ──
+bin/
 .idea/
 .vscode/
 *.iml

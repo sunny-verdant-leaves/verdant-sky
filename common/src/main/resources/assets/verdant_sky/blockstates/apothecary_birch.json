@@ -1,9 +1,6 @@
 {
   "variants": {
-    "water=false": {
-      "model": "verdant_sky:block/apothecary_birch"
-    },
-    "water=true": {
+    "": {
       "model": "verdant_sky:block/apothecary_birch"
     }
   }

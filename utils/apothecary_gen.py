@@ -4,6 +4,7 @@
 木花药台资源生成器 / Wooden Petal Apothecary Generator
 =================================================
 为 Verdant Sky 的每一种木材批量生成花药台的全套资源与数据文件。
+注意：不包括本地化和标签
 
 用法: python utils/apothecary_gen.py [--output <目录>] [--mod-id <id>]
       旧写法兼容: 直接运行，使用默认参数
@@ -13,7 +14,6 @@
     --mod-id <id>     模组 ID。默认 verdant_sky
 
 生成内容（每种木材）:
-    assets/<mod>/lang/en_us.json + zh_cn.json         （追加，不覆盖已有键）
     assets/<mod>/blockstates/apothecary_<wood>.json
     assets/<mod>/models/block/apothecary_<wood>.json
     assets/<mod>/models/item/apothecary_<wood>.json
@@ -93,79 +93,81 @@ def load_json(path: Path) -> dict:
 
 # 由于语言文件需要排版的特殊性，不直接进行追加。而是使用额外的工具整合并重新生成。
 
-# def gen_lang(root: Path):
-#     """
-#     追加语言条目。已存在的键不动，只往文件末尾插入缺失的键。
-#     原文件内容保持原样，不做整体重新格式化。
-#     """
-#     lang_dir = root / "assets" / MOD_ID / "lang"
-#     en_path = lang_dir / "en_us.json"
-#     zh_path = lang_dir / "zh_cn.json"
+def gen_lang(root: Path):
+    """
+    追加语言条目。已存在的键不动，只往文件末尾插入缺失的键。
+    原文件内容保持原样，不做整体重新格式化。
+    """
+    # lang_dir = root / "assets" / MOD_ID / "lang"
+    # en_path = lang_dir / "en_us.json"
+    # zh_path = lang_dir / "zh_cn.json"
 
-#     en_added = append_lang_entries(en_path, {
-#         f"block.{MOD_ID}.apothecary_{wood}": f"{wood_en} Petal Apothecary"
-#         for wood, (wood_en, _, _, _) in WOODS.items()
-#     })
-#     zh_added = append_lang_entries(zh_path, {
-#         f"block.{MOD_ID}.apothecary_{wood}": f"{wood_zh}花药台"
-#         for wood, (_, wood_zh, _, _) in WOODS.items()
-#     })
+    # en_added = append_lang_entries(en_path, {
+    #     f"block.{MOD_ID}.apothecary_{wood}": f"{wood_en} Petal Apothecary"
+    #     for wood, (wood_en, _, _, _) in WOODS.items()
+    # })
+    # zh_added = append_lang_entries(zh_path, {
+    #     f"block.{MOD_ID}.apothecary_{wood}": f"{wood_zh}花药台"
+    #     for wood, (_, wood_zh, _, _) in WOODS.items()
+    # })
 
-#     print(f"  [lang]     en_us +{en_added} / zh_cn +{zh_added}")
+    # print(f"  [lang]     en_us +{en_added} / zh_cn +{zh_added}")
+    return
 
 
-# def append_lang_entries(path: Path, entries: dict) -> int:
-#     """
-#     把 entries 中尚未存在的键追加到 JSON 文件末尾。
-#     返回新增数量。已有内容原样保留。
-#     """
-#     if not path.exists():
-#         write_json(path, entries)
-#         return len(entries)
+def append_lang_entries(path: Path, entries: dict) -> int:
+    """
+    把 entries 中尚未存在的键追加到 JSON 文件末尾。
+    返回新增数量。已有内容原样保留。
+    """
+    # if not path.exists():
+    #     write_json(path, entries)
+    #     return len(entries)
 
-#     text = path.read_text(encoding="utf-8")
+    # text = path.read_text(encoding="utf-8")
 
-#     # 解析已有内容，判断哪些键已存在
-#     try:
-#         existing = json.loads(text)
-#     except json.JSONDecodeError:
-#         # 文件坏了就直接整体重写
-#         write_json(path, entries)
-#         return len(entries)
+    # # 解析已有内容，判断哪些键已存在
+    # try:
+    #     existing = json.loads(text)
+    # except json.JSONDecodeError:
+    #     # 文件坏了就直接整体重写
+    #     write_json(path, entries)
+    #     return len(entries)
 
-#     new_entries = {k: v for k, v in entries.items() if k not in existing}
-#     if not new_entries:
-#         return 0
+    # new_entries = {k: v for k, v in entries.items() if k not in existing}
+    # if not new_entries:
+    #     return 0
 
-#     # 找到最后一个 } 的位置，在它前面插入新行
-#     last_brace = text.rfind("}")
-#     if last_brace == -1:
-#         write_json(path, {**existing, **new_entries})
-#         return len(new_entries)
+    # # 找到最后一个 } 的位置，在它前面插入新行
+    # last_brace = text.rfind("}")
+    # if last_brace == -1:
+    #     write_json(path, {**existing, **new_entries})
+    #     return len(new_entries)
 
-#     before = text[:last_brace].rstrip()
-#     after = text[last_brace:]
+    # before = text[:last_brace].rstrip()
+    # after = text[last_brace:]
 
-#     # 判断原文件是否为空对象
-#     if before.endswith("{"):
-#         # {} 空对象，直接填
-#         lines = [
-#             f'  {json.dumps(k, ensure_ascii=False)}: '
-#             f'{json.dumps(v, ensure_ascii=False)}'
-#             for k, v in new_entries.items()
-#         ]
-#         new_text = "{\n" + ",\n".join(lines) + "\n}"
-#     else:
-#         # 非空，在最后一个已有条目后加逗号再追加
-#         lines = [
-#             f'  {json.dumps(k, ensure_ascii=False)}: '
-#             f'{json.dumps(v, ensure_ascii=False)}'
-#             for k, v in new_entries.items()
-#         ]
-#         new_text = before + ",\n" + ",\n".join(lines) + "\n}" + after[1:]
+    # # 判断原文件是否为空对象
+    # if before.endswith("{"):
+    #     # {} 空对象，直接填
+    #     lines = [
+    #         f'  {json.dumps(k, ensure_ascii=False)}: '
+    #         f'{json.dumps(v, ensure_ascii=False)}'
+    #         for k, v in new_entries.items()
+    #     ]
+    #     new_text = "{\n" + ",\n".join(lines) + "\n}"
+    # else:
+    #     # 非空，在最后一个已有条目后加逗号再追加
+    #     lines = [
+    #         f'  {json.dumps(k, ensure_ascii=False)}: '
+    #         f'{json.dumps(v, ensure_ascii=False)}'
+    #         for k, v in new_entries.items()
+    #     ]
+    #     new_text = before + ",\n" + ",\n".join(lines) + "\n}" + after[1:]
 
-#     path.write_text(new_text, encoding="utf-8")
-#     return len(new_entries)
+    # path.write_text(new_text, encoding="utf-8")
+    # return len(new_entries)
+    return 0
 
 # ══════════════════════════════════════════════════════════════
 #  2. 战利品表
@@ -239,8 +241,7 @@ def gen_resources(root: Path):
 
         write_json(bs_dir / f"apothecary_{wood}.json", {
             "variants": {
-                "water=false": {"model": model_id},
-                "water=true":  {"model": model_id}
+                "": { "model": f"verdant_sky:block/apothecary_{wood}" }
             }
         })
 
