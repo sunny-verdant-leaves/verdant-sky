@@ -93,12 +93,12 @@ public class ModBlocks {
 
     private static void registerPetalApothecary(WoodVariant wood) {
         String id = "apothecary_" + wood.name();
-    
+
         RegistrySupplier<Block> block = BLOCKS.register(id, () ->
-            new WoodenPetalApothecaryBlock(apothecaryProps(wood))
+            new WoodenPetalApothecaryBlock(apothecaryProps(wood), wood)
         );
         PETAL_APOTHECARIES.put(wood.name(), block);
-    
+        
         PETAL_APOTHECARY_ITEMS.put(wood.name(), ITEMS.register(id, () ->
             new BlockItem(block.get(), new Item.Properties())
         ));

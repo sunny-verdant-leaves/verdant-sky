@@ -5,13 +5,18 @@ import net.fabricmc.fabric.api.registry.FuelRegistry;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
+import com.github.verdant_leaves.verdant_sky.platform.PlatformFlammable;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModWoods;
+import com.github.verdant_leaves.verdant_sky.fabric.platform.PlatformFlammableFabric;
 
 public final class VerdantSkyFabric implements ModInitializer {
     @Override
     public void onInitialize() {
-        // Run our common setup.
+        // 注入 Fabric 端的燃烧实现
+        PlatformFlammable.Holder.INSTANCE = new PlatformFlammableFabric();
+
+        // 运行公共初始化
         VerdantSky.init();
 
         // 注册燃料燃烧时间
@@ -21,9 +26,9 @@ public final class VerdantSkyFabric implements ModInitializer {
             if (wood.fireResistant()) continue;
 
             // 花药台
-            var apothecary = ModBlocks.PETAL_APOTHECARY_ITEMS.get(wood.name());
-            if (apothecary != null) {
-                FuelRegistry.INSTANCE.add(apothecary.get(), ModBlocks.WOOD_BURN_TIME);
+            var apothecaryItem = ModBlocks.PETAL_APOTHECARY_ITEMS.get(wood.name());
+            if (apothecaryItem != null) {
+                FuelRegistry.INSTANCE.add(apothecaryItem.get(), ModBlocks.WOOD_BURN_TIME);
             }
 
             // 炼药锅

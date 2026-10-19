@@ -9,8 +9,10 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
+import com.github.verdant_leaves.verdant_sky.platform.PlatformFlammable;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModWoods;
+import com.github.verdant_leaves.verdant_sky.forge.platform.PlatformFlammableForge;
 
 @SuppressWarnings("removal")
 @Mod(VerdantSky.MOD_ID)
@@ -19,8 +21,13 @@ public final class VerdantSkyForge {
         EventBuses.registerModEventBus(VerdantSky.MOD_ID,
             FMLJavaModLoadingContext.get().getModEventBus());
 
+        // 注入 Forge 端的燃烧实现
+        PlatformFlammable.Holder.INSTANCE = new PlatformFlammableForge();
+
+        // 运行公共初始化
         VerdantSky.init();
 
+        // 注册燃料燃烧时间事件
         MinecraftForge.EVENT_BUS.addListener(this::onFuelBurnTime);
     }
 
