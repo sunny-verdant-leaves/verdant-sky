@@ -18,15 +18,7 @@ import vazkii.botania.common.item.block.SpecialFlowerBlockItem;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
-import com.github.verdant_leaves.verdant_sky.block.DecayAgapanthusBlock;
-import com.github.verdant_leaves.verdant_sky.block.FloatingDecayAgapanthusBlock;
-import com.github.verdant_leaves.verdant_sky.block.VerdantCauldronNames;
-import com.github.verdant_leaves.verdant_sky.block.VerdantPoolBlock;
-import com.github.verdant_leaves.verdant_sky.block.WoodenCauldronBlock;
-import com.github.verdant_leaves.verdant_sky.block.WoodenWaterCauldronBlock;
-import com.github.verdant_leaves.verdant_sky.block.WoodenLavaCauldronBlock;
-import com.github.verdant_leaves.verdant_sky.block.WoodenPowderSnowCauldronBlock;
-import com.github.verdant_leaves.verdant_sky.block.WoodenPetalApothecaryBlock;
+import com.github.verdant_leaves.verdant_sky.block.*;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.BLOCK);

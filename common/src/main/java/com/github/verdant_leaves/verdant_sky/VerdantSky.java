@@ -5,12 +5,10 @@ import dev.architectury.platform.Platform;
 
 import com.github.verdant_leaves.verdant_sky.integration.botania.BotaniaIntegration;
 import com.github.verdant_leaves.verdant_sky.loot.PlantLootModifier;
-import com.github.verdant_leaves.verdant_sky.platform.PlatformFlammable;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
 import com.github.verdant_leaves.verdant_sky.registry.ModCreativeTabs;
 import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
-import com.github.verdant_leaves.verdant_sky.registry.ModWoods;
 import com.github.verdant_leaves.verdant_sky.world.StartIslandSpawner;
 
 public final class VerdantSky {
@@ -37,14 +35,14 @@ public final class VerdantSky {
                 BotaniaIntegration.register();
             }
             
-            // 统一注册方块的可燃性（烧毁几率 20，蔓延速度 5）
-            for (var wood : ModWoods.ALL) {
-                if (wood.fireResistant()) continue;
-                var apothecaryBlock = ModBlocks.PETAL_APOTHECARIES.get(wood.name());
-                if (apothecaryBlock != null) {
-                    PlatformFlammable.Holder.INSTANCE.register(apothecaryBlock.get(), 20, 5);
-                }
-            }
+            // 统一注册方块的可燃性
+            // for (var wood : ModWoods.ALL) {
+            //     if (wood.fireResistant()) continue;
+            //     var apothecaryBlock = ModBlocks.PETAL_APOTHECARIES.get(wood.name());
+            //     if (apothecaryBlock != null) {
+            //         PlatformFlammable.Holder.INSTANCE.register(apothecaryBlock.get(), 20, 5);
+            //     }
+            // }
         });
         
         LifecycleEvent.SETUP.register(ModBlocks::bindCauldronItems);

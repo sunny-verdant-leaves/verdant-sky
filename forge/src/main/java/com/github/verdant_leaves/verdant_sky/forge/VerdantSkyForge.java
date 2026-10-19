@@ -18,8 +18,7 @@ import com.github.verdant_leaves.verdant_sky.forge.platform.PlatformFlammableFor
 @Mod(VerdantSky.MOD_ID)
 public final class VerdantSkyForge {
     public VerdantSkyForge() {
-        EventBuses.registerModEventBus(VerdantSky.MOD_ID,
-            FMLJavaModLoadingContext.get().getModEventBus());
+        EventBuses.registerModEventBus(VerdantSky.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
 
         // 注入 Forge 端的燃烧实现
         PlatformFlammable.Holder.INSTANCE = new PlatformFlammableForge();
