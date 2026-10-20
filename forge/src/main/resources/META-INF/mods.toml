@@ -9,7 +9,7 @@ version = "${version}"
 displayName = "Verdant Sky"
 authors = "Sunny Verdant Leaves"
 description = '''
-This is a Minecraft mod for the Verdant Sky modpack.
+Botania Addon Mod for the Verdant Sky Modpack
 '''
 logoFile = "logo.png"
 

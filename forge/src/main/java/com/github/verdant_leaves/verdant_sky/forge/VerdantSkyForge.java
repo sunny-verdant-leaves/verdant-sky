@@ -14,7 +14,6 @@ import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModWoods;
 import com.github.verdant_leaves.verdant_sky.forge.platform.PlatformFlammableForge;
 
-@SuppressWarnings("removal")
 @Mod(VerdantSky.MOD_ID)
 public final class VerdantSkyForge {
     public VerdantSkyForge() {

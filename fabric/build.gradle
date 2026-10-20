@@ -34,8 +34,8 @@ dependencies {
     modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
 
     // Botania
-    modCompileOnly "maven.modrinth:pfjLUfGv:ZbFDx99K"
-    modRuntimeOnly "maven.modrinth:pfjLUfGv:ZbFDx99K"
+    modCompileOnly "maven.modrinth:pfjLUfGv:CEQN4Awy"
+    modRuntimeOnly "maven.modrinth:pfjLUfGv:CEQN4Awy"
 
     // JEI
     modLocalRuntime "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"

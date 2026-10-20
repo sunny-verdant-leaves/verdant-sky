@@ -40,8 +40,8 @@ dependencies {
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
     
     // Botania
-    modCompileOnly "vazkii.botania:Botania:1.20.1-453-FORGE"
-    modRuntimeOnly "vazkii.botania:Botania:1.20.1-453-FORGE"
+    modCompileOnly "vazkii.botania:Botania:${botania_version}-FORGE"
+    modRuntimeOnly "vazkii.botania:Botania:${botania_version}-FORGE"
     
     // JEI
     modLocalRuntime "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"

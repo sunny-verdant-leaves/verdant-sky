@@ -13,12 +13,12 @@ dependencies {
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
         
     // Botania - Forge 端
-    modCompileOnly "vazkii.botania:Botania:1.20.1-453-FORGE"
-    modRuntimeOnly "vazkii.botania:Botania:1.20.1-453-FORGE"
+    modCompileOnly "vazkii.botania:Botania:${botania_version}-FORGE"
+    modRuntimeOnly "vazkii.botania:Botania:${botania_version}-FORGE"
 
     // Botania - Fabric 端
-    modCompileOnly "maven.modrinth:pfjLUfGv:ZbFDx99K"
-    modRuntimeOnly "maven.modrinth:pfjLUfGv:ZbFDx99K"
+    modCompileOnly "maven.modrinth:pfjLUfGv:CEQN4Awy"
+    modRuntimeOnly "maven.modrinth:pfjLUfGv:CEQN4Awy"
 
     // JEI
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"

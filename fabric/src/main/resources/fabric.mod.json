@@ -3,7 +3,7 @@
   "id": "verdant_sky",
   "version": "${version}",
   "name": "Verdant Sky",
-  "description": "Mod for Modspack Verdant Sky",
+  "description": "Botania Addon Mod for the Verdant Sky Modpack",
   "authors": [
     "Sunny Verdant Leaves"
   ],
@@ -32,12 +32,12 @@
     "verdant_sky.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.19.5",
+    "fabricloader": ">=0.15.6",
     "minecraft": "~1.20.1",
     "java": ">=17",
     "architectury": ">=9.1.10",
     "fabric-api": "*",
-    "botania": ">=1.20.1-451"
+    "botania": ">=1.20.1-453"
   },
   "suggests": {
   }
