@@ -85,9 +85,6 @@ public class ModBlocks {
             if (LIVINGWOOD_POOL_BLOCK != null) {
                 return LIVINGWOOD_POOL_BLOCK;
             }
-            else{
-                System.out.println("[Verdant Sky] Unexpected null value registration");
-            }
             // Forge 端在安全的注册窗口期内实例化
             return new VerdantPoolBlock(
                 BlockBehaviour.Properties.of()

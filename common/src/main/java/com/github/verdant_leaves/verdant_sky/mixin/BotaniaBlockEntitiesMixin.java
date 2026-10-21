@@ -1,6 +1,5 @@
 package com.github.verdant_leaves.verdant_sky.mixin;
 
-import com.github.verdant_leaves.verdant_sky.block.WoodenPetalApothecaryBlock;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
