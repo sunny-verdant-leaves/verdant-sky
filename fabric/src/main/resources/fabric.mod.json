@@ -29,7 +29,8 @@
     ]
   },
   "mixins": [
-    "verdant_sky.mixins.json"
+    "verdant_sky.mixins.json",
+    "verdant_sky_fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.15.6",

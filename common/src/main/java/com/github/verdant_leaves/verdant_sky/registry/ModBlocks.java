@@ -5,6 +5,7 @@ import java.util.Map;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
+import dev.architectury.platform.Platform;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -23,6 +24,7 @@ import com.github.verdant_leaves.verdant_sky.block.*;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.BLOCK);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.ITEM);
+    public static final Map<String, Block> FABRIC_PRE_INSTANTIATED = new LinkedHashMap<>();
 
     private static final BlockBehaviour.Properties FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY);
     private static final BlockBehaviour.Properties FLOATING_PROPS = BlockBehaviour.Properties.of()
@@ -60,38 +62,46 @@ public class ModBlocks {
     // ══════════════════════════════════════════════════════════════
     //  活木魔力池
     // ══════════════════════════════════════════════════════════════
+    public static final Block LIVINGWOOD_POOL_BLOCK;
 
-    public static final RegistrySupplier<Block> LIVINGWOOD_POOL =
-        BLOCKS.register("livingwood_pool", () ->
-            new VerdantPoolBlock(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.WOOD)
-                .strength(2.0F)
-                .sound(SoundType.WOOD)
-                .noOcclusion()
-            )
-        );
+    static {
+        // Fabric 端：提前实例化
+        if (Platform.isFabric()) {
+            LIVINGWOOD_POOL_BLOCK = new VerdantPoolBlock(
+                BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+            );
+        } else {
+            LIVINGWOOD_POOL_BLOCK = null;
+        }
+    }
 
-    public static final RegistrySupplier<Item> LIVINGWOOD_POOL_ITEM =
-        ITEMS.register("livingwood_pool", () ->
+    public static final RegistrySupplier<Block> LIVINGWOOD_POOL = 
+        BLOCKS.register("livingwood_pool", () -> {
+            // Fabric 直接返回提前 new 好的实例
+            if (LIVINGWOOD_POOL_BLOCK != null) {
+                return LIVINGWOOD_POOL_BLOCK;
+            }
+            else{
+                System.out.println("[Verdant Sky] Unexpected null value registration");
+            }
+            // Forge 端在安全的注册窗口期内实例化
+            return new VerdantPoolBlock(
+                BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+            );
+        });
+
+    public static final RegistrySupplier<Item> LIVINGWOOD_POOL_ITEM = 
+        ITEMS.register("livingwood_pool", () -> 
             new BlockItem(LIVINGWOOD_POOL.get(), new Item.Properties())
         );
-        static {
-            // 当 LIVINGWOOD_POOL 真正注册完成的瞬间，执行以下回调
-            LIVINGWOOD_POOL.listen(block -> {
-                if (dev.architectury.platform.Platform.isModLoaded("botania")) {
-                    var poolType = vazkii.botania.common.block.block_entity.BotaniaBlockEntities.POOL;
-                    var poolBlocks = new java.util.HashSet<>(
-                        ((com.github.verdant_leaves.verdant_sky.mixin.BlockEntityTypeAccessor) (Object) poolType).getValidBlocks()
-                    );
-                    poolBlocks.add(block);
-                    ((com.github.verdant_leaves.verdant_sky.mixin.BlockEntityTypeAccessor) (Object) poolType).setValidBlocks(poolBlocks);
-                    System.out.println("[VerdantSky] Injected livingwood_pool into POOL validBlocks via listen()");
-                }
-                else{
-                    System.out.println("[VerdantSky] Couldn't inject livingwood_pool into POOL validBlocks via listen()");
-                }
-            });
-        }
 
     // ══════════════════════════════════════════════════════════════
     //  木花药台
