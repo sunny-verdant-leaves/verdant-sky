@@ -75,6 +75,23 @@ public class ModBlocks {
         ITEMS.register("livingwood_pool", () ->
             new BlockItem(LIVINGWOOD_POOL.get(), new Item.Properties())
         );
+        static {
+            // 当 LIVINGWOOD_POOL 真正注册完成的瞬间，执行以下回调
+            LIVINGWOOD_POOL.listen(block -> {
+                if (dev.architectury.platform.Platform.isModLoaded("botania")) {
+                    var poolType = vazkii.botania.common.block.block_entity.BotaniaBlockEntities.POOL;
+                    var poolBlocks = new java.util.HashSet<>(
+                        ((com.github.verdant_leaves.verdant_sky.mixin.BlockEntityTypeAccessor) (Object) poolType).getValidBlocks()
+                    );
+                    poolBlocks.add(block);
+                    ((com.github.verdant_leaves.verdant_sky.mixin.BlockEntityTypeAccessor) (Object) poolType).setValidBlocks(poolBlocks);
+                    System.out.println("[VerdantSky] Injected livingwood_pool into POOL validBlocks via listen()");
+                }
+                else{
+                    System.out.println("[VerdantSky] Couldn't inject livingwood_pool into POOL validBlocks via listen()");
+                }
+            });
+        }
 
     // ══════════════════════════════════════════════════════════════
     //  木花药台

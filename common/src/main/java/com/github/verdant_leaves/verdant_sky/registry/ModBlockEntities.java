@@ -51,12 +51,12 @@ public class ModBlockEntities {
         ((BlockEntityTypeAccessor) (Object) altar).setValidBlocks(altarBlocks);
 
         // 追加活木魔力池
-        BlockEntityType<?> pool = BotaniaBlockEntities.POOL;
-        Set<Block> poolBlocks = new HashSet<>(
-            ((BlockEntityTypeAccessor) (Object) pool).getValidBlocks()
-        );
-        poolBlocks.add(ModBlocks.LIVINGWOOD_POOL.get());
-        ((BlockEntityTypeAccessor) (Object) pool).setValidBlocks(poolBlocks);
+        // BlockEntityType<?> pool = BotaniaBlockEntities.POOL;
+        // Set<Block> poolBlocks = new HashSet<>(
+        //     ((BlockEntityTypeAccessor) (Object) pool).getValidBlocks()
+        // );
+        // poolBlocks.add(ModBlocks.LIVINGWOOD_POOL.get());
+        // ((BlockEntityTypeAccessor) (Object) pool).setValidBlocks(poolBlocks);
 
         // System.out.println("[Verdant Sky] Injected blocks into Botania BE types");
     }
