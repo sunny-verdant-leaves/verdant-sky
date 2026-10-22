@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "verdant_sky:block/snow_bricks",
+    "top": "verdant_sky:block/snow_bricks",
+    "side": "verdant_sky:block/snow_bricks"
+  }
+}
