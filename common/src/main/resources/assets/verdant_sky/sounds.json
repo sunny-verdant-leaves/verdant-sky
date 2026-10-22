@@ -1,0 +1,47 @@
+{
+  "block.snow_bricks.break": {
+    "sounds": [
+      "verdant_sky:block/snow_bricks/snow_bricks1",
+      "verdant_sky:block/snow_bricks/snow_bricks2",
+      "verdant_sky:block/snow_bricks/snow_bricks3",
+      "verdant_sky:block/snow_bricks/snow_bricks4"
+    ],
+    "subtitle": "verdant_sky.subtitles.block.generic.break"
+  },
+  "block.snow_bricks.step": {
+    "sounds": [
+      "verdant_sky:block/snow_bricks/snow_bricks1",
+      "verdant_sky:block/snow_bricks/snow_bricks2",
+      "verdant_sky:block/snow_bricks/snow_bricks3",
+      "verdant_sky:block/snow_bricks/snow_bricks4"
+    ],
+    "subtitle": "verdant_sky.subtitles.block.generic.step"
+  },
+  "block.snow_bricks.place": {
+    "sounds": [
+      "verdant_sky:block/snow_bricks/snow_bricks1",
+      "verdant_sky:block/snow_bricks/snow_bricks2",
+      "verdant_sky:block/snow_bricks/snow_bricks3",
+      "verdant_sky:block/snow_bricks/snow_bricks4"
+    ],
+    "subtitle": "verdant_sky.subtitles.block.generic.place"
+  },
+  "block.snow_bricks.hit": {
+    "sounds": [
+      "verdant_sky:block/snow_bricks/snow_bricks1",
+      "verdant_sky:block/snow_bricks/snow_bricks2",
+      "verdant_sky:block/snow_bricks/snow_bricks3",
+      "verdant_sky:block/snow_bricks/snow_bricks4"
+    ],
+    "subtitle": "verdant_sky.subtitles.block.generic.hit"
+  },
+  "block.snow_bricks.fall": {
+    "sounds": [
+      "verdant_sky:block/snow_bricks/snow_bricks1",
+      "verdant_sky:block/snow_bricks/snow_bricks2",
+      "verdant_sky:block/snow_bricks/snow_bricks3",
+      "verdant_sky:block/snow_bricks/snow_bricks4"
+    ],
+    "subtitle": "verdant_sky.subtitles.block.snow_bricks.fall"
+  }
+}
