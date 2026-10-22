@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import vazkii.botania.common.block.PetalApothecaryBlock;
 
 public class WoodenPetalApothecaryBlock extends PetalApothecaryBlock {
+    @SuppressWarnings("unused")
     private final WoodVariant variant;
 
     public WoodenPetalApothecaryBlock(BlockBehaviour.Properties props, WoodVariant variant) {

@@ -4,6 +4,7 @@
 装饰方块资源与数据生成器 / Decorative Block Generator
 =================================================
 为 Verdant Sky 批量生成方块变种（楼梯、台阶、墙、门等）的资源和数据。
+注意：不包括本地化和标签
 
 生成内容:
     assets/<mod>/blockstates/<name>.json
