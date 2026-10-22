@@ -200,20 +200,28 @@ public class ModBlocks {
         }
     }
     // ══════════════════════════════════════════════════════════════
-    //  石砖装饰变种 Stone Brick Variants
+    //  装饰方块
     // ══════════════════════════════════════════════════════════════
 
-    private static BlockBehaviour.Properties stoneBrickProps() {
+    // private static BlockBehaviour.Properties stoneBrickProps() {
+    //     return BlockBehaviour.Properties.of()
+    //         .mapColor(MapColor.STONE)
+    //         .strength(1.5F, 6.0F)
+    //         .requiresCorrectToolForDrops()
+    //         .sound(SoundType.STONE);
+    // }
+    
+    private static BlockBehaviour.Properties snowBrickProps() {
         return BlockBehaviour.Properties.of()
-            .mapColor(MapColor.STONE)
-            .strength(1.5F, 6.0F)
+            .mapColor(MapColor.SNOW)
+            .strength(0.8F, 0.8F)
             .requiresCorrectToolForDrops()
-            .sound(SoundType.STONE);
+            .sound(ModSoundTypes.snowBrick());
     }
 
     public static final RegistrySupplier<Block> SNOW_BRICKS =
         BLOCKS.register("snow_bricks", () -> 
-            new Block(stoneBrickProps())
+            new Block(snowBrickProps())
         );
 
     public static final RegistrySupplier<Item> SNOW_BRICKS_ITEM =
@@ -223,7 +231,7 @@ public class ModBlocks {
 
     public static final RegistrySupplier<Block> SNOW_BRICK_SLAB =
         BLOCKS.register("snow_brick_slab", () -> 
-            new SlabBlock(stoneBrickProps())
+            new SlabBlock(snowBrickProps())
         );
 
     public static final RegistrySupplier<Item> SNOW_BRICK_SLAB_ITEM =
@@ -233,7 +241,7 @@ public class ModBlocks {
 
     public static final RegistrySupplier<Block> SNOW_BRICK_STAIRS =
         BLOCKS.register("snow_brick_stairs", () ->
-            new StairBlock(Blocks.STONE_BRICKS.defaultBlockState(), stoneBrickProps())
+            new StairBlock(Blocks.STONE_BRICKS.defaultBlockState(), snowBrickProps())
         );
 
     public static final RegistrySupplier<Item> SNOW_BRICK_STAIRS_ITEM =
@@ -243,7 +251,7 @@ public class ModBlocks {
 
     public static final RegistrySupplier<Block> SNOW_BRICK_WALL =
         BLOCKS.register("snow_brick_wall", () -> 
-            new WallBlock(stoneBrickProps())
+            new WallBlock(snowBrickProps())
         );
 
     public static final RegistrySupplier<Item> SNOW_BRICK_WALL_ITEM =
