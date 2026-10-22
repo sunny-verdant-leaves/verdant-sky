@@ -75,6 +75,11 @@
   "block.verdant_sky.dreamwood_lava_cauldron": "Dreamwood Lava Cauldron",
   "block.verdant_sky.dreamwood_powder_snow_cauldron": "Dreamwood Powder Snow Cauldron",
 
+  "block.verdant_sky.snow_bricks": "Snow Bricks",
+  "block.verdant_sky.snow_brick_slab": "Snow Brick Slab",
+  "block.verdant_sky.snow_brick_stairs": "Snow Brick Stairs",
+  "block.verdant_sky.snow_brick_wall": "Snow Brick Wall",
+
   "jei.verdant_sky.decay": "Decay Agapanthus",
   "jei.verdant_sky.condition.required.short": "§8Location Requirements",
   "jei.verdant_sky.condition.required": "Flower need to be at specific location",

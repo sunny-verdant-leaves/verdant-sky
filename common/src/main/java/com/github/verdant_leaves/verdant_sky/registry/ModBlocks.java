@@ -12,7 +12,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import vazkii.botania.common.item.block.SpecialFlowerBlockItem;
@@ -196,6 +199,65 @@ public class ModBlocks {
             registerPetalApothecary(wood);
         }
     }
+    // ══════════════════════════════════════════════════════════════
+    //  装饰方块
+    // ══════════════════════════════════════════════════════════════
+
+    // private static BlockBehaviour.Properties stoneBrickProps() {
+    //     return BlockBehaviour.Properties.of()
+    //         .mapColor(MapColor.STONE)
+    //         .strength(1.5F, 6.0F)
+    //         .requiresCorrectToolForDrops()
+    //         .sound(SoundType.STONE);
+    // }
+    
+    private static BlockBehaviour.Properties snowBrickProps() {
+        return BlockBehaviour.Properties.of()
+            .mapColor(MapColor.SNOW)
+            .strength(0.8F, 0.8F)
+            .requiresCorrectToolForDrops()
+            .sound(ModSoundTypes.snowBrick());
+    }
+
+    public static final RegistrySupplier<Block> SNOW_BRICKS =
+        BLOCKS.register("snow_bricks", () -> 
+            new Block(snowBrickProps())
+        );
+
+    public static final RegistrySupplier<Item> SNOW_BRICKS_ITEM =
+        ITEMS.register("snow_bricks", () ->
+            new BlockItem(SNOW_BRICKS.get(), new Item.Properties())
+        );
+
+    public static final RegistrySupplier<Block> SNOW_BRICK_SLAB =
+        BLOCKS.register("snow_brick_slab", () -> 
+            new SlabBlock(snowBrickProps())
+        );
+
+    public static final RegistrySupplier<Item> SNOW_BRICK_SLAB_ITEM =
+        ITEMS.register("snow_brick_slab", () ->
+            new BlockItem(SNOW_BRICK_SLAB.get(), new Item.Properties())
+        );
+
+    public static final RegistrySupplier<Block> SNOW_BRICK_STAIRS =
+        BLOCKS.register("snow_brick_stairs", () ->
+            new StairBlock(Blocks.STONE_BRICKS.defaultBlockState(), snowBrickProps())
+        );
+
+    public static final RegistrySupplier<Item> SNOW_BRICK_STAIRS_ITEM =
+        ITEMS.register("snow_brick_stairs", () ->
+            new BlockItem(SNOW_BRICK_STAIRS.get(), new Item.Properties())
+        );
+
+    public static final RegistrySupplier<Block> SNOW_BRICK_WALL =
+        BLOCKS.register("snow_brick_wall", () -> 
+            new WallBlock(snowBrickProps())
+        );
+
+    public static final RegistrySupplier<Item> SNOW_BRICK_WALL_ITEM =
+        ITEMS.register("snow_brick_wall", () ->
+            new BlockItem(SNOW_BRICK_WALL.get(), new Item.Properties())
+        );
 
     public static void register() {
         BLOCKS.register();

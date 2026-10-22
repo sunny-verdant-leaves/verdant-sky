@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "verdant_sky:snow_bricks"
+  },
+  "result": "verdant_sky:snow_brick_wall",
+  "count": 1
+}

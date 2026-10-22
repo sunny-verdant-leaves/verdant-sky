@@ -24,7 +24,7 @@ public class ModCreativeTabs {
     @SuppressWarnings("unchecked")
     public static void register() {
         TABS.register();
-        
+
         CreativeTabRegistry.append(
             VERDANT_TAB,
             ModBlocks.DECAY_AGAPANTHUS_ITEM,
@@ -36,9 +36,17 @@ public class ModCreativeTabs {
             CreativeTabRegistry.append(VERDANT_TAB, item);
         }
 
-
         for (RegistrySupplier<Item> item : ModBlocks.CAULDRON_ITEMS.values()) {
             CreativeTabRegistry.append(VERDANT_TAB, item);
         }
+
+        // 雪砖装饰变种
+        CreativeTabRegistry.append(
+            VERDANT_TAB,
+            ModBlocks.SNOW_BRICKS_ITEM,
+            ModBlocks.SNOW_BRICK_SLAB_ITEM,
+            ModBlocks.SNOW_BRICK_STAIRS_ITEM,
+            ModBlocks.SNOW_BRICK_WALL_ITEM
+        );
     }
 }
