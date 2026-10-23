@@ -79,19 +79,39 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
         if (!(cachedLevel instanceof ServerLevel serverLevel)) {
             return;
         }
-        
-        if (getMana() < VerdantSkyConfig.decayAgapanthusManaCost()) {
+
+        int manaCost = VerdantSkyConfig.decayAgapanthusManaCost();
+        int configMax = VerdantSkyConfig.decayAgapanthusMaxConversionsPerTick();
+
+        if (configMax <= 0) {
             return;
         }
-        
+
+        // 计算当前魔力最多进行几次转换
+        int maxAffordable;
+        if (manaCost <= 0) {
+            maxAffordable = configMax;
+        } else {
+            maxAffordable = getMana() / manaCost;
+        }
+
+        if (maxAffordable <= 0) {
+            return;
+        }
+
         // 尝试转换
         BlockPos center = getEffectivePos();
-        int converted = performDecayConversion(serverLevel);
+        int converted = performDecayConversion(serverLevel, maxAffordable); // 传入魔力可进行转换的数量
 
-        // 只有真的转换了方块 (实际转换的数量>0)，才响施加凋零效果 + 音效 + 扣魔力
+        // 只有真的转换了方块 (实际转换的数量>0)，才施加凋零效果 + 响音效 + 扣魔力
         if (converted > 0) {
             playWorkSound(serverLevel, center);
-            addMana(-VerdantSkyConfig.decayAgapanthusManaCost() * converted);
+            
+            // 只有正常消耗模式才扣除魔力
+            if (manaCost > 0) {
+                addMana(-manaCost * converted);
+            }
+            
             applyWitherToNearbyEntities(serverLevel, center);
             sync();
         }
@@ -150,7 +170,7 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
     //  转换逻辑
     // ══════════════════════════════════════════════════════════════
 
-    private int performDecayConversion(ServerLevel serverLevel) {
+    private int performDecayConversion(ServerLevel serverLevel, int maxAffordable) {
         List<DecayRecipe> allRecipes = serverLevel.getRecipeManager().getAllRecipesFor(ModRecipeTypes.DECAY.get());
         if (allRecipes.isEmpty()) return 0;
     
@@ -165,7 +185,9 @@ public class DecayAgapanthusBlockEntity extends FunctionalFlowerBlockEntity {
         if (recipes.isEmpty()) return 0;
 
         int radius = VerdantSkyConfig.decayAgapanthusRadius();
-        int maxConversions = VerdantSkyConfig.decayAgapanthusMaxConversionsPerTick();
+        
+        // 实际尝试转换的上限 = 玩家配置的最大值 与 当前魔力能承受的最大值 取最小
+        int maxConversions = Math.min(VerdantSkyConfig.decayAgapanthusMaxConversionsPerTick(), maxAffordable);
 
         List<BlockPos> candidates = new ArrayList<>();
         RandomSource random = serverLevel.getRandom();
