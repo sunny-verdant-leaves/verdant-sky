@@ -20,9 +20,9 @@ public class VerdantSkyConfig {
     private static VerdantSkyConfig INSTANCE = new VerdantSkyConfig();
 
     // ══════════════════════════════════════════════════════════════
-    //  腐朽百子莲
+    //  腐朽百子莲 Decay Agapanthus
     // ══════════════════════════════════════════════════════════════
-    /** 腐朽百子莲作用半径。2 表示 5×5×5，3 表示 7×7×7。 */
+    /** 腐朽百子莲作用半径（以花为中心的正方体边长）。2 表示 5×5×5。  */
     public int decayAgapanthusRadius = 2;
 
     /** 单次工作最多转换多少个方块，防止卡顿。 */
@@ -43,9 +43,33 @@ public class VerdantSkyConfig {
     /** 凋零效果等级。0 = I 级，1 = II 级。 */
     public int decayAgapanthusWitherAmplifier = 1;
 
+    // ══════════════════════════════════════════════════════════════
+    //  饮雪莲 Drinking Snow Lotus
+    // ══════════════════════════════════════════════════════════════
+    /** 雪球提供的工作时间，单位：tick。 */
+    public int drinkingSnowLotusSnowballWorkTicks = 40;
+
+    /** 顶层雪提供的工作时间，单位：tick。 */
+    public int drinkingSnowLotusSnowLayerWorkTicks = 20;
+
+    /** 雪块提供的工作时间，单位：tick。 */
+    public int drinkingSnowLotusSnowBlockWorkTicks = 160;
+
+    /** 普通生物群系产魔速率，单位：mana/tick。 */
+    public double drinkingSnowLotusNormalManaPerTick = 1.5;
+
+    /** 寒冷生物群系产魔速率，单位：mana/tick。 */
+    public double drinkingSnowLotusColdManaPerTick = 2.25;
+
+    /** 工作时间缓冲上限，单位：tick。 */
+    public int drinkingSnowLotusMaxWorkTicks = 72000;
+    
+    /** 饮雪莲工作半径（以花为中心的正方体边长）。3 表示 7×7×7。 */
+    public int drinkingSnowLotusRadius = 3;
+
 
     // ══════════════════════════════════════════════════════════════
-    //  修改项
+    //  修改项 Modification
     // ══════════════════════════════════════════════════════════════
     /** 是否启用植物掉落修改（空手打草掉草/蕨等）。 */
     public boolean enablePlantLootModification = false;
@@ -97,12 +121,13 @@ public class VerdantSkyConfig {
     // ══════════════════════════════════════════════════════════════
     //  访问器
     // ══════════════════════════════════════════════════════════════
+    //  -- 腐朽百子莲 Decay Agapanthus --
     public static int decayAgapanthusRadius() {
-        return Math.max(0, INSTANCE.decayAgapanthusRadius);
+        return Math.max(1, INSTANCE.decayAgapanthusRadius);
     }
 
     public static int decayAgapanthusMaxConversionsPerTick() {
-        return Math.max(1, INSTANCE.decayAgapanthusMaxConversionsPerTick);
+        return Math.max(0, INSTANCE.decayAgapanthusMaxConversionsPerTick);
     }
 
     public static int decayAgapanthusInterval() {
@@ -110,7 +135,7 @@ public class VerdantSkyConfig {
     }
 
     public static int decayAgapanthusManaCost() {
-        return Math.max(1, INSTANCE.decayAgapanthusManaCost);
+        return INSTANCE.decayAgapanthusManaCost;
     }
 
     public static int decayAgapanthusMaxMana() {
@@ -118,13 +143,43 @@ public class VerdantSkyConfig {
     }
 
     public static int decayAgapanthusWitherDuration() {
-        return Math.max(1, INSTANCE.decayAgapanthusWitherDuration);
+        return Math.max(0, INSTANCE.decayAgapanthusWitherDuration);
     }
 
     public static int decayAgapanthusWitherAmplifier() {
         return Math.max(0, INSTANCE.decayAgapanthusWitherAmplifier);
     }
     
+    //  -- 饮雪莲 Drinking Snow Lotus --
+    public static int drinkingSnowLotusRadius() {
+        return Math.max(1, INSTANCE.drinkingSnowLotusRadius);
+    }
+    
+    public static int drinkingSnowLotusSnowballWorkTicks() {
+        return Math.max(1, INSTANCE.drinkingSnowLotusSnowballWorkTicks);
+    }
+    
+    public static int drinkingSnowLotusSnowLayerWorkTicks() {
+        return Math.max(1, INSTANCE.drinkingSnowLotusSnowLayerWorkTicks);
+    }
+    
+    public static int drinkingSnowLotusSnowBlockWorkTicks() {
+        return Math.max(1, INSTANCE.drinkingSnowLotusSnowBlockWorkTicks);
+    }
+    
+    public static double drinkingSnowLotusNormalManaPerTick() {
+        return Math.max(0.0, INSTANCE.drinkingSnowLotusNormalManaPerTick);
+    }
+    
+    public static double drinkingSnowLotusColdManaPerTick() {
+        return Math.max(0.0, INSTANCE.drinkingSnowLotusColdManaPerTick);
+    }
+    
+    public static int drinkingSnowLotusMaxWorkTicks() {
+        return Math.max(1, INSTANCE.drinkingSnowLotusMaxWorkTicks);
+    }
+    
+    //  -- 修改项 Modification --
     public static boolean enablePlantLootModification() {
         return INSTANCE.enablePlantLootModification;
     }
