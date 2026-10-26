@@ -23,8 +23,8 @@ public final class VerdantSkyClient {
     private VerdantSkyClient() {}
 
     public static void init() {
-        registerDecayAgapanthusRenderType();
-        registerDecayAgapanthusRenderer();
+        registerRenderType();
+        registerRenderer();
         registerCauldronWaterColor();
     }
 
@@ -32,7 +32,7 @@ public final class VerdantSkyClient {
     //  透明渲染层
     // ══════════════════════════════════════════════════════════════
 
-    private static void registerDecayAgapanthusRenderType() {
+    private static void registerRenderType() {
         // -- 腐朽百子莲 --
         RenderTypeRegistry.register(
             RenderType.cutout(),
@@ -51,12 +51,19 @@ public final class VerdantSkyClient {
     }
 
     // ══════════════════════════════════════════════════════════════
-    //  腐朽百子莲的范围渲染器
+    //  范围渲染器
     // ══════════════════════════════════════════════════════════════
-
-    private static void registerDecayAgapanthusRenderer() {
+    
+    private static void registerRenderer() {
+        // -- 腐朽百子莲 --
         BlockEntityRendererRegistry.register(
             ModBlockEntities.DECAY_AGAPANTHUS.get(),
+            ctx -> new SpecialFlowerBlockEntityRenderer<>(ctx)
+        );
+    
+        // -- 饮雪莲 --
+        BlockEntityRendererRegistry.register(
+            ModBlockEntities.DRINKING_SNOW_LOTUS.get(),
             ctx -> new SpecialFlowerBlockEntityRenderer<>(ctx)
         );
     }
