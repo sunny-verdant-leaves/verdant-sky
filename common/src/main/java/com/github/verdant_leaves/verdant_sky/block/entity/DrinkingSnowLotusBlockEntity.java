@@ -180,7 +180,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
                 newStack.shrink(1);
                 itemEntity.setItem(newStack);
             } else {
-                itemEntity.discard();
+                itemEntity.setItem(ItemStack.EMPTY); 
             }
             workTicks = Math.min(maxTicks, workTicks + ticksToAdd);
 
