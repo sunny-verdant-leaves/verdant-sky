@@ -46,6 +46,9 @@ public class VerdantSkyConfig {
     // ══════════════════════════════════════════════════════════════
     //  饮雪莲 Drinking Snow Lotus
     // ══════════════════════════════════════════════════════════════
+    /** 饮雪莲工作半径（以花为中心的正方体边长）。3 表示 7×7×7。 */
+    public int drinkingSnowLotusRadius = 3;
+    
     /** 雪球提供的工作时间，单位：tick。 */
     public int drinkingSnowLotusSnowballWorkTicks = 40;
 
@@ -61,11 +64,11 @@ public class VerdantSkyConfig {
     /** 寒冷生物群系产魔速率，单位：mana/tick。 */
     public double drinkingSnowLotusColdManaPerTick = 2.25;
 
+    /** 产魔速率随机波动范围。0.2 = ±20% 的波动。 */
+    public double drinkingSnowLotusManaVariance = 0.2;
+
     /** 工作时间缓冲上限，单位：tick。 */
     public int drinkingSnowLotusMaxWorkTicks = 72000;
-    
-    /** 饮雪莲工作半径（以花为中心的正方体边长）。3 表示 7×7×7。 */
-    public int drinkingSnowLotusRadius = 3;
 
 
     // ══════════════════════════════════════════════════════════════
@@ -173,6 +176,10 @@ public class VerdantSkyConfig {
     
     public static double drinkingSnowLotusColdManaPerTick() {
         return Math.max(0.0, INSTANCE.drinkingSnowLotusColdManaPerTick);
+    }
+
+    public static double drinkingSnowLotusManaVariance() {
+        return Math.max(0.0, INSTANCE.drinkingSnowLotusManaVariance);
     }
     
     public static int drinkingSnowLotusMaxWorkTicks() {

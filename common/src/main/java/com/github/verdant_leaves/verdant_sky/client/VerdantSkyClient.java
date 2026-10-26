@@ -29,10 +29,11 @@ public final class VerdantSkyClient {
     }
 
     // ══════════════════════════════════════════════════════════════
-    //  腐朽百子莲的渲染层（透明）
+    //  透明渲染层
     // ══════════════════════════════════════════════════════════════
 
     private static void registerDecayAgapanthusRenderType() {
+        // -- 腐朽百子莲 --
         RenderTypeRegistry.register(
             RenderType.cutout(),
             ModBlocks.DECAY_AGAPANTHUS.get()
@@ -40,6 +41,12 @@ public final class VerdantSkyClient {
         RenderTypeRegistry.register(
             RenderType.cutout(),
             ModBlocks.FLOATING_DECAY_AGAPANTHUS.get()
+        );
+
+        // -- 饮雪莲 --
+        RenderTypeRegistry.register(
+            RenderType.cutout(),
+            ModBlocks.DRINKING_SNOW_LOTUS.get()
         );
     }
 

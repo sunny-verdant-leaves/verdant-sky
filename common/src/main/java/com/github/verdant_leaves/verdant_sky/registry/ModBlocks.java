@@ -7,6 +7,7 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import dev.architectury.platform.Platform;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -23,6 +24,7 @@ import vazkii.botania.common.item.block.SpecialFlowerBlockItem;
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
 import com.github.verdant_leaves.verdant_sky.block.*;
+import com.github.verdant_leaves.verdant_sky.platform.PlatformBlocks;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(VerdantSky.MOD_ID, Registries.BLOCK);
@@ -60,6 +62,22 @@ public class ModBlocks {
     public static final RegistrySupplier<Item> FLOATING_DECAY_AGAPANTHUS_ITEM =
         ITEMS.register("floating_decay_agapanthus", () ->
             new SpecialFlowerBlockItem(FLOATING_DECAY_AGAPANTHUS.get(), new Item.Properties())
+        );
+    
+    // ══════════════════════════════════════════════════════════════
+    //  饮雪莲 Drinking Snow Lotus
+    // ══════════════════════════════════════════════════════════════
+    public static final RegistrySupplier<Block> DRINKING_SNOW_LOTUS =
+        BLOCKS.register("drinking_snow_lotus", () ->
+            PlatformBlocks.createSpecialFlowerBlock(
+                MobEffects.SATURATION, 1, FLOWER_PROPS, 
+                () -> ModBlockEntities.DRINKING_SNOW_LOTUS.get()
+            )
+        );
+
+    public static final RegistrySupplier<Item> DRINKING_SNOW_LOTUS_ITEM =
+        ITEMS.register("drinking_snow_lotus", () ->
+            new SpecialFlowerBlockItem(DRINKING_SNOW_LOTUS.get(), new Item.Properties())
         );
 
     // ══════════════════════════════════════════════════════════════
