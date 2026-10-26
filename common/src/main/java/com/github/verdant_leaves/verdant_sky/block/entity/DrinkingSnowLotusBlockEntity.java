@@ -2,12 +2,14 @@ package com.github.verdant_leaves.verdant_sky.block.entity;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSkyConfig;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
+import com.github.verdant_leaves.verdant_sky.registry.ModSoundEvents;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -45,6 +47,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         super(ModBlockEntities.DRINKING_SNOW_LOTUS.get(), pos, state);
     }
 
+
     // ══════════════════════════════════════════════════════════════
     //  核心逻辑
     // ══════════════════════════════════════════════════════════════
@@ -52,7 +55,18 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     public void tickFlower() {
         super.tickFlower();
 
-        if (level == null || level.isClientSide()) return;
+        if (level == null) return;
+
+        // 客户端逻辑：工作粒子
+        if (level.isClientSide) {
+            if (workTicks > 0 && level.random.nextInt(8) == 0) {
+                double x = worldPosition.getX() + 0.5 + (level.random.nextDouble() - 0.5) * 0.6;
+                double y = worldPosition.getY() + 0.3 + level.random.nextDouble() * 0.5;
+                double z = worldPosition.getZ() + 0.5 + (level.random.nextDouble() - 0.5) * 0.6;
+                level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, 0, 0.02, 0);
+            }
+            return; // 客户端不执行产魔逻辑
+        }
 
         // 扫描掉落物
         scanCooldown++;
@@ -125,10 +139,22 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
                 itemEntity.discard();
             }
 
-            level.playSound(null, worldPosition, SoundEvents.SNOW_BREAK,
-                    SoundSource.BLOCKS, 0.3f, 1.0f + level.random.nextFloat() * 0.2f);
+            // 播放音效
+            level.playSound(null, worldPosition, ModSoundEvents.DRINKING_SNOW_LOTUS_CONSUME.get(), SoundSource.BLOCKS, 0.3f, 1.5f + level.random.nextFloat() * 0.2f);
+
+            // 粒子
+            if (level instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(
+                        ParticleTypes.SNOWFLAKE,
+                        worldPosition.getX() + 0.5, 
+                        worldPosition.getY() + 0.5, 
+                        worldPosition.getZ() + 0.5,
+                        15, 0.3, 0.3, 0.3, 0.05
+                );
+            }
 
             setChanged();
+            sync();
             break; 
         }
     }

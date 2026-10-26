@@ -80,6 +80,8 @@
   "block.verdant_sky.snow_brick_slab": "雪砖台阶",
   "block.verdant_sky.snow_brick_stairs": "雪砖楼梯",
   "block.verdant_sky.snow_brick_wall": "雪砖墙",
+  
+  "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "饮雪莲：吞噬",
 
   "jei.verdant_sky.decay": "腐朽百子莲",
   "jei.verdant_sky.condition.required.short": "§8位置要求",

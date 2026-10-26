@@ -80,6 +80,8 @@
   "block.verdant_sky.snow_brick_slab": "Snow Brick Slab",
   "block.verdant_sky.snow_brick_stairs": "Snow Brick Stairs",
   "block.verdant_sky.snow_brick_wall": "Snow Brick Wall",
+  
+  "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "Drinking Snow Lotus: Consumes",
 
   "jei.verdant_sky.decay": "Decay Agapanthus",
   "jei.verdant_sky.condition.required.short": "§8Location Requirements",

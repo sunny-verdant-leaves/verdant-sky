@@ -15,7 +15,7 @@
       "verdant_sky:block/snow_bricks/snow_bricks3",
       "verdant_sky:block/snow_bricks/snow_bricks4"
     ],
-    "subtitle": "subtitles.block.generic.step"
+    "subtitle": "subtitles.block.generic.footsteps"
   },
   "block.snow_bricks.place": {
     "sounds": [
@@ -42,6 +42,12 @@
       "verdant_sky:block/snow_bricks/snow_bricks3",
       "verdant_sky:block/snow_bricks/snow_bricks4"
     ],
-    "subtitle": "subtitles.block.snow_bricks.fall"
+    "subtitle": "subtitles.block.generic.fall"
+  },
+  "block.drinking_snow_lotus.consume": {
+    "subtitle": "subtitles.verdant_sky.block.drinking_snow_lotus.consume",
+    "sounds": [
+      "minecraft:block.snow.break"
+    ]
   }
 }
