@@ -9,9 +9,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,6 +38,8 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     private static final String TAG_MANA_BUFFER = "ManaBuffer";
     private static final String TAG_SCAN_COOLDOWN = "ScanCooldown";
 
+    private static final int START_CONSUME_EVENT = 0; // 自定义方块事件 ID
+
     private int workTicks = 0;
     private double manaBuffer = 0.0;
     private int scanCooldown = 0;
@@ -46,7 +48,6 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     public DrinkingSnowLotusBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DRINKING_SNOW_LOTUS.get(), pos, state);
     }
-
 
     // ══════════════════════════════════════════════════════════════
     //  核心逻辑
@@ -83,8 +84,8 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         boolean consumeWork = !(coldBiome && snowing);
         
         double baseManaPerTick = coldBiome
-                ? VerdantSkyConfig.drinkingSnowLotusColdManaPerTick()
-                : VerdantSkyConfig.drinkingSnowLotusNormalManaPerTick();
+            ? VerdantSkyConfig.drinkingSnowLotusColdManaPerTick()
+            : VerdantSkyConfig.drinkingSnowLotusNormalManaPerTick();
 
         // 计算随机波动
         double variance = VerdantSkyConfig.drinkingSnowLotusManaVariance();
@@ -106,6 +107,44 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
             workTicks--;
         }
     }
+    
+    // ══════════════════════════════════════════════════════════════
+    //  客户端事件
+    // ══════════════════════════════════════════════════════════════
+    @Override
+    public boolean triggerEvent(int event, int param) {
+        if (event == START_CONSUME_EVENT) {
+            if (level != null && level.isClientSide) {
+                // 根据传入的实体 ID 找到即将消失的掉落物
+                Entity entity = level.getEntity(param);
+                if (entity != null) {
+                    double ex = entity.getX();
+                    double ey = entity.getY() + 0.1;
+                    double ez = entity.getZ();
+
+                    // 在物品位置生成粒子并飞向花朵
+                    for (int i = 0; i < 8; i++) {
+                        level.addParticle(ParticleTypes.SNOWFLAKE, 
+                            ex, ey, ez, 
+                            (level.random.nextDouble() - 0.5) * 0.1, 
+                            level.random.nextDouble() * 0.1, 
+                            (level.random.nextDouble() - 0.5) * 0.1
+                        );
+                    }
+                    for (int i = 0; i < 4; i++) {
+                        level.addParticle(ParticleTypes.END_ROD, 
+                            ex, ey, ez, 
+                            (worldPosition.getX() + 0.5 - ex) * 0.1,
+                            (worldPosition.getY() + 0.5 - ey) * 0.1,
+                            (worldPosition.getZ() + 0.5 - ez) * 0.1
+                        );
+                    }
+                }
+            }
+            return true;
+        }
+        return super.triggerEvent(event, param);
+    }
 
     // ══════════════════════════════════════════════════════════════
     //  辅助方法
@@ -117,8 +156,8 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
 
         int r = VerdantSkyConfig.drinkingSnowLotusRadius();
         AABB area = new AABB(
-                worldPosition.getX() - r, worldPosition.getY() - r, worldPosition.getZ() - r,
-                worldPosition.getX() + r + 1, worldPosition.getY() + r + 1, worldPosition.getZ() + r + 1
+            worldPosition.getX() - r, worldPosition.getY() - r, worldPosition.getZ() - r,
+            worldPosition.getX() + r + 1, worldPosition.getY() + r + 1, worldPosition.getZ() + r + 1
         );
 
         List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, area);
@@ -132,33 +171,31 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
             int maxTicks = VerdantSkyConfig.drinkingSnowLotusMaxWorkTicks();
             if (workTicks >= maxTicks) break;
 
-            stack.shrink(1);
-            workTicks = Math.min(maxTicks, workTicks + ticksToAdd);
+            // 记录实体 ID 以便向客户端广播事件
+            int entityId = itemEntity.getId();
 
-            if (stack.isEmpty()) {
+            // 消耗与同步
+            if (stack.getCount() > 1) {
+                ItemStack newStack = stack.copy();
+                newStack.shrink(1);
+                itemEntity.setItem(newStack);
+            } else {
                 itemEntity.discard();
             }
+            workTicks = Math.min(maxTicks, workTicks + ticksToAdd);
 
             // 播放音效
-            level.playSound(null, worldPosition, ModSoundEvents.DRINKING_SNOW_LOTUS_CONSUME.get(), SoundSource.BLOCKS, 0.3f, 1.5f + level.random.nextFloat() * 0.2f);
+            level.playSound(null, worldPosition, ModSoundEvents.DRINKING_SNOW_LOTUS_CONSUME.get(), SoundSource.BLOCKS, 1.0f, 1.2f + level.random.nextFloat() * 0.2f);
 
-            // 粒子
-            if (level instanceof ServerLevel serverLevel) {
-                serverLevel.sendParticles(
-                        ParticleTypes.SNOWFLAKE,
-                        worldPosition.getX() + 0.5, 
-                        worldPosition.getY() + 0.5, 
-                        worldPosition.getZ() + 0.5,
-                        15, 0.3, 0.3, 0.3, 0.05
-                );
-            }
+            // 向周围客户端广播事件，并传入实体 ID
+            level.blockEvent(getBlockPos(), getBlockState().getBlock(), START_CONSUME_EVENT, entityId);
 
             setChanged();
             sync();
             break; 
         }
     }
-    
+
     /* 获取掉落物对应的工作时长 */
     private int getWorkTicksForItem(ItemStack stack) {
         if (stack.is(Items.SNOWBALL)) {
@@ -221,8 +258,8 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     @Override
     public RadiusDescriptor getRadius() {
         return RadiusDescriptor.Rectangle.square(
-                getEffectivePos(),
-                VerdantSkyConfig.drinkingSnowLotusRadius()
+            getEffectivePos(),
+            VerdantSkyConfig.drinkingSnowLotusRadius()
         );
     }
 }

@@ -20,7 +20,7 @@ public class ModSoundEvents {
 
     private static RegistrySupplier<SoundEvent> register(String name) {
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(
-                new ResourceLocation(VerdantSky.MOD_ID, name)
+            new ResourceLocation(VerdantSky.MOD_ID, name)
         ));
     }
 

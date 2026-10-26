@@ -47,7 +47,10 @@
   "block.drinking_snow_lotus.consume": {
     "subtitle": "subtitles.verdant_sky.block.drinking_snow_lotus.consume",
     "sounds": [
-      "minecraft:block.snow.break"
+      "minecraft:dig/snow1",
+      "minecraft:dig/snow2",
+      "minecraft:dig/snow3",
+      "minecraft:dig/snow4"
     ]
   }
 }
