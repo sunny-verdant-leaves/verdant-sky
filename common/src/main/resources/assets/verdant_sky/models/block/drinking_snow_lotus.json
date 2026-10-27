@@ -1,5 +1,5 @@
 {
-  "parent": "botania:block/shapes/cross",
+  "parent": "verdant_sky:block/shapes/crosses",
   "textures": {
     "cross": "verdant_sky:block/drinking_snow_lotus"
   }
