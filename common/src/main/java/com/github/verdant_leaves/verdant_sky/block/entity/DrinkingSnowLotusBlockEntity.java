@@ -19,6 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -34,16 +35,10 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         new ResourceLocation("verdant_sky", "drinking_snow_lotus_fuel")
     );
 
-    private static final String TAG_WORK_TICKS = "WorkTicks";
-    private static final String TAG_MANA_BUFFER = "ManaBuffer";
-    private static final String TAG_SCAN_COOLDOWN = "ScanCooldown";
-
+    private static final String TAG_WORK_TICKS = "workTicks";
     private static final int START_CONSUME_EVENT = 0; // 自定义方块事件 ID
 
     private int workTicks = 0;
-    private double manaBuffer = 0.0;
-    private int scanCooldown = 0;
-    private static final int SCAN_INTERVAL = 20; // 扫描掉落物的时间间隔，单位：tick
 
     public DrinkingSnowLotusBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DRINKING_SNOW_LOTUS.get(), pos, state);
@@ -70,10 +65,11 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         }
 
         // 扫描掉落物
-        scanCooldown++;
-        if (scanCooldown >= SCAN_INTERVAL) {
-            scanCooldown = 0;
-            tryConsumeDroppedFuel();
+        if (ticksExisted % 20 == 0) {
+            int maxTicks = VerdantSkyConfig.drinkingSnowLotusMaxWorkTicks();
+            if (workTicks < maxTicks && getMana() < getMaxMana()) {
+                tryConsumeDroppedFuel();
+            }
         }
 
         // 如果没有工作时间，直接返回
@@ -82,24 +78,21 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         boolean coldBiome = isColdBiome();
         boolean snowing = isSnowingHere();
         boolean consumeWork = !(coldBiome && snowing);
-        
-        double baseManaPerTick = coldBiome
-            ? VerdantSkyConfig.drinkingSnowLotusColdManaPerTick()
-            : VerdantSkyConfig.drinkingSnowLotusNormalManaPerTick();
-
-        // 计算随机波动
-        double variance = VerdantSkyConfig.drinkingSnowLotusManaVariance();
-        double randomOffset = (level.random.nextDouble() * 2.0 - 1.0) * variance;
-        double actualManaPerTick = baseManaPerTick * (1.0 + randomOffset);
-        
-        if (actualManaPerTick < 0) actualManaPerTick = 0;
+        int baseAmount = coldBiome 
+                ? VerdantSkyConfig.drinkingSnowLotusColdManaAmount() 
+                : VerdantSkyConfig.drinkingSnowLotusNormalManaAmount();
+        int interval = coldBiome 
+                ? VerdantSkyConfig.drinkingSnowLotusColdManaInterval() 
+                : VerdantSkyConfig.drinkingSnowLotusNormalManaInterval();
 
         // 生产魔力
-        manaBuffer += actualManaPerTick;
-        int manaToAdd = (int) Math.floor(manaBuffer);
-        if (manaToAdd > 0) {
-            addMana(manaToAdd);
-            manaBuffer -= manaToAdd;
+        if (ticksExisted % interval == 0) {
+            double variance = VerdantSkyConfig.drinkingSnowLotusManaVariance();
+            double randomOffset = (level.random.nextDouble() * 2.0 - 1.0) * variance;
+            int actualMana = (int) Math.round(baseAmount * (1.0 + randomOffset));
+            
+            if (actualMana < 1) actualMana = 1;
+            addMana(actualMana);
         }
 
         // 扣除工作时间
@@ -122,6 +115,12 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
                     double ey = entity.getY() + 0.1;
                     double ez = entity.getZ();
 
+                    // 位置偏移矫正
+                    Vec3 offset = getBlockState().getOffset(level, worldPosition);
+                    double targetX = worldPosition.getX() + 0.5 + offset.x;
+                    double targetY = worldPosition.getY() + 0.5 + offset.y;
+                    double targetZ = worldPosition.getZ() + 0.5 + offset.z;
+
                     // 在物品位置生成粒子并飞向花朵
                     for (int i = 0; i < 8; i++) {
                         level.addParticle(ParticleTypes.SNOWFLAKE, 
@@ -134,9 +133,9 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
                     for (int i = 0; i < 4; i++) {
                         level.addParticle(ParticleTypes.END_ROD, 
                             ex, ey, ez, 
-                            (worldPosition.getX() + 0.5 - ex) * 0.1,
-                            (worldPosition.getY() + 0.5 - ey) * 0.1,
-                            (worldPosition.getZ() + 0.5 - ez) * 0.1
+                            (targetX - ex) * 0.1,
+                            (targetY - ey) * 0.1,
+                            (targetZ - ez) * 0.1
                         );
                     }
                 }
@@ -168,9 +167,6 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
             int ticksToAdd = getWorkTicksForItem(stack);
             if (ticksToAdd <= 0) continue;
 
-            int maxTicks = VerdantSkyConfig.drinkingSnowLotusMaxWorkTicks();
-            if (workTicks >= maxTicks) break;
-
             // 记录实体 ID 以便向客户端广播事件
             int entityId = itemEntity.getId();
 
@@ -182,7 +178,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
             } else {
                 itemEntity.setItem(ItemStack.EMPTY); 
             }
-            workTicks = Math.min(maxTicks, workTicks + ticksToAdd);
+            workTicks = Math.min(VerdantSkyConfig.drinkingSnowLotusMaxWorkTicks(), workTicks + ticksToAdd);
 
             // 播放音效
             level.playSound(null, worldPosition, ModSoundEvents.DRINKING_SNOW_LOTUS_CONSUME.get(), SoundSource.BLOCKS, 1.0f, 1.2f + level.random.nextFloat() * 0.2f);
@@ -229,16 +225,12 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     public void readFromPacketNBT(CompoundTag cmp) {
         super.readFromPacketNBT(cmp);
         workTicks = cmp.getInt(TAG_WORK_TICKS);
-        manaBuffer = cmp.getDouble(TAG_MANA_BUFFER);
-        scanCooldown = cmp.getInt(TAG_SCAN_COOLDOWN);
     }
 
     @Override
     public void writeToPacketNBT(CompoundTag cmp) {
         super.writeToPacketNBT(cmp);
         cmp.putInt(TAG_WORK_TICKS, workTicks);
-        cmp.putDouble(TAG_MANA_BUFFER, manaBuffer);
-        cmp.putInt(TAG_SCAN_COOLDOWN, scanCooldown);
     }
 
     // ══════════════════════════════════════════════════════════════
