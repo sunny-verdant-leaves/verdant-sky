@@ -23,6 +23,7 @@
 
 import argparse
 import json
+import shutil
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════
@@ -30,25 +31,25 @@ from pathlib import Path
 # ══════════════════════════════════════════════════════════════
 
 MOD_ID = "verdant_sky"
-
-# 基础方块配置
 BASE_BLOCK_ID = "snow_bricks"               # 完整方块的注册名
 BASE_BLOCK_PREFIX = "snow_brick"            # 其他变种的前缀 (例如: snow_brick_slab)
 
-# 纹理配置
+# 模组默认纹理
 TEXTURE_BASE = "verdant_sky:block/snow_bricks"
 TEXTURE_DOOR_TOP = "verdant_sky:block/snow_brick_door_top"
 TEXTURE_DOOR_BOTTOM = "verdant_sky:block/snow_brick_door_bottom"
 TEXTURE_TRAPDOOR = "verdant_sky:block/snow_brick_trapdoor"
 
+# 资源包专属配置
+VANILLA_TEXTURE_BASE = "minecraft:block/snow_bricks"
+SOURCE_TEXTURE_PATH = "utils/assets/minecraft/textures/block/snow_bricks.png"
+
 # 类型
 # 必需: base
 # 可选: slab, stairs, wall, fence, fence_gate, door, trapdoor, pressure_plate, button
 ENABLED_TYPES = ["base", "slab", "stairs", "wall"]
-
-# 配方配置
-IS_STONE_LIKE = True  # 如果是石质方块，将额外生成切石机配方
-RECIPE_MATERIAL = "minecraft:snow_block" # 基础方块的合成材料
+IS_STONE_LIKE = False 
+RECIPE_MATERIAL = "minecraft:snow_block" 
 
 # ══════════════════════════════════════════════════════════════
 #  工具函数
@@ -65,618 +66,302 @@ def get_block_id(block_type: str) -> str:
         return BASE_BLOCK_ID
     return f"{BASE_BLOCK_PREFIX}_{block_type}"
 
-def get_model_id(block_type: str, suffix: str = "") -> str:
-    base = get_block_id(block_type)
-    if suffix:
-        return f"{MOD_ID}:block/{base}_{suffix}"
-    return f"{MOD_ID}:block/{base}"
-
 # ══════════════════════════════════════════════════════════════
-#  1. 资源文件生成 (Blockstates)
+#  变体数据生成器 (Variants Builders) - 核心复用逻辑
 # ══════════════════════════════════════════════════════════════
 
-def gen_blockstates(root: Path):
-    bs_dir = root / "assets" / MOD_ID / "blockstates"
+def build_stairs_variants(model_ns: str) -> dict:
+    stairs_id = get_block_id("stairs")
+    variants = {}
+    for facing in ["east", "north", "south", "west"]:
+        for half in ["bottom", "top"]:
+            for shape in ["straight", "inner_left", "inner_right", "outer_left", "outer_right"]:
+                model_suffix = ""
+                if "inner" in shape: model_suffix = "_inner"
+                elif "outer" in shape: model_suffix = "_outer"
+                
+                x, y, uvlock = 0, 0, False
+                
+                if facing == "east":
+                    if half == "bottom":
+                        if shape == "inner_left": y = 270; uvlock = True
+                        elif shape == "outer_left": y = 270; uvlock = True
+                    else:
+                        x = 180
+                        if shape == "inner_left": uvlock = True
+                        elif shape == "inner_right": y = 90; uvlock = True
+                        elif shape == "outer_left": uvlock = True
+                        elif shape == "outer_right": y = 90; uvlock = True
+                        elif shape == "straight": uvlock = True
+                elif facing == "north":
+                    if half == "bottom":
+                        if shape == "inner_left": y = 180; uvlock = True
+                        elif shape == "inner_right": y = 270; uvlock = True
+                        elif shape == "outer_left": y = 180; uvlock = True
+                        elif shape == "outer_right": y = 270; uvlock = True
+                        elif shape == "straight": y = 270; uvlock = True
+                    else:
+                        x = 180
+                        if shape == "inner_left": y = 270; uvlock = True
+                        elif shape == "outer_left": y = 270; uvlock = True
+                        elif shape == "straight": y = 270; uvlock = True
+                elif facing == "south":
+                    if half == "bottom":
+                        if shape == "inner_right": y = 90; uvlock = True
+                        elif shape == "outer_right": y = 90; uvlock = True
+                        elif shape == "straight": y = 90; uvlock = True
+                    else:
+                        x = 180
+                        if shape == "inner_left": y = 90; uvlock = True
+                        elif shape == "inner_right": y = 180; uvlock = True
+                        elif shape == "outer_left": y = 90; uvlock = True
+                        elif shape == "outer_right": y = 180; uvlock = True
+                        elif shape == "straight": y = 90; uvlock = True
+                elif facing == "west":
+                    if half == "bottom":
+                        if shape == "inner_left": y = 90; uvlock = True
+                        elif shape == "inner_right": y = 180; uvlock = True
+                        elif shape == "outer_left": y = 90; uvlock = True
+                        elif shape == "outer_right": y = 180; uvlock = True
+                        elif shape == "straight": y = 180; uvlock = True
+                    else:
+                        x = 180
+                        if shape == "inner_left": y = 180; uvlock = True
+                        elif shape == "inner_right": y = 270; uvlock = True
+                        elif shape == "outer_left": y = 180; uvlock = True
+                        elif shape == "outer_right": y = 270; uvlock = True
+                        elif shape == "straight": y = 180; uvlock = True
+
+                key = f"facing={facing},half={half},shape={shape}"
+                entry = {"model": f"{model_ns}:block/{stairs_id}{model_suffix}"}
+                if uvlock: entry["uvlock"] = True
+                if x != 0: entry["x"] = x
+                if y != 0: entry["y"] = y
+                variants[key] = entry
+    return variants
+
+def build_wall_multipart(model_ns: str) -> dict:
+    wall_id = get_block_id("wall")
+    return {
+        "multipart": [
+            { "when": { "up": "true" }, "apply": { "model": f"{model_ns}:block/{wall_id}_post" } },
+            { "when": { "north": "low" }, "apply": { "model": f"{model_ns}:block/{wall_id}_side", "uvlock": True } },
+            { "when": { "east": "low" }, "apply": { "model": f"{model_ns}:block/{wall_id}_side", "y": 90, "uvlock": True } },
+            { "when": { "south": "low" }, "apply": { "model": f"{model_ns}:block/{wall_id}_side", "y": 180, "uvlock": True } },
+            { "when": { "west": "low" }, "apply": { "model": f"{model_ns}:block/{wall_id}_side", "y": 270, "uvlock": True } },
+            { "when": { "north": "tall" }, "apply": { "model": f"{model_ns}:block/{wall_id}_side_tall", "uvlock": True } },
+            { "when": { "east": "tall" }, "apply": { "model": f"{model_ns}:block/{wall_id}_side_tall", "y": 90, "uvlock": True } },
+            { "when": { "south": "tall" }, "apply": { "model": f"{model_ns}:block/{wall_id}_side_tall", "y": 180, "uvlock": True } },
+            { "when": { "west": "tall" }, "apply": { "model": f"{model_ns}:block/{wall_id}_side_tall", "y": 270, "uvlock": True } }
+        ]
+    }
+
+# ══════════════════════════════════════════════════════════════
+#  资源文件生成 (Blockstates & Models)
+# ══════════════════════════════════════════════════════════════
+
+def generate_blockstates(bs_ns: str, model_ns: str, root: Path):
+    """生成 Blockstates。bs_ns 决定放在哪个文件夹，model_ns 决定指向谁的模型"""
+    bs_dir = root / "assets" / bs_ns / "blockstates"
 
     if "base" in ENABLED_TYPES:
         write_json(bs_dir / f"{BASE_BLOCK_ID}.json", {
-            "variants": { "": { "model": get_model_id("base") } }
+            "variants": { "": { "model": f"{model_ns}:block/{BASE_BLOCK_ID}" } }
         })
 
     if "slab" in ENABLED_TYPES:
-        write_json(bs_dir / f"{get_block_id('slab')}.json", {
+        slab_id = get_block_id('slab')
+        write_json(bs_dir / f"{slab_id}.json", {
             "variants": {
-                "type=bottom": { "model": get_model_id("slab") },
-                "type=top": { "model": get_model_id("slab", "top") },
-                "type=double": { "model": get_model_id("base") }
+                "type=bottom": { "model": f"{model_ns}:block/{slab_id}" },
+                "type=top": { "model": f"{model_ns}:block/{slab_id}_top" },
+                "type=double": { "model": f"{model_ns}:block/{BASE_BLOCK_ID}" }
             }
         })
 
     if "stairs" in ENABLED_TYPES:
-        variants = {}
-        for facing in ["east", "north", "south", "west"]:
-            for half in ["bottom", "top"]:
-                for shape in ["straight", "inner_left", "inner_right", "outer_left", "outer_right"]:
-                    model_suffix = ""
-                    if "inner" in shape: model_suffix = "inner"
-                    elif "outer" in shape: model_suffix = "outer"
-                    
-                    x = 0
-                    y = 0
-                    uvlock = False
-                    
-                    if facing == "east":
-                        if half == "bottom":
-                            if shape == "inner_left": y = 270; uvlock = True
-                            elif shape == "inner_right": y = 0
-                            elif shape == "outer_left": y = 270; uvlock = True
-                            elif shape == "outer_right": y = 0
-                        else:
-                            x = 180
-                            if shape == "inner_left": y = 0; uvlock = True
-                            elif shape == "inner_right": y = 90; uvlock = True
-                            elif shape == "outer_left": y = 0; uvlock = True
-                            elif shape == "outer_right": y = 90; uvlock = True
-                            elif shape == "straight": uvlock = True
-                    elif facing == "north":
-                        if half == "bottom":
-                            if shape == "inner_left": y = 180; uvlock = True
-                            elif shape == "inner_right": y = 270; uvlock = True
-                            elif shape == "outer_left": y = 180; uvlock = True
-                            elif shape == "outer_right": y = 270; uvlock = True
-                            elif shape == "straight": y = 270; uvlock = True
-                        else:
-                            x = 180
-                            if shape == "inner_left": y = 270; uvlock = True
-                            elif shape == "inner_right": y = 0; uvlock = True
-                            elif shape == "outer_left": y = 270; uvlock = True
-                            elif shape == "outer_right": y = 0; uvlock = True
-                            elif shape == "straight": y = 270; uvlock = True
-                    elif facing == "south":
-                        if half == "bottom":
-                            if shape == "inner_left": y = 0
-                            elif shape == "inner_right": y = 90; uvlock = True
-                            elif shape == "outer_left": y = 0
-                            elif shape == "outer_right": y = 90; uvlock = True
-                            elif shape == "straight": y = 90; uvlock = True
-                        else:
-                            x = 180
-                            if shape == "inner_left": y = 90; uvlock = True
-                            elif shape == "inner_right": y = 180; uvlock = True
-                            elif shape == "outer_left": y = 90; uvlock = True
-                            elif shape == "outer_right": y = 180; uvlock = True
-                            elif shape == "straight": y = 90; uvlock = True
-                    elif facing == "west":
-                        if half == "bottom":
-                            if shape == "inner_left": y = 90; uvlock = True
-                            elif shape == "inner_right": y = 180; uvlock = True
-                            elif shape == "outer_left": y = 90; uvlock = True
-                            elif shape == "outer_right": y = 180; uvlock = True
-                            elif shape == "straight": y = 180; uvlock = True
-                        else:
-                            x = 180
-                            if shape == "inner_left": y = 180; uvlock = True
-                            elif shape == "inner_right": y = 270; uvlock = True
-                            elif shape == "outer_left": y = 180; uvlock = True
-                            elif shape == "outer_right": y = 270; uvlock = True
-                            elif shape == "straight": y = 180; uvlock = True
-
-                    key = f"facing={facing},half={half},shape={shape}"
-                    entry = {"model": get_model_id("stairs", model_suffix)}
-                    if uvlock: entry["uvlock"] = True
-                    if x != 0: entry["x"] = x
-                    if y != 0: entry["y"] = y
-                    
-                    variants[key] = entry
-                    
-        write_json(bs_dir / f"{get_block_id('stairs')}.json", { "variants": variants })
+        write_json(bs_dir / f"{get_block_id('stairs')}.json", { "variants": build_stairs_variants(model_ns) })
 
     if "wall" in ENABLED_TYPES:
-        write_json(bs_dir / f"{get_block_id('wall')}.json", {
-            "multipart": [
-                { "when": { "up": "true" }, "apply": { "model": get_model_id("wall", "post") } },
-                { "when": { "north": "low" }, "apply": { "model": get_model_id("wall", "side"), "uvlock": True } },
-                { "when": { "east": "low" }, "apply": { "model": get_model_id("wall", "side"), "y": 90, "uvlock": True } },
-                { "when": { "south": "low" }, "apply": { "model": get_model_id("wall", "side"), "y": 180, "uvlock": True } },
-                { "when": { "west": "low" }, "apply": { "model": get_model_id("wall", "side"), "y": 270, "uvlock": True } },
-                { "when": { "north": "tall" }, "apply": { "model": get_model_id("wall", "side_tall"), "uvlock": True } },
-                { "when": { "east": "tall" }, "apply": { "model": get_model_id("wall", "side_tall"), "y": 90, "uvlock": True } },
-                { "when": { "south": "tall" }, "apply": { "model": get_model_id("wall", "side_tall"), "y": 180, "uvlock": True } },
-                { "when": { "west": "tall" }, "apply": { "model": get_model_id("wall", "side_tall"), "y": 270, "uvlock": True } }
-            ]
-        })
+        write_json(bs_dir / f"{get_block_id('wall')}.json", build_wall_multipart(model_ns))
 
-    if "fence" in ENABLED_TYPES:
-        write_json(bs_dir / f"{get_block_id('fence')}.json", {
-            "multipart": [
-                { "apply": { "model": get_model_id("fence", "post") } },
-                { "when": { "north": "true" }, "apply": { "model": get_model_id("fence", "side"), "uvlock": True } },
-                { "when": { "east": "true" }, "apply": { "model": get_model_id("fence", "side"), "y": 90, "uvlock": True } },
-                { "when": { "south": "true" }, "apply": { "model": get_model_id("fence", "side"), "y": 180, "uvlock": True } },
-                { "when": { "west": "true" }, "apply": { "model": get_model_id("fence", "side"), "y": 270, "uvlock": True } }
-            ]
-        })
-
-    if "fence_gate" in ENABLED_TYPES:
-        variants = {}
-        for facing in ["east", "north", "south", "west"]:
-            for in_wall in ["false", "true"]:
-                for open in ["false", "true"]:
-                    y = {"east": 270, "north": 180, "south": 0, "west": 90}[facing]
-                    model_suffix = ""
-                    if in_wall == "true": model_suffix = "_wall"
-                    if open == "true": model_suffix += "_open"
-                    
-                    key = f"facing={facing},in_wall={in_wall},open={open}"
-                    entry = {"model": get_model_id("fence_gate", model_suffix.lstrip("_")) if model_suffix else get_model_id("fence_gate"), "uvlock": True}
-                    if y != 0: entry["y"] = y
-                    
-                    variants[key] = entry
-        write_json(bs_dir / f"{get_block_id('fence_gate')}.json", { "variants": variants })
-
-    if "door" in ENABLED_TYPES:
-        variants = {}
-        for facing in ["east", "north", "south", "west"]:
-            for half in ["lower", "upper"]:
-                for hinge in ["left", "right"]:
-                    for open in ["false", "true"]:
-                        model_name = f"{get_block_id('door')}_{half}_{hinge}"
-                        if open == "true": model_name += "_open"
-                        
-                        y = 0
-                        if facing == "east":
-                            if open == "true": y = 90 if hinge == "left" else 270
-                        elif facing == "north":
-                            if open == "false": y = 270
-                            else: y = 0 if hinge == "left" else 180
-                        elif facing == "south":
-                            if open == "false": y = 90
-                            else: y = 180 if hinge == "left" else 0
-                        elif facing == "west":
-                            if open == "false": y = 180
-                            else: y = 270 if hinge == "left" else 90
-                                
-                        key = f"facing={facing},half={half},hinge={hinge},open={open}"
-                        entry = {"model": f"{MOD_ID}:block/{model_name}"}
-                        if y != 0: entry["y"] = y
-                        variants[key] = entry
-        write_json(bs_dir / f"{get_block_id('door')}.json", { "variants": variants })
-
-    if "trapdoor" in ENABLED_TYPES:
-        variants = {}
-        for facing in ["east", "north", "south", "west"]:
-            for half in ["bottom", "top"]:
-                for open in ["false", "true"]:
-                    model_suffix = ""
-                    x = 0
-                    y = 0
-                    
-                    if open == "false":
-                        model_suffix = half
-                    else:
-                        model_suffix = "open"
-                        if half == "top": x = 180
-                            
-                    if facing == "east":
-                        if open == "false": y = 90
-                        else: y = 90 if half == "bottom" else 270
-                    elif facing == "south":
-                        if open == "false": y = 180
-                        else: y = 180 if half == "bottom" else 0
-                    elif facing == "west":
-                        if open == "false": y = 270
-                        else: y = 270 if half == "bottom" else 90
-                        
-                    key = f"facing={facing},half={half},open={open}"
-                    entry = {"model": get_model_id("trapdoor", model_suffix)}
-                    if x != 0: entry["x"] = x
-                    if y != 0: entry["y"] = y
-                    
-                    variants[key] = entry
-        write_json(bs_dir / f"{get_block_id('trapdoor')}.json", { "variants": variants })
-
-    if "pressure_plate" in ENABLED_TYPES:
-        write_json(bs_dir / f"{get_block_id('pressure_plate')}.json", {
-            "variants": {
-                "powered=false": { "model": get_model_id("pressure_plate") },
-                "powered=true": { "model": get_model_id("pressure_plate", "down") }
-            }
-        })
-
-    if "button" in ENABLED_TYPES:
-        variants = {}
-        for face in ["floor", "wall", "ceiling"]:
-            for facing in ["east", "north", "south", "west"]:
-                for powered in ["false", "true"]:
-                    model_suffix = "" if powered == "false" else "pressed"
-                    x = 0
-                    y = 0
-                    uvlock = (face == "wall")
-                    
-                    if face == "ceiling":
-                        x = 180
-                        if facing == "east": y = 270
-                        elif facing == "north": y = 180
-                        elif facing == "south": y = 0
-                        elif facing == "west": y = 90
-                    elif face == "floor":
-                        if facing == "east": y = 90
-                        elif facing == "north": y = 0
-                        elif facing == "south": y = 180
-                        elif facing == "west": y = 270
-                    elif face == "wall":
-                        x = 90
-                        if facing == "east": y = 90
-                        elif facing == "north": y = 0
-                        elif facing == "south": y = 180
-                        elif facing == "west": y = 270
-                        
-                    key = f"face={face},facing={facing},powered={powered}"
-                    entry = {"model": get_model_id("button", model_suffix).replace("_pressed", "") + ("_pressed" if powered == "true" else "")}
-                    if uvlock: entry["uvlock"] = True
-                    if x != 0: entry["x"] = x
-                    if y != 0: entry["y"] = y
-                    
-                    variants[key] = entry
-        write_json(bs_dir / f"{get_block_id('button')}.json", { "variants": variants })
-
-    print(f"  [blockstate] 生成完毕")
-
-
-# ══════════════════════════════════════════════════════════════
-#  2. 模型文件生成
-# ══════════════════════════════════════════════════════════════
-
-def gen_models(root: Path):
-    block_dir = root / "assets" / MOD_ID / "models" / "block"
-    item_dir = root / "assets" / MOD_ID / "models" / "item"
+def generate_models(model_ns: str, texture: str, root: Path, include_items: bool = True):
+    """生成模型文件。model_ns 决定放在哪个文件夹，texture 决定指向谁的贴图"""
+    block_dir = root / "assets" / model_ns / "models" / "block"
+    item_dir = root / "assets" / model_ns / "models" / "item"
 
     if "base" in ENABLED_TYPES:
         write_json(block_dir / f"{BASE_BLOCK_ID}.json", {
             "parent": "minecraft:block/cube_all",
-            "textures": { "all": TEXTURE_BASE }
+            "textures": { "all": texture }
         })
-        write_json(item_dir / f"{BASE_BLOCK_ID}.json", { "parent": get_model_id("base") })
+        if include_items:
+            write_json(item_dir / f"{BASE_BLOCK_ID}.json", { "parent": f"{model_ns}:block/{BASE_BLOCK_ID}" })
 
     if "slab" in ENABLED_TYPES:
-        write_json(block_dir / f"{get_block_id('slab')}.json", {
+        slab_id = get_block_id('slab')
+        write_json(block_dir / f"{slab_id}.json", {
             "parent": "minecraft:block/slab",
-            "textures": { "bottom": TEXTURE_BASE, "top": TEXTURE_BASE, "side": TEXTURE_BASE }
+            "textures": { "bottom": texture, "top": texture, "side": texture }
         })
-        write_json(block_dir / f"{get_block_id('slab')}_top.json", {
+        write_json(block_dir / f"{slab_id}_top.json", {
             "parent": "minecraft:block/slab_top",
-            "textures": { "bottom": TEXTURE_BASE, "top": TEXTURE_BASE, "side": TEXTURE_BASE }
+            "textures": { "bottom": texture, "top": texture, "side": texture }
         })
-        write_json(item_dir / f"{get_block_id('slab')}.json", { "parent": get_model_id("slab") })
+        if include_items:
+            write_json(item_dir / f"{slab_id}.json", { "parent": f"{model_ns}:block/{slab_id}" })
 
     if "stairs" in ENABLED_TYPES:
-        write_json(block_dir / f"{get_block_id('stairs')}.json", {
+        stairs_id = get_block_id('stairs')
+        write_json(block_dir / f"{stairs_id}.json", {
             "parent": "minecraft:block/stairs",
-            "textures": { "bottom": TEXTURE_BASE, "top": TEXTURE_BASE, "side": TEXTURE_BASE }
+            "textures": { "bottom": texture, "top": texture, "side": texture }
         })
-        write_json(block_dir / f"{get_block_id('stairs')}_inner.json", {
+        write_json(block_dir / f"{stairs_id}_inner.json", {
             "parent": "minecraft:block/inner_stairs",
-            "textures": { "bottom": TEXTURE_BASE, "top": TEXTURE_BASE, "side": TEXTURE_BASE }
+            "textures": { "bottom": texture, "top": texture, "side": texture }
         })
-        write_json(block_dir / f"{get_block_id('stairs')}_outer.json", {
+        write_json(block_dir / f"{stairs_id}_outer.json", {
             "parent": "minecraft:block/outer_stairs",
-            "textures": { "bottom": TEXTURE_BASE, "top": TEXTURE_BASE, "side": TEXTURE_BASE }
+            "textures": { "bottom": texture, "top": texture, "side": texture }
         })
-        write_json(item_dir / f"{get_block_id('stairs')}.json", { "parent": get_model_id("stairs") })
+        if include_items:
+            write_json(item_dir / f"{stairs_id}.json", { "parent": f"{model_ns}:block/{stairs_id}" })
 
     if "wall" in ENABLED_TYPES:
-        write_json(block_dir / f"{get_block_id('wall')}_post.json", {
+        wall_id = get_block_id('wall')
+        write_json(block_dir / f"{wall_id}_post.json", {
             "parent": "minecraft:block/template_wall_post",
-            "textures": { "wall": TEXTURE_BASE }
+            "textures": { "wall": texture }
         })
-        write_json(block_dir / f"{get_block_id('wall')}_side.json", {
+        write_json(block_dir / f"{wall_id}_side.json", {
             "parent": "minecraft:block/template_wall_side",
-            "textures": { "wall": TEXTURE_BASE }
+            "textures": { "wall": texture }
         })
-        write_json(block_dir / f"{get_block_id('wall')}_side_tall.json", {
+        write_json(block_dir / f"{wall_id}_side_tall.json", {
             "parent": "minecraft:block/template_wall_side_tall",
-            "textures": { "wall": TEXTURE_BASE }
+            "textures": { "wall": texture }
         })
-        write_json(block_dir / f"{get_block_id('wall')}_inventory.json", {
-            "parent": "minecraft:block/wall_inventory",
-            "textures": { "wall": TEXTURE_BASE }
-        })
-        write_json(item_dir / f"{get_block_id('wall')}.json", { "parent": get_model_id("wall", "inventory") })
-
-    if "fence" in ENABLED_TYPES:
-        write_json(block_dir / f"{get_block_id('fence')}_post.json", {
-            "parent": "minecraft:block/fence_post",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(block_dir / f"{get_block_id('fence')}_side.json", {
-            "parent": "minecraft:block/fence_side",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(block_dir / f"{get_block_id('fence')}_inventory.json", {
-            "parent": "minecraft:block/fence_inventory",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(item_dir / f"{get_block_id('fence')}.json", { "parent": get_model_id("fence", "inventory") })
-
-    if "fence_gate" in ENABLED_TYPES:
-        write_json(block_dir / f"{get_block_id('fence_gate')}.json", {
-            "parent": "minecraft:block/template_fence_gate",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(block_dir / f"{get_block_id('fence_gate')}_open.json", {
-            "parent": "minecraft:block/template_fence_gate_open",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(block_dir / f"{get_block_id('fence_gate')}_wall.json", {
-            "parent": "minecraft:block/template_fence_gate_wall",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(block_dir / f"{get_block_id('fence_gate')}_wall_open.json", {
-            "parent": "minecraft:block/template_fence_gate_wall_open",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(item_dir / f"{get_block_id('fence_gate')}.json", { "parent": get_model_id("fence_gate") })
-
-    if "door" in ENABLED_TYPES:
-        for half in ["bottom", "top"]:
-            for hinge in ["left", "right"]:
-                write_json(block_dir / f"{get_block_id('door')}_{half}_{hinge}.json", {
-                    "parent": f"minecraft:block/door_{half}_{hinge}",
-                    "textures": { "bottom": TEXTURE_DOOR_BOTTOM, "top": TEXTURE_DOOR_TOP }
-                })
-                write_json(block_dir / f"{get_block_id('door')}_{half}_{hinge}_open.json", {
-                    "parent": f"minecraft:block/door_{half}_{hinge}_open",
-                    "textures": { "bottom": TEXTURE_DOOR_BOTTOM, "top": TEXTURE_DOOR_TOP }
-                })
-        write_json(item_dir / f"{get_block_id('door')}.json", {
-            "parent": "minecraft:item/generated",
-            "textures": { "layer0": f"{MOD_ID}:item/{get_block_id('door')}" }
-        })
-
-    if "trapdoor" in ENABLED_TYPES:
-        for suffix in ["bottom", "top", "open"]:
-            write_json(block_dir / f"{get_block_id('trapdoor')}_{suffix}.json", {
-                "parent": f"minecraft:block/template_orientable_trapdoor_{suffix}",
-                "textures": { "texture": TEXTURE_TRAPDOOR }
+        if include_items:
+            write_json(block_dir / f"{wall_id}_inventory.json", {
+                "parent": "minecraft:block/wall_inventory",
+                "textures": { "wall": texture }
             })
-        write_json(item_dir / f"{get_block_id('trapdoor')}.json", { "parent": get_model_id("trapdoor", "bottom") })
-
-    if "pressure_plate" in ENABLED_TYPES:
-        write_json(block_dir / f"{get_block_id('pressure_plate')}.json", {
-            "parent": "minecraft:block/pressure_plate_up",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(block_dir / f"{get_block_id('pressure_plate')}_down.json", {
-            "parent": "minecraft:block/pressure_plate_down",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(item_dir / f"{get_block_id('pressure_plate')}.json", { "parent": get_model_id("pressure_plate") })
-
-    if "button" in ENABLED_TYPES:
-        write_json(block_dir / f"{get_block_id('button')}.json", {
-            "parent": "minecraft:block/button",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(block_dir / f"{get_block_id('button')}_pressed.json", {
-            "parent": "minecraft:block/button_pressed",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(block_dir / f"{get_block_id('button')}_inventory.json", {
-            "parent": "minecraft:block/button_inventory",
-            "textures": { "texture": TEXTURE_BASE }
-        })
-        write_json(item_dir / f"{get_block_id('button')}.json", { "parent": get_model_id("button", "inventory") })
-
-    print(f"  [model]      生成完毕")
+            write_json(item_dir / f"{wall_id}.json", { "parent": f"{model_ns}:block/{wall_id}_inventory" })
 
 
 # ══════════════════════════════════════════════════════════════
-#  3. 战利品表生成
+#  数据文件生成 (Loot Tables & Recipes)
 # ══════════════════════════════════════════════════════════════
 
-def gen_loot_tables(root: Path):
+def generate_data(root: Path):
     lt_dir = root / "data" / MOD_ID / "loot_tables" / "blocks"
-
-    def create_simple_loot(block_id: str):
-        return {
-            "type": "minecraft:block",
-            "pools": [{
-                "rolls": 1,
-                "entries": [{ "type": "minecraft:item", "name": f"{MOD_ID}:{block_id}" }],
-                "conditions": [{ "condition": "minecraft:survives_explosion" }]
-            }]
-        }
-
-    if "base" in ENABLED_TYPES:
-        write_json(lt_dir / f"{BASE_BLOCK_ID}.json", create_simple_loot(BASE_BLOCK_ID))
-
-    if "slab" in ENABLED_TYPES:
-        write_json(lt_dir / f"{get_block_id('slab')}.json", {
-            "type": "minecraft:block",
-            "pools": [{
-                "rolls": 1,
-                "entries": [{
-                    "type": "minecraft:item",
-                    "name": f"{MOD_ID}:{get_block_id('slab')}",
-                    "functions": [{
-                        "function": "minecraft:set_count",
-                        "count": 2,
-                        "conditions": [{
-                            "condition": "minecraft:block_state_property",
-                            "block": f"{MOD_ID}:{get_block_id('slab')}",
-                            "properties": { "type": "double" }
-                        }]
-                    }, {
-                        "function": "minecraft:explosion_decay"
-                    }]
-                }]
-            }]
-        })
-
-    if "stairs" in ENABLED_TYPES:
-        write_json(lt_dir / f"{get_block_id('stairs')}.json", create_simple_loot(get_block_id('stairs')))
-    
-    if "wall" in ENABLED_TYPES:
-        write_json(lt_dir / f"{get_block_id('wall')}.json", create_simple_loot(get_block_id('wall')))
-
-    if "fence" in ENABLED_TYPES:
-        write_json(lt_dir / f"{get_block_id('fence')}.json", create_simple_loot(get_block_id('fence')))
-
-    if "fence_gate" in ENABLED_TYPES:
-        write_json(lt_dir / f"{get_block_id('fence_gate')}.json", create_simple_loot(get_block_id('fence_gate')))
-    
-    if "door" in ENABLED_TYPES:
-        write_json(lt_dir / f"{get_block_id('door')}.json", create_simple_loot(get_block_id('door')))
-
-    if "trapdoor" in ENABLED_TYPES:
-        write_json(lt_dir / f"{get_block_id('trapdoor')}.json", create_simple_loot(get_block_id('trapdoor')))
-
-    if "pressure_plate" in ENABLED_TYPES:
-        write_json(lt_dir / f"{get_block_id('pressure_plate')}.json", create_simple_loot(get_block_id('pressure_plate')))
-
-    if "button" in ENABLED_TYPES:
-        write_json(lt_dir / f"{get_block_id('button')}.json", create_simple_loot(get_block_id('button')))
-
-    print(f"  [loot]       生成完毕")
-
-
-# ══════════════════════════════════════════════════════════════
-#  4. 配方生成
-# ══════════════════════════════════════════════════════════════
-
-def gen_recipes(root: Path):
     craft_dir = root / "data" / MOD_ID / "recipes" / "crafting"
     stone_dir = root / "data" / MOD_ID / "recipes" / "stonecutting"
 
-    def save_craft(recipe_id, data): write_json(craft_dir / f"{recipe_id}.json", data)
-    def save_stone(recipe_id, data): 
-        if IS_STONE_LIKE: write_json(stone_dir / f"{recipe_id}.json", data)
+    def simple_loot(block_id: str):
+        return {
+            "type": "minecraft:block",
+            "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": f"{MOD_ID}:{block_id}"}], "conditions": [{"condition": "minecraft:survives_explosion"}]}]
+        }
+
+    def save_craft(r_id, data): write_json(craft_dir / f"{r_id}.json", data)
+    def save_stone(r_id, data): 
+        if IS_STONE_LIKE: write_json(stone_dir / f"{r_id}.json", data)
 
     if "base" in ENABLED_TYPES:
+        write_json(lt_dir / f"{BASE_BLOCK_ID}.json", simple_loot(BASE_BLOCK_ID))
         save_craft(BASE_BLOCK_ID, {
-            "type": "minecraft:crafting_shaped",
-            "category": "building",
-            "key": { "#": { "item": RECIPE_MATERIAL } },
-            "pattern": ["##", "##"],
+            "type": "minecraft:crafting_shaped", "category": "building",
+            "key": { "#": { "item": RECIPE_MATERIAL } }, "pattern": ["##", "##"],
             "result": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}", "count": 4 }
         })
 
     if "slab" in ENABLED_TYPES:
-        slab_id = get_block_id("slab")
+        slab_id = get_block_id('slab')
+        write_json(lt_dir / f"{slab_id}.json", {
+            "type": "minecraft:block", "pools": [{"rolls": 1, "entries": [{
+                "type": "minecraft:item", "name": f"{MOD_ID}:{slab_id}",
+                "functions": [{"function": "minecraft:set_count", "count": 2, "conditions": [{"condition": "minecraft:block_state_property", "block": f"{MOD_ID}:{slab_id}", "properties": {"type": "double"}}]}, {"function": "minecraft:explosion_decay"}]
+            }]}]
+        })
         save_craft(slab_id, {
-            "type": "minecraft:crafting_shaped",
-            "category": "building",
-            "key": { "#": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" } },
-            "pattern": ["###"],
+            "type": "minecraft:crafting_shaped", "category": "building",
+            "key": { "#": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" } }, "pattern": ["###"],
             "result": { "item": f"{MOD_ID}:{slab_id}", "count": 6 }
         })
         save_stone(slab_id, {
-            "type": "minecraft:stonecutting",
-            "ingredient": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" },
-            "result": f"{MOD_ID}:{slab_id}",
-            "count": 2
+            "type": "minecraft:stonecutting", "ingredient": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" },
+            "result": f"{MOD_ID}:{slab_id}", "count": 2
         })
 
     if "stairs" in ENABLED_TYPES:
-        stairs_id = get_block_id("stairs")
+        stairs_id = get_block_id('stairs')
+        write_json(lt_dir / f"{stairs_id}.json", simple_loot(stairs_id))
         save_craft(stairs_id, {
-            "type": "minecraft:crafting_shaped",
-            "category": "building",
-            "key": { "#": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" } },
-            "pattern": ["#  ", "## ", "###"],
+            "type": "minecraft:crafting_shaped", "category": "building",
+            "key": { "#": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" } }, "pattern": ["#  ", "## ", "###"],
             "result": { "item": f"{MOD_ID}:{stairs_id}", "count": 4 }
         })
         save_stone(stairs_id, {
-            "type": "minecraft:stonecutting",
-            "ingredient": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" },
-            "result": f"{MOD_ID}:{stairs_id}",
-            "count": 1
+            "type": "minecraft:stonecutting", "ingredient": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" },
+            "result": f"{MOD_ID}:{stairs_id}", "count": 1
         })
 
     if "wall" in ENABLED_TYPES:
-        wall_id = get_block_id("wall")
+        wall_id = get_block_id('wall')
+        write_json(lt_dir / f"{wall_id}.json", simple_loot(wall_id))
         save_craft(wall_id, {
-            "type": "minecraft:crafting_shaped",
-            "category": "building",
-            "key": { "#": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" } },
-            "pattern": ["###", "###"],
+            "type": "minecraft:crafting_shaped", "category": "building",
+            "key": { "#": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" } }, "pattern": ["###", "###"],
             "result": { "item": f"{MOD_ID}:{wall_id}", "count": 6 }
         })
         save_stone(wall_id, {
-            "type": "minecraft:stonecutting",
-            "ingredient": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" },
-            "result": f"{MOD_ID}:{wall_id}",
-            "count": 1
+            "type": "minecraft:stonecutting", "ingredient": { "item": f"{MOD_ID}:{BASE_BLOCK_ID}" },
+            "result": f"{MOD_ID}:{wall_id}", "count": 1
         })
 
-    if "fence" in ENABLED_TYPES:
-        fence_id = get_block_id("fence")
-        # 栅栏配方：木板 + 木棍
-        save_craft(fence_id, {
-            "type": "minecraft:crafting_shaped",
-            "category": "building",
-            "key": {
-                "#": { "item": RECIPE_MATERIAL },
-                "S": { "item": "minecraft:stick" }
-            },
-            "pattern": ["#S#", "#S#"],
-            "result": { "item": f"{MOD_ID}:{fence_id}", "count": 3 }
-        })
+    print(f"  [data]       生成完毕")
 
-    if "fence_gate" in ENABLED_TYPES:
-        gate_id = get_block_id("fence_gate")
-        save_craft(gate_id, {
-            "type": "minecraft:crafting_shaped",
-            "category": "redstone",
-            "key": {
-                "#": { "item": RECIPE_MATERIAL },
-                "S": { "item": "minecraft:stick" }
-            },
-            "pattern": ["S#S", "S#S"],
-            "result": { "item": f"{MOD_ID}:{gate_id}" }
-        })
+# ══════════════════════════════════════════════════════════════
+#  资源包与主模组入口
+# ══════════════════════════════════════════════════════════════
 
-    if "door" in ENABLED_TYPES:
-        door_id = get_block_id("door")
-        save_craft(door_id, {
-            "type": "minecraft:crafting_shaped",
-            "category": "redstone",
-            "key": { "#": { "item": RECIPE_MATERIAL } },
-            "pattern": ["##", "##", "##"],
-            "result": { "item": f"{MOD_ID}:{door_id}", "count": 3 }
-        })
+def gen_optional_pack(root: Path, pack_name: str):
+    """生成可选内置资源包"""
+    pack_dir = root / "resourcepacks" / pack_name
+    
+    # 1. pack.mcmeta
+    write_json(pack_dir / "pack.mcmeta", {
+        "pack": {
+            "pack_format": 15,
+            "description": {
+                "text": "", "extra": [
+                    {"translate": "desc.verdant_leaves.verdant_sky.resourcepack.vanilla.1", "fallback": "verdant sky - Vanilla Blocks Style", "color": "#a3fa85", "italic": False},
+                    {"text": "\n"},
+                    {"translate": "desc.verdant_leaves.verdant_sky.resourcepack.vanilla.2", "fallback": "Gives some modded blocks the appearance of their newer vanilla versions.", "color": "#ffffbc", "italic": False}
+                ]
+            }
+        }
+    })
 
-    if "trapdoor" in ENABLED_TYPES:
-        trapdoor_id = get_block_id("trapdoor")
-        save_craft(trapdoor_id, {
-            "type": "minecraft:crafting_shaped",
-            "category": "redstone",
-            "key": { "#": { "item": RECIPE_MATERIAL } },
-            "pattern": ["###", "###"],
-            "result": { "item": f"{MOD_ID}:{trapdoor_id}", "count": 2 }
-        })
+    # 2. 生成 Blockstates (覆盖到 mod_id 命名空间，指向 minecraft 模型)
+    generate_blockstates(bs_ns=MOD_ID, model_ns="minecraft", root=pack_dir)
+    
+    # 3. 生成 Models (存放在 minecraft 命名空间，使用原版纹理)
+    generate_models(model_ns="minecraft", texture=VANILLA_TEXTURE_BASE, root=pack_dir, include_items=False)
 
-    if "pressure_plate" in ENABLED_TYPES:
-        plate_id = get_block_id("pressure_plate")
-        save_craft(plate_id, {
-            "type": "minecraft:crafting_shaped",
-            "category": "redstone",
-            "key": { "#": { "item": RECIPE_MATERIAL } },
-            "pattern": ["##"],
-            "result": { "item": f"{MOD_ID}:{plate_id}" }
-        })
+    # 4. 复制原版纹理
+    src_tex = Path(SOURCE_TEXTURE_PATH)
+    if src_tex.exists():
+        dst_tex = pack_dir / "assets" / "minecraft" / "textures" / "block" / f"{BASE_BLOCK_ID}.png"
+        dst_tex.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src_tex, dst_tex)
+        print(f"  [pack] 成功复制原版纹理: {dst_tex.name}")
+    else:
+        print(f"  [!] 警告: 找不到源纹理文件 {src_tex}")
 
-    if "button" in ENABLED_TYPES:
-        button_id = get_block_id("button")
-        save_craft(button_id, {
-            "type": "minecraft:crafting_shapeless",
-            "category": "redstone",
-            "ingredients": [{ "item": RECIPE_MATERIAL }],
-            "result": { "item": f"{MOD_ID}:{button_id}" }
-        })
-
-    print(f"  [recipe]     生成完毕")
-
+    print(f"  [pack] 资源包生成完毕，位于 {pack_dir.resolve()}")
 
 # ══════════════════════════════════════════════════════════════
 #  入口
@@ -685,7 +370,8 @@ def gen_recipes(root: Path):
 def main():
     parser = argparse.ArgumentParser(description="生成装饰方块变种的资源与数据。")
     parser.add_argument("--output", default="common/src/main/resources", help="资源根目录")
-    parser.add_argument("--mod-id", default=MOD_ID, help="模组 ID")
+    parser.add_argument("--gen-pack", action="store_true", help="仅生成可选内置资源包")
+    parser.add_argument("--pack-name", default="vanilla_blocks_style", help="资源包文件夹名")
     args = parser.parse_args()
 
     root = Path(args.output)
@@ -693,18 +379,23 @@ def main():
         print(f"[!] 目录不存在：{root}")
         return
 
-    print(f"模组        : {args.mod_id}")
-    print(f"基础方块    : {BASE_BLOCK_ID}")
-    print(f"启用变种    : {', '.join(ENABLED_TYPES)}")
-    print("-" * 60)
-
-    gen_blockstates(root)
-    gen_models(root)
-    gen_loot_tables(root)
-    gen_recipes(root)
-
-    print("-" * 60)
-    print("全部生成完毕！")
+    if args.gen_pack:
+        print(f"资源包名称  : {args.pack_name}")
+        print("-" * 60)
+        gen_optional_pack(root, args.pack_name)
+        print("-" * 60)
+    else:
+        print(f"模组        : {MOD_ID}")
+        print(f"基础方块    : {BASE_BLOCK_ID}")
+        print("-" * 60)
+        
+        # 生成主模组资源 (放在 verdant_sky 命名空间)
+        generate_blockstates(bs_ns=MOD_ID, model_ns=MOD_ID, root=root)
+        generate_models(model_ns=MOD_ID, texture=TEXTURE_BASE, root=root, include_items=True)
+        generate_data(root)
+        
+        print("-" * 60)
+        print("全部生成完毕！")
 
 if __name__ == "__main__":
     main()
