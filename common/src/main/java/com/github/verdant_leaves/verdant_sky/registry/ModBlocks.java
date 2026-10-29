@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import vazkii.botania.common.block.FloatingSpecialFlowerBlock;
 import vazkii.botania.common.item.block.SpecialFlowerBlockItem;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
@@ -78,6 +79,16 @@ public class ModBlocks {
     public static final RegistrySupplier<Item> DRINKING_SNOW_LOTUS_ITEM =
         ITEMS.register("drinking_snow_lotus", () ->
             new SpecialFlowerBlockItem(DRINKING_SNOW_LOTUS.get(), new Item.Properties())
+        );
+
+    public static final RegistrySupplier<Block> FLOATING_DRINKING_SNOW_LOTUS =
+        BLOCKS.register("floating_drinking_snow_lotus", () ->
+            new FloatingSpecialFlowerBlock(FLOATING_PROPS, () -> ModBlockEntities.DRINKING_SNOW_LOTUS.get())
+        );
+
+    public static final RegistrySupplier<Item> FLOATING_DRINKING_SNOW_LOTUS_ITEM =
+        ITEMS.register("floating_drinking_snow_lotus", () ->
+            new SpecialFlowerBlockItem(FLOATING_DRINKING_SNOW_LOTUS.get(), new Item.Properties())
         );
 
     // ══════════════════════════════════════════════════════════════

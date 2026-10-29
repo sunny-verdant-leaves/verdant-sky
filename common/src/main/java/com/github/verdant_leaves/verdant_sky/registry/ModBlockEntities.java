@@ -36,8 +36,8 @@ public class ModBlockEntities {
         BLOCK_ENTITIES.register("drinking_snow_lotus", () ->
             BlockEntityType.Builder.of(
                 DrinkingSnowLotusBlockEntity::new,
-                ModBlocks.DRINKING_SNOW_LOTUS.get()
-                // ,ModBlocks.FLOATING_DRINKING_SNOW_LOTUS.get()
+                ModBlocks.DRINKING_SNOW_LOTUS.get(),
+                ModBlocks.FLOATING_DRINKING_SNOW_LOTUS.get()
             ).build(null)
         );
 

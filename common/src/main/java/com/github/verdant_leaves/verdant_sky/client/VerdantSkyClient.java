@@ -48,6 +48,10 @@ public final class VerdantSkyClient {
             RenderType.cutout(),
             ModBlocks.DRINKING_SNOW_LOTUS.get()
         );
+        RenderTypeRegistry.register(
+            RenderType.cutout(),
+            ModBlocks.FLOATING_DRINKING_SNOW_LOTUS.get()
+        );
     }
 
     // ══════════════════════════════════════════════════════════════

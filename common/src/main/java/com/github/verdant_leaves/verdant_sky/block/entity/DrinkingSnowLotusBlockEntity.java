@@ -55,7 +55,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
 
         // 客户端逻辑：工作粒子
         if (level.isClientSide) {
-            if (workTicks > 0 && level.random.nextInt(8) == 0) {
+            if (workTicks > 0 && level.random.nextInt(16) == 0) {
                 double x = worldPosition.getX() + 0.5 + (level.random.nextDouble() - 0.5) * 0.6;
                 double y = worldPosition.getY() + 0.3 + level.random.nextDouble() * 0.5;
                 double z = worldPosition.getZ() + 0.5 + (level.random.nextDouble() - 0.5) * 0.6;
@@ -79,11 +79,11 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         boolean snowing = isSnowingHere();
         boolean consumeWork = !(coldBiome && snowing);
         int baseAmount = coldBiome 
-                ? VerdantSkyConfig.drinkingSnowLotusColdManaAmount() 
-                : VerdantSkyConfig.drinkingSnowLotusNormalManaAmount();
+            ? VerdantSkyConfig.drinkingSnowLotusColdManaAmount() 
+            : VerdantSkyConfig.drinkingSnowLotusNormalManaAmount();
         int interval = coldBiome 
-                ? VerdantSkyConfig.drinkingSnowLotusColdManaInterval() 
-                : VerdantSkyConfig.drinkingSnowLotusNormalManaInterval();
+            ? VerdantSkyConfig.drinkingSnowLotusColdManaInterval() 
+            : VerdantSkyConfig.drinkingSnowLotusNormalManaInterval();
 
         // 生产魔力
         if (ticksExisted % interval == 0) {
@@ -122,7 +122,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
                     double targetZ = worldPosition.getZ() + 0.5 + offset.z;
 
                     // 在物品位置生成粒子并飞向花朵
-                    for (int i = 0; i < 8; i++) {
+                    for (int i = 0; i < 4; i++) {
                         level.addParticle(ParticleTypes.SNOWFLAKE, 
                             ex, ey, ez, 
                             (level.random.nextDouble() - 0.5) * 0.1, 
@@ -130,7 +130,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
                             (level.random.nextDouble() - 0.5) * 0.1
                         );
                     }
-                    for (int i = 0; i < 4; i++) {
+                    for (int i = 0; i < 2; i++) {
                         level.addParticle(ParticleTypes.END_ROD, 
                             ex, ey, ez, 
                             (targetX - ex) * 0.1,
