@@ -2,6 +2,10 @@ package com.github.verdant_leaves.verdant_sky.fabric;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.loader.api.FabricLoader; 
+import net.minecraft.resources.ResourceLocation;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
@@ -36,5 +40,14 @@ public final class VerdantSkyFabric implements ModInitializer {
             if (empty == null) continue;
             FuelRegistry.INSTANCE.add(empty.get().asItem(), ModBlocks.WOOD_BURN_TIME);
         }
+
+        // 内置资源包
+        FabricLoader.getInstance().getModContainer(VerdantSky.MOD_ID).ifPresent(modContainer -> {
+            ResourceManagerHelper.registerBuiltinResourcePack(
+                new ResourceLocation(VerdantSky.MOD_ID, "vanilla_blocks"),
+                modContainer,
+                ResourcePackActivationType.DEFAULT_ENABLED // 激活类型
+            );
+        });
     }
 }

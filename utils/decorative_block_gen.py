@@ -19,11 +19,13 @@
 
 示例:
     python utils/decorative_block_gen.py --output common/src/main/resources
+    python utils/decorative_block_gen.py --gen-pack
 """
 
 import argparse
 import json
 import shutil
+import zipfile
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════
@@ -328,7 +330,7 @@ def generate_data(root: Path):
 # ══════════════════════════════════════════════════════════════
 
 def gen_optional_pack(root: Path, pack_name: str):
-    """生成可选内置资源包"""
+    """生成可选内置资源包，并自动打包为 zip 供分发。"""
     pack_dir = root / "resourcepacks" / pack_name
     
     # 1. pack.mcmeta
@@ -337,9 +339,9 @@ def gen_optional_pack(root: Path, pack_name: str):
             "pack_format": 15,
             "description": {
                 "text": "", "extra": [
-                    {"translate": "desc.verdant_leaves.verdant_sky.resourcepack.vanilla.1", "fallback": "verdant sky - Vanilla Blocks Style", "color": "#a3fa85", "italic": False},
+                    {"translate": "resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1", "fallback": "verdant sky - Vanilla Blocks", "color": "#a3fa85", "italic": False},
                     {"text": "\n"},
-                    {"translate": "desc.verdant_leaves.verdant_sky.resourcepack.vanilla.2", "fallback": "Gives some modded blocks the appearance of their newer vanilla versions.", "color": "#ffffbc", "italic": False}
+                    {"translate": "resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2", "fallback": "Makes Snow Brick textures match newer vanilla versions.", "color": "#ffffbc", "italic": False}
                 ]
             }
         }
@@ -361,7 +363,19 @@ def gen_optional_pack(root: Path, pack_name: str):
     else:
         print(f"  [!] 警告: 找不到源纹理文件 {src_tex}")
 
-    print(f"  [pack] 资源包生成完毕，位于 {pack_dir.resolve()}")
+    # 5. 自动打包为 zip
+    zip_path = root / "resourcepacks" / f"{pack_name}.zip"
+    zip_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for file_path in pack_dir.rglob('*'):
+            if file_path.is_file():
+                arcname = file_path.relative_to(pack_dir)
+                zipf.write(file_path, arcname)
+
+    print(f"  [pack] 资源包生成完毕！")
+    print(f"  [pack] 文件夹位置: {pack_dir.resolve()}")
+    print(f"  [pack] Zip打包位置: {zip_path.resolve()}")
 
 # ══════════════════════════════════════════════════════════════
 #  入口
@@ -371,7 +385,7 @@ def main():
     parser = argparse.ArgumentParser(description="生成装饰方块变种的资源与数据。")
     parser.add_argument("--output", default="common/src/main/resources", help="资源根目录")
     parser.add_argument("--gen-pack", action="store_true", help="仅生成可选内置资源包")
-    parser.add_argument("--pack-name", default="vanilla_blocks_style", help="资源包文件夹名")
+    parser.add_argument("--pack-name", default="vanilla_blocks", help="资源包文件夹名")
     args = parser.parse_args()
 
     root = Path(args.output)

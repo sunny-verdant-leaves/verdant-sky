@@ -1,0 +1,25 @@
+{
+  "pack": {
+    "pack_format": 15,
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "translate": "resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1",
+          "fallback": "verdant sky - Vanilla Blocks",
+          "color": "#a3fa85",
+          "italic": false
+        },
+        {
+          "text": "\n"
+        },
+        {
+          "translate": "resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2",
+          "fallback": "Makes Snow Brick textures match newer vanilla versions.",
+          "color": "#ffffbc",
+          "italic": false
+        }
+      ]
+    }
+  }
+}

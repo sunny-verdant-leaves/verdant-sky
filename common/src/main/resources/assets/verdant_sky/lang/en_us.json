@@ -79,6 +79,9 @@
   "block.verdant_sky.snow_brick_slab": "Snow Brick Slab",
   "block.verdant_sky.snow_brick_stairs": "Snow Brick Stairs",
   "block.verdant_sky.snow_brick_wall": "Snow Brick Wall",
+  
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "verdant sky - Vanilla Blocks",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "Makes Snow Brick textures match newer vanilla versions.",
 
   "jei.verdant_sky.decay": "Decay Agapanthus",
   "jei.verdant_sky.condition.required.short": "§8Location Requirements",

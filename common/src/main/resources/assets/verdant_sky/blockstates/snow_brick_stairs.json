@@ -85,7 +85,6 @@
     },
     "facing=north,half=top,shape=inner_right": {
       "model": "verdant_sky:block/snow_brick_stairs_inner",
-      "uvlock": true,
       "x": 180
     },
     "facing=north,half=top,shape=outer_left": {
@@ -96,7 +95,6 @@
     },
     "facing=north,half=top,shape=outer_right": {
       "model": "verdant_sky:block/snow_brick_stairs_outer",
-      "uvlock": true,
       "x": 180
     },
     "facing=south,half=bottom,shape=straight": {
