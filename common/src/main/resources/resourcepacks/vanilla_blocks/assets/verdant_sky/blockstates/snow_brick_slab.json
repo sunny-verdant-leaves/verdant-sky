@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "minecraft:block/snow_brick_slab"
+    },
+    "type=top": {
+      "model": "minecraft:block/snow_brick_slab_top"
+    },
+    "type=double": {
+      "model": "minecraft:block/snow_bricks"
+    }
+  }
+}

@@ -1,11 +1,22 @@
 package com.github.verdant_leaves.verdant_sky.forge;
 
+import java.nio.file.Path;
+
 import dev.architectury.platform.forge.EventBuses;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forgespi.locating.IModFile;
+import net.minecraftforge.resource.PathPackResources;
+
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
@@ -27,6 +38,9 @@ public final class VerdantSkyForge {
 
         // 注册燃料燃烧时间事件
         MinecraftForge.EVENT_BUS.addListener(this::onFuelBurnTime);
+
+        // 注册内置资源包事件
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onAddPackFinders);
     }
 
     private void onFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
@@ -54,6 +68,33 @@ public final class VerdantSkyForge {
                 event.setBurnTime(ModBlocks.WOOD_BURN_TIME);
                 return;
             }
+        }
+    }
+
+    //  内置资源包
+    private void onAddPackFinders(AddPackFindersEvent event) {
+        if (event.getPackType() != PackType.CLIENT_RESOURCES) return;
+    
+        String folderName = "vanilla_blocks";
+        IModFile modFile = ModList.get().getModFileById(VerdantSky.MOD_ID).getFile();
+    
+        // 注意：这里不再指向 .zip，而是指向文件夹
+        Path packPath = modFile.findResource("resourcepacks/" + folderName);
+    
+        PathPackResources packResources = new PathPackResources(folderName, true, packPath);
+    
+        Pack myPack = Pack.readMetaAndCreate(
+            VerdantSky.MOD_ID + ":" + folderName,
+            Component.translatable("resourcepack.verdant_sky.vanilla_blocks"),
+            false,
+            (packLocationInfo) -> packResources,
+            PackType.CLIENT_RESOURCES,
+            Pack.Position.TOP,
+            PackSource.BUILT_IN
+        );
+    
+        if (myPack != null) {
+            event.addRepositorySource((packConsumer) -> packConsumer.accept(myPack));
         }
     }
 }

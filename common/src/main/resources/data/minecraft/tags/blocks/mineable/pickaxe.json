@@ -1,9 +1,5 @@
 {
   "replace": false,
   "values": [
-    "verdant_sky:snow_bricks",
-    "verdant_sky:snow_brick_slab",
-    "verdant_sky:snow_brick_stairs",
-    "verdant_sky:snow_brick_wall"
   ]
 }

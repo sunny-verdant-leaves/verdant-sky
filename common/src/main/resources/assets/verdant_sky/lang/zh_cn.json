@@ -83,6 +83,10 @@
   
   "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "饮雪莲：吞噬",
 
+	"resourcepack.verdant_sky.vanilla_blocks":  "碧空物语 - 原版方块",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "使一些方块的纹理与高版本原版相匹配，",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "例如雪砖。",
+
   "jei.verdant_sky.decay": "腐朽百子莲",
   "jei.verdant_sky.condition.required.short": "§8位置要求",
   "jei.verdant_sky.condition.required": "花需要在特定位置",

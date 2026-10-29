@@ -232,7 +232,7 @@ public class ModBlocks {
     private static BlockBehaviour.Properties snowBrickProps() {
         return BlockBehaviour.Properties.of()
             .mapColor(MapColor.SNOW)
-            .strength(0.8F, 0.8F)
+            .strength(0.6F, 0.6F)
             .requiresCorrectToolForDrops()
             .sound(ModSoundTypes.snowBrick());
     }
@@ -247,16 +247,6 @@ public class ModBlocks {
             new BlockItem(SNOW_BRICKS.get(), new Item.Properties())
         );
 
-    public static final RegistrySupplier<Block> SNOW_BRICK_SLAB =
-        BLOCKS.register("snow_brick_slab", () -> 
-            new SlabBlock(snowBrickProps())
-        );
-
-    public static final RegistrySupplier<Item> SNOW_BRICK_SLAB_ITEM =
-        ITEMS.register("snow_brick_slab", () ->
-            new BlockItem(SNOW_BRICK_SLAB.get(), new Item.Properties())
-        );
-
     public static final RegistrySupplier<Block> SNOW_BRICK_STAIRS =
         BLOCKS.register("snow_brick_stairs", () ->
             new StairBlock(Blocks.STONE_BRICKS.defaultBlockState(), snowBrickProps())
@@ -265,6 +255,16 @@ public class ModBlocks {
     public static final RegistrySupplier<Item> SNOW_BRICK_STAIRS_ITEM =
         ITEMS.register("snow_brick_stairs", () ->
             new BlockItem(SNOW_BRICK_STAIRS.get(), new Item.Properties())
+        );
+
+    public static final RegistrySupplier<Block> SNOW_BRICK_SLAB =
+        BLOCKS.register("snow_brick_slab", () -> 
+            new SlabBlock(snowBrickProps())
+        );
+
+    public static final RegistrySupplier<Item> SNOW_BRICK_SLAB_ITEM =
+        ITEMS.register("snow_brick_slab", () ->
+            new BlockItem(SNOW_BRICK_SLAB.get(), new Item.Properties())
         );
 
     public static final RegistrySupplier<Block> SNOW_BRICK_WALL =

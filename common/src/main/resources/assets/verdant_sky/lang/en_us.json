@@ -83,6 +83,10 @@
   
   "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "Drinking Snow Lotus: Consumes",
 
+	"resourcepack.verdant_sky.vanilla_blocks":  "verdant sky - Vanilla Blocks",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "Makes some block textures match newer vanilla versions, ",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "such as Snow Bricks.",
+
   "jei.verdant_sky.decay": "Decay Agapanthus",
   "jei.verdant_sky.condition.required.short": "§8Location Requirements",
   "jei.verdant_sky.condition.required": "Flower need to be at specific location",
