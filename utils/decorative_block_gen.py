@@ -339,9 +339,9 @@ def gen_optional_pack(root: Path, pack_name: str):
             "pack_format": 15,
             "description": {
                 "text": "", "extra": [
-                    {"translate": "resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1", "fallback": "verdant sky - Vanilla Blocks", "color": "#a3fa85", "italic": False},
+                    {"translate": "resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1", "fallback": "Makes Snow Brick textures match newer vanilla versions.", "color": "#ffffbc", "italic": False},
                     {"text": "\n"},
-                    {"translate": "resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2", "fallback": "Makes Snow Brick textures match newer vanilla versions.", "color": "#ffffbc", "italic": False}
+                    {"translate": "resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2", "fallback": "such as Snow Bricks.", "color": "#ffffbc", "italic": False}
                 ]
             }
         }

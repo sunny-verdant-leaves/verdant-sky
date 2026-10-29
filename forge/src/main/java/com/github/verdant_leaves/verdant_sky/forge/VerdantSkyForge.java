@@ -85,7 +85,7 @@ public final class VerdantSkyForge {
     
         Pack myPack = Pack.readMetaAndCreate(
             VerdantSky.MOD_ID + ":" + folderName,
-            Component.translatable("resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1"),
+            Component.translatable("resourcepack.verdant_sky.vanilla_blocks"),
             false,
             (packLocationInfo) -> packResources,
             PackType.CLIENT_RESOURCES,

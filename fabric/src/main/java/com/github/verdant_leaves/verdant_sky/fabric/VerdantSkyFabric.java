@@ -1,5 +1,6 @@
 package com.github.verdant_leaves.verdant_sky.fabric;
 
+import net.minecraft.network.chat.Component;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -46,6 +47,7 @@ public final class VerdantSkyFabric implements ModInitializer {
             ResourceManagerHelper.registerBuiltinResourcePack(
                 new ResourceLocation(VerdantSky.MOD_ID, "vanilla_blocks"),
                 modContainer,
+                Component.translatable("resourcepack.verdant_sky.vanilla_blocks"), 
                 ResourcePackActivationType.DEFAULT_ENABLED // 激活类型
             );
         });
