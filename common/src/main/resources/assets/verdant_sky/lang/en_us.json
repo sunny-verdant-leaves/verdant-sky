@@ -8,7 +8,7 @@
   "block.verdant_sky.decay_agapanthus.reference": "All things shall wither and decay.",
   "block.verdant_sky.floating_decay_agapanthus": "Floating Decay Agapanthus",
   "block.verdant_sky.drinking_snow_lotus": "Drinking Snow Lotus",
-  "block.verdant_sky.drinking_snow_lotus.reference": "",
+  "block.verdant_sky.drinking_snow_lotus.reference": "Chill to the Core, Let the Snow Soar.",
   "block.verdant_sky.floating_drinking_snow_lotus": "Floating Drinking Snow Lotus",
   "block.verdant_sky.livingwood_pool": "Livingwood Mana Pool",
   "block.verdant_sky.apothecary_oak": "Oak Petal Apothecary",
@@ -82,12 +82,8 @@
   "block.verdant_sky.snow_brick_slab": "Snow Brick Slab",
   "block.verdant_sky.snow_brick_stairs": "Snow Brick Stairs",
   "block.verdant_sky.snow_brick_wall": "Snow Brick Wall",
-  
-  "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "Drinking Snow Lotus: Consumes",
 
-	"resourcepack.verdant_sky.vanilla_blocks":  "verdant sky - Vanilla Blocks",
-	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "Makes some block textures match newer vanilla versions, ",
-	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "such as Snow Bricks.",
+  "emi.category.verdant_sky.decay": "Decay Agapanthus",
 
   "jei.verdant_sky.decay": "Decay Agapanthus",
   "jei.verdant_sky.condition.required.short": "§8Location Requirements",
@@ -108,12 +104,23 @@
   "jei.verdant_sky.condition.value.min": "≥ %s",
   "jei.verdant_sky.condition.value.max": "≤ %s",
 
-  "emi.category.verdant_sky.decay": "Decay Agapanthus",
+  "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "Drinking Snow Lotus: Devours",
+
+	"resourcepack.verdant_sky.vanilla_blocks":  "verdant sky - Vanilla Blocks",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "Makes some block textures match newer vanilla versions, ",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "such as Snow Bricks.",
 
   "verdant_sky.entry.decay_agapanthus": "Decay Agapanthus",
   "verdant_sky.tagline.decay_agapanthus": "Reverse version of the Pure Daisy",
-  "verdant_sky.page.decay_agapanthus.0": "The $(item)Decay Agapanthus$(0) is an important flower.$(p)This flower will decay any nearby $(item)Leaves$(0), $(item)Cobblestone$(0) in the Nether and other blocks into their decayed counterparts, $(item)Dirt$(0), $(item)Netherrack$(0) and more. It provides ways to obtain and regenerate some materials in special environments.",
-  "verdant_sky.page.decay_agapanthus.1": "A few other blocks can also be decayed by placing them around the flower. While not as unique or essential as Dirt, these recipes can still come in handy. $(p)$(item)Blue Ice$(0) decays into $(item)Packed Ice$(0), $(item)Packed Ice$(0) into $(item)Ice$(0), $(item)Snow Block$(0) into $(item)Water$(0), and $(item)Obsidian$(0) into $(item)Crying Obsidian$(0). In the Nether, $(item)Sand$(0) decays into $(item)Soul Sand$(0); in the End, $(item)Cobbled Deepslate$(0) decays into $(item)End Stone$(0).",
+  "verdant_sky.page.decay_agapanthus.0": "The $(item)Decay Agapanthus$() is an important flower.$(p)This flower will decay any nearby $(item)Leaves$(), $(item)Cobblestone$() in the Nether and other blocks into their decayed counterparts, $(item)Dirt$(), $(item)Netherrack$() and more. It provides ways to obtain and regenerate some materials in special environments.",
+  "verdant_sky.page.decay_agapanthus.1": "A few other blocks can also be decayed by placing them around the flower. While not as unique or essential as Dirt, these recipes can still come in handy. $(p)$(item)Blue Ice$() decays into $(item)Packed Ice$(), $(item)Packed Ice$() into $(item)Ice$(), $(item)Snow Block$() into $(item)Water$(), and $(item)Obsidian$() into $(item)Crying Obsidian$(). In the Nether, $(item)Sand$() decays into $(item)Soul Sand$(); in the End, $(item)Cobbled Deepslate$() decays into $(item)End Stone$().",
   "verdant_sky.page.decay_agapanthus.2": "In addition, when the Decay Agapanthus is working, it also applies the Wither effect to nearby mobs.",
-  "verdant_sky.page.decay_agapanthus.3": "...Though turned to mud, they'd nurture flowers' growth next spring."
+  "verdant_sky.page.decay_agapanthus.3": "$(o)...Though turned to mud, they'd nurture flowers' growth next spring.$()",
+
+  "verdant_sky.entry.drinking_snow_lotus": "Drinking Snow Lotus",
+  "verdant_sky.tagline.drinking_snow_lotus": "Mana from snow",
+  "verdant_sky.page.drinking_snow_lotus.0": "$(item)Drinking Snow Lotus$() is a $(thing)Generating Flower$() that loves ice and snow. It devours Snowballs, Snow, and Snow Blocks on the ground to continuously produce $(thing)Mana$(). The more it drinks, the longer it works.$(p)If placed in a $(thing)Cold Biome$(), its efficiency increases several times. This is a privilege of flowers blessed by ice and snow.",
+  "verdant_sky.page.drinking_snow_lotus.1": "When the Drinking Snow Lotus devours different snow resources, its fullness and the provided work time vary:$(li)$(item)Snow Block$(): most filling, provides 8s each$(li)$(item)Snow$(): comes next, provides 4s each$(li)$(item)Snowball$(): least filling, provides 2s each.$(p)Note that once fully fed, the lotus will no longer want to drink. If it is $(thing)snowing$(), it will also drink the snowflakes falling from the sky.",
+  "verdant_sky.page.drinking_snow_lotus.2": "The Drinking Snow Lotus devours dropped items very frequently, making it hard to control the timing of feeding. Therefore, manual management is not recommended. Using a timer to drop snowballs near it at regular intervals is the ideal way to automate it.",
+  "verdant_sky.page.drinking_snow_lotus.3": "$(o)The cold never bothered me anyway.$()"
 }

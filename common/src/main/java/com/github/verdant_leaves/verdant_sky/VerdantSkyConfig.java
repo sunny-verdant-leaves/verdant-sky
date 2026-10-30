@@ -70,9 +70,6 @@ public class VerdantSkyConfig {
     /** 寒冷生物群系：产出间隔（tick） */
     public int drinkingSnowLotusColdManaInterval = 4;
 
-    /** 产魔速率随机波动范围。0.2 = ±20% 的波动。 */
-    public double drinkingSnowLotusManaVariance = 0.2;
-
     /** 工作时间缓冲上限，单位：tick。 */
     public int drinkingSnowLotusMaxWorkTicks = 72000;
 
@@ -190,10 +187,6 @@ public class VerdantSkyConfig {
     
     public static int drinkingSnowLotusColdManaInterval() {
         return Math.max(1, INSTANCE.drinkingSnowLotusColdManaInterval);
-    }
-
-    public static double drinkingSnowLotusManaVariance() {
-        return Math.max(0.0, INSTANCE.drinkingSnowLotusManaVariance);
     }
     
     public static int drinkingSnowLotusMaxWorkTicks() {

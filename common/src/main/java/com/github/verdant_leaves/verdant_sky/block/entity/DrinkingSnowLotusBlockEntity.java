@@ -38,10 +38,33 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     private static final String TAG_WORK_TICKS = "workTicks";
     private static final int START_CONSUME_EVENT = 0; // 自定义方块事件 ID
 
+    //  配置缓存
+    private final int maxWorkTicks;
+    private final int normalAmount;
+    private final int normalInterval;
+    private final int coldAmount;
+    private final int coldInterval;
+    private final int radius;
+    
+    private final int snowballTicks;
+    private final int snowTicks;
+    private final int snowBlockTicks;
+
     private int workTicks = 0;
 
     public DrinkingSnowLotusBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DRINKING_SNOW_LOTUS.get(), pos, state);
+        
+        this.maxWorkTicks = VerdantSkyConfig.drinkingSnowLotusMaxWorkTicks();
+        this.normalAmount = VerdantSkyConfig.drinkingSnowLotusNormalManaAmount();
+        this.normalInterval = VerdantSkyConfig.drinkingSnowLotusNormalManaInterval();
+        this.coldAmount = VerdantSkyConfig.drinkingSnowLotusColdManaAmount();
+        this.coldInterval = VerdantSkyConfig.drinkingSnowLotusColdManaInterval();
+        this.radius = VerdantSkyConfig.drinkingSnowLotusRadius();
+        
+        this.snowballTicks = VerdantSkyConfig.drinkingSnowLotusSnowballWorkTicks();
+        this.snowTicks = VerdantSkyConfig.drinkingSnowLotusSnowLayerWorkTicks();
+        this.snowBlockTicks = VerdantSkyConfig.drinkingSnowLotusSnowBlockWorkTicks();
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -65,9 +88,8 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         }
 
         // 扫描掉落物
-        if (ticksExisted % 20 == 0) {
-            int maxTicks = VerdantSkyConfig.drinkingSnowLotusMaxWorkTicks();
-            if (workTicks < maxTicks && getMana() < getMaxMana()) {
+        if (ticksExisted % 40 == 0) {
+            if (workTicks < maxWorkTicks && getMana() < getMaxMana()) {
                 tryConsumeDroppedFuel();
             }
         }
@@ -78,21 +100,12 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         boolean coldBiome = isColdBiome();
         boolean snowing = isSnowingHere();
         boolean consumeWork = !(coldBiome && snowing);
-        int baseAmount = coldBiome 
-            ? VerdantSkyConfig.drinkingSnowLotusColdManaAmount() 
-            : VerdantSkyConfig.drinkingSnowLotusNormalManaAmount();
-        int interval = coldBiome 
-            ? VerdantSkyConfig.drinkingSnowLotusColdManaInterval() 
-            : VerdantSkyConfig.drinkingSnowLotusNormalManaInterval();
+        int baseAmount = coldBiome ? coldAmount : normalAmount;
+        int interval = coldBiome ? coldInterval : normalInterval;
 
         // 生产魔力
         if (ticksExisted % interval == 0) {
-            double variance = VerdantSkyConfig.drinkingSnowLotusManaVariance();
-            double randomOffset = (level.random.nextDouble() * 2.0 - 1.0) * variance;
-            int actualMana = (int) Math.round(baseAmount * (1.0 + randomOffset));
-            
-            if (actualMana < 1) actualMana = 1;
-            addMana(actualMana);
+            addMana(baseAmount);
         }
 
         // 扣除工作时间
@@ -153,10 +166,9 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     private void tryConsumeDroppedFuel() {
         if (level == null || level.isClientSide()) return;
 
-        int r = VerdantSkyConfig.drinkingSnowLotusRadius();
         AABB area = new AABB(
-            worldPosition.getX() - r, worldPosition.getY() - r, worldPosition.getZ() - r,
-            worldPosition.getX() + r + 1, worldPosition.getY() + r + 1, worldPosition.getZ() + r + 1
+            worldPosition.getX() - radius, worldPosition.getY() - radius, worldPosition.getZ() - radius,
+            worldPosition.getX() + radius + 1, worldPosition.getY() + radius + 1, worldPosition.getZ() + radius + 1
         );
 
         List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, area);
@@ -178,7 +190,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
             } else {
                 itemEntity.setItem(ItemStack.EMPTY); 
             }
-            workTicks = Math.min(VerdantSkyConfig.drinkingSnowLotusMaxWorkTicks(), workTicks + ticksToAdd);
+            workTicks = Math.min(maxWorkTicks, workTicks + ticksToAdd);
 
             // 播放音效
             level.playSound(null, worldPosition, ModSoundEvents.DRINKING_SNOW_LOTUS_CONSUME.get(), SoundSource.BLOCKS, 1.0f, 1.2f + level.random.nextFloat() * 0.2f);
@@ -195,13 +207,13 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     /* 获取掉落物对应的工作时长 */
     private int getWorkTicksForItem(ItemStack stack) {
         if (stack.is(Items.SNOWBALL)) {
-            return VerdantSkyConfig.drinkingSnowLotusSnowballWorkTicks();
+            return snowballTicks;
         } else if (stack.is(Items.SNOW)) {
-            return VerdantSkyConfig.drinkingSnowLotusSnowLayerWorkTicks();
+            return snowTicks;
         } else if (stack.is(Items.SNOW_BLOCK)) {
-            return VerdantSkyConfig.drinkingSnowLotusSnowBlockWorkTicks();
+            return snowBlockTicks;
         }
-        return VerdantSkyConfig.drinkingSnowLotusSnowballWorkTicks();
+        return snowballTicks;
     }
 
     /* 是否为寒冷生物群系 */
@@ -251,7 +263,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     public RadiusDescriptor getRadius() {
         return RadiusDescriptor.Rectangle.square(
             getEffectivePos(),
-            VerdantSkyConfig.drinkingSnowLotusRadius()
+            radius
         );
     }
 }

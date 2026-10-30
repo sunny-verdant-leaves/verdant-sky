@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "botania:floating_flower",
+  "ingredients": [
+    {
+      "tag": "botania:floating_flowers"
+    },
+    {
+      "item": "verdant_sky:drinking_snow_lotus"
+    }
+  ],
+  "result": {
+    "item": "verdant_sky:floating_drinking_snow_lotus"
+  }
+}
