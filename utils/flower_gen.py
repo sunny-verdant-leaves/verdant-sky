@@ -4,8 +4,8 @@
 Botania 花卉资源与数据生成器 / Botania Flower Generator
 =================================================
 为 Verdant Sky 批量生成 Botania 风格的花（普通与浮空）的资源和数据。
-包括：方块状态、模型、纹理、战利品表、标签
-不包括：本地化
+包括：方块状态、模型（方块+物品）、纹理（方块）、战利品表、标签（方块+物品）
+不包括：本地化、帕秋莉手册、配方
 
 用法:
     python utils/flower_gen.py [--output <目录>]
@@ -158,10 +158,7 @@ def gen_tags(root: Path):
         normal_id = f"{MOD_ID}:{fid}"
         floating_id = f"{MOD_ID}:floating_{fid}" if flower.get("has_floating") else None
 
-        # special_flowers
-        tag_special = root / "data" / "botania" / "tags" / "blocks" / "special_flowers.json"
-        load_and_append_json(tag_special, [normal_id])
-
+        # ---------------- 方块标签 ----------------
         # functional_special_flower, etc.
         tag_special_sub = root / "data" / "botania" / "tags" / "blocks" / f"{ftype}_special_flowers.json"
         load_and_append_json(tag_special_sub, [normal_id])
@@ -170,6 +167,16 @@ def gen_tags(root: Path):
         if floating_id:
             tag_float_sub = root / "data" / "botania" / "tags" / "blocks" / f"{ftype}_floating_flowers.json"
             load_and_append_json(tag_float_sub, [floating_id])
+
+        # ---------------- 物品标签 ----------------
+        # functional_special_flower, etc.
+        tag_special_sub_item = root / "data" / "botania" / "tags" / "items" / f"{ftype}_special_flowers.json"
+        load_and_append_json(tag_special_sub_item, [normal_id])
+
+        # functional_floating_flowers, etc.
+        if floating_id:
+            tag_float_sub_item = root / "data" / "botania" / "tags" / "items" / f"{ftype}_floating_flowers.json"
+            load_and_append_json(tag_float_sub_item, [floating_id])
 
     print(f"  [tags]       生成完毕")
 

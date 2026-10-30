@@ -11,10 +11,11 @@ import java.util.function.Supplier;
 
 public class PlatformBlocksImpl {
     public static Block createSpecialFlowerBlock(
-            MobEffect effect, 
-            int effectDuration, 
-            BlockBehaviour.Properties props, 
-            Supplier<BlockEntityType<? extends SpecialFlowerBlockEntity>> beType) {
+        MobEffect effect, 
+        int effectDuration, 
+        BlockBehaviour.Properties props, 
+        Supplier<BlockEntityType<? extends SpecialFlowerBlockEntity>> beType
+    ) {
         return new ForgeSpecialFlowerBlock(effect, effectDuration, props, beType);
     }
 }

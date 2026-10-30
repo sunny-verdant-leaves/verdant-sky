@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.block.entity.DecayAgapanthusBlockEntity;
-import com.github.verdant_leaves.verdant_sky.block.entity.DrinkingSnowLotusBlockEntity; // 新增导入
+import com.github.verdant_leaves.verdant_sky.block.entity.DrinkingSnowLotusBlockEntity;
 import com.github.verdant_leaves.verdant_sky.mixin.BlockEntityTypeAccessor;
 
 import dev.architectury.platform.Platform;

@@ -17,7 +17,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.resource.PathPackResources;
 
-
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.api.WoodVariant;
 import com.github.verdant_leaves.verdant_sky.platform.PlatformFlammable;
