@@ -6,6 +6,7 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 
@@ -44,8 +45,17 @@ public class ModCreativeTabs {
         CreativeTabRegistry.append(
             VERDANT_TAB,
             ModBlocks.SNOW_BRICKS_ITEM,
-            ModBlocks.SNOW_BRICK_SLAB_ITEM,
             ModBlocks.SNOW_BRICK_STAIRS_ITEM,
+            ModBlocks.SNOW_BRICK_SLAB_ITEM,
+            ModBlocks.SNOW_BRICK_WALL_ITEM
+        );
+
+        // 原版标签页 - 建筑方块
+        CreativeTabRegistry.append(
+            CreativeModeTabs.BUILDING_BLOCKS,
+            ModBlocks.SNOW_BRICKS_ITEM,
+            ModBlocks.SNOW_BRICK_STAIRS_ITEM,
+            ModBlocks.SNOW_BRICK_SLAB_ITEM,
             ModBlocks.SNOW_BRICK_WALL_ITEM
         );
     }
