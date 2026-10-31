@@ -78,7 +78,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
 
         // 客户端逻辑：工作粒子
         if (level.isClientSide) {
-            if (workTicks > 0 && level.random.nextInt(16) == 0) {
+            if (workTicks > 0 && level.random.nextInt(12) == 0) {
                 double x = worldPosition.getX() + 0.5 + (level.random.nextDouble() - 0.5) * 0.6;
                 double y = worldPosition.getY() + 0.3 + level.random.nextDouble() * 0.5;
                 double z = worldPosition.getZ() + 0.5 + (level.random.nextDouble() - 0.5) * 0.6;
@@ -88,7 +88,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         }
 
         // 扫描掉落物
-        if (ticksExisted % 40 == 0) {
+        if (ticksExisted % 20 == 0) {
             if (workTicks < maxWorkTicks && getMana() < getMaxMana()) {
                 tryConsumeDroppedFuel();
             }
@@ -135,7 +135,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
                     double targetZ = worldPosition.getZ() + 0.5 + offset.z;
 
                     // 在物品位置生成粒子并飞向花朵
-                    for (int i = 0; i < 4; i++) {
+                    for (int i = 0; i < 5; i++) {
                         level.addParticle(ParticleTypes.SNOWFLAKE, 
                             ex, ey, ez, 
                             (level.random.nextDouble() - 0.5) * 0.1, 
@@ -143,14 +143,12 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
                             (level.random.nextDouble() - 0.5) * 0.1
                         );
                     }
-                    for (int i = 0; i < 2; i++) {
-                        level.addParticle(ParticleTypes.END_ROD, 
-                            ex, ey, ez, 
-                            (targetX - ex) * 0.1,
-                            (targetY - ey) * 0.1,
-                            (targetZ - ez) * 0.1
-                        );
-                    }
+                    level.addParticle(ParticleTypes.END_ROD, 
+                        ex, ey, ez, 
+                        (targetX - ex) * 0.1,
+                        (targetY - ey) * 0.1,
+                        (targetZ - ez) * 0.1
+                    );
                 }
             }
             return true;
