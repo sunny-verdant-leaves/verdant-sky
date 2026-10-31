@@ -23,16 +23,17 @@ public final class VerdantSkyClient {
     private VerdantSkyClient() {}
 
     public static void init() {
-        registerDecayAgapanthusRenderType();
-        registerDecayAgapanthusRenderer();
+        registerRenderType();
+        registerRenderer();
         registerCauldronWaterColor();
     }
 
     // ══════════════════════════════════════════════════════════════
-    //  腐朽百子莲的渲染层（透明）
+    //  透明渲染层
     // ══════════════════════════════════════════════════════════════
 
-    private static void registerDecayAgapanthusRenderType() {
+    private static void registerRenderType() {
+        // -- 腐朽百子莲 --
         RenderTypeRegistry.register(
             RenderType.cutout(),
             ModBlocks.DECAY_AGAPANTHUS.get()
@@ -41,15 +42,32 @@ public final class VerdantSkyClient {
             RenderType.cutout(),
             ModBlocks.FLOATING_DECAY_AGAPANTHUS.get()
         );
+
+        // -- 饮雪莲 --
+        RenderTypeRegistry.register(
+            RenderType.cutout(),
+            ModBlocks.DRINKING_SNOW_LOTUS.get()
+        );
+        RenderTypeRegistry.register(
+            RenderType.cutout(),
+            ModBlocks.FLOATING_DRINKING_SNOW_LOTUS.get()
+        );
     }
 
     // ══════════════════════════════════════════════════════════════
-    //  腐朽百子莲的范围渲染器
+    //  范围渲染器
     // ══════════════════════════════════════════════════════════════
-
-    private static void registerDecayAgapanthusRenderer() {
+    
+    private static void registerRenderer() {
+        // -- 腐朽百子莲 --
         BlockEntityRendererRegistry.register(
             ModBlockEntities.DECAY_AGAPANTHUS.get(),
+            ctx -> new SpecialFlowerBlockEntityRenderer<>(ctx)
+        );
+    
+        // -- 饮雪莲 --
+        BlockEntityRendererRegistry.register(
+            ModBlockEntities.DRINKING_SNOW_LOTUS.get(),
             ctx -> new SpecialFlowerBlockEntityRenderer<>(ctx)
         );
     }

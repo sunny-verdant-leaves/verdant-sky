@@ -6,6 +6,7 @@ import vazkii.botania.api.BotaniaFabricClientCapabilities;
 import vazkii.botania.api.block_entity.BindableSpecialFlowerBlockEntity;
 
 import com.github.verdant_leaves.verdant_sky.block.entity.DecayAgapanthusBlockEntity;
+import com.github.verdant_leaves.verdant_sky.block.entity.DrinkingSnowLotusBlockEntity;
 import com.github.verdant_leaves.verdant_sky.client.VerdantSkyClient;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
 
@@ -16,15 +17,23 @@ public final class VerdantSkyFabricClient implements ClientModInitializer {
         // 通用客户端初始化
         VerdantSkyClient.init();
 
-        // 平台特有：给 Botania 注册腐朽百子莲的 WandHUD
+        // 给 Botania 注册 WandHUD
         registerBotaniaWandHud();
     }
 
     private static void registerBotaniaWandHud() {
+        // -- 腐朽百子莲 --
         BotaniaFabricClientCapabilities.WAND_HUD.registerForBlockEntities(
             (be, ctx) -> new BindableSpecialFlowerBlockEntity
                 .BindableFlowerWandHud<>((DecayAgapanthusBlockEntity) be),
             ModBlockEntities.DECAY_AGAPANTHUS.get()
+        );
+        
+        // -- 饮雪莲 --
+        BotaniaFabricClientCapabilities.WAND_HUD.registerForBlockEntities(
+            (be, ctx) -> new BindableSpecialFlowerBlockEntity
+                .BindableFlowerWandHud<>((DrinkingSnowLotusBlockEntity) be),
+            ModBlockEntities.DRINKING_SNOW_LOTUS.get()
         );
     }
 }

@@ -7,6 +7,9 @@
   "block.verdant_sky.decay_agapanthus": "腐朽百子莲",
   "block.verdant_sky.decay_agapanthus.reference": "万物终将归于腐朽。",
   "block.verdant_sky.floating_decay_agapanthus": "浮空腐朽百子莲",
+  "block.verdant_sky.drinking_snow_lotus": "饮雪莲",
+  "block.verdant_sky.drinking_snow_lotus.reference": "透心凉，雪飞扬。",
+  "block.verdant_sky.floating_drinking_snow_lotus": "浮空饮雪莲",
   "block.verdant_sky.livingwood_pool": "活木魔力池",
   "block.verdant_sky.apothecary_oak": "橡木花药台",
   "block.verdant_sky.apothecary_spruce": "云杉木花药台",
@@ -80,9 +83,7 @@
   "block.verdant_sky.snow_brick_stairs": "雪砖楼梯",
   "block.verdant_sky.snow_brick_wall": "雪砖墙",
 
-	"resourcepack.verdant_sky.vanilla_blocks":  "碧空物语 - 原版方块",
-	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "使一些方块的纹理与高版本原版相匹配，",
-	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "例如雪砖。",
+  "emi.category.verdant_sky.decay": "腐朽百子莲",
 
   "jei.verdant_sky.decay": "腐朽百子莲",
   "jei.verdant_sky.condition.required.short": "§8位置要求",
@@ -103,12 +104,23 @@
   "jei.verdant_sky.condition.value.min": "≥ %s",
   "jei.verdant_sky.condition.value.max": "≤ %s",
 
-  "emi.category.verdant_sky.decay": "腐朽百子莲",
+  "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "饮雪莲：吞噬",
+
+	"resourcepack.verdant_sky.vanilla_blocks":  "碧空物语 - 原版方块",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "使一些方块的纹理与高版本原版相匹配，",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "例如雪砖。",
 
   "verdant_sky.entry.decay_agapanthus": "腐朽百子莲",
   "verdant_sky.tagline.decay_agapanthus": "白雏菊的反转版",
-  "verdant_sky.page.decay_agapanthus.0": "$(item)腐朽百子莲$(0)是一种重要的花。$(p)这种花会将附近的$(item)树叶$(0)、下界中的$(item)圆石$(0)以及其他方块腐化成对应的腐化形态：$(item)泥土$(0)、$(item)下界岩$(0)等。它提供了在特殊环境中获取和再生某些材料的方法。",
-  "verdant_sky.page.decay_agapanthus.1": "还有一些方块放在这朵花旁边时也能被腐化。尽管它们并不像泥土那样独特且必要，但这些配方仍然很有用。$(p)$(item)蓝冰$(0)变为$(item)浮冰$(0)，$(item)浮冰$(0)变为$(item)冰$(0)，$(item)雪块$(0)变为$(item)水$(0)，$(item)黑曜石$(0)变为$(item)哭泣的黑曜石$(0)。在下界中，$(item)沙子$(0)变为$(item)灵魂沙$(0)；在末地中，$(item)深板岩圆石$(0)变为$(item)末地石$(0)。",
+  "verdant_sky.page.decay_agapanthus.0": "$(item)腐朽百子莲$()是一种重要的花。$(p)这种花会将附近的$(item)树叶$()、下界中的$(item)圆石$()以及其他方块腐化成对应的腐化形态：$(item)泥土$()、$(item)下界岩$()等。它提供了在特殊环境中获取和再生某些材料的方法。",
+  "verdant_sky.page.decay_agapanthus.1": "还有一些方块放在这朵花旁边时也能被腐化。尽管它们并不像泥土那样独特且必要，但这些配方仍然很有用。$(p)$(item)蓝冰$()变为$(item)浮冰$()，$(item)浮冰$()变为$(item)冰$()，$(item)雪块$()变为$(item)水$()，$(item)黑曜石$()变为$(item)哭泣的黑曜石$()。在下界中，$(item)沙子$()变为$(item)灵魂沙$()；在末地中，$(item)深板岩圆石$()变为$(item)末地石$()。",
   "verdant_sky.page.decay_agapanthus.2": "除此之外，腐朽百子莲工作的时候，也会为附近的生物施加凋零效果。",
-  "verdant_sky.page.decay_agapanthus.3": "……化作春泥更护花。"
+  "verdant_sky.page.decay_agapanthus.3": "$(o)……化作春泥更护花。$()",
+  
+  "verdant_sky.entry.drinking_snow_lotus": "饮雪莲",
+  "verdant_sky.tagline.drinking_snow_lotus": "融雪产魔",
+  "verdant_sky.page.drinking_snow_lotus.0": "$(item)饮雪莲$()是一朵喜欢冰雪的$(thing)产能花$()。它会将地上的雪球、雪和雪块吞入花腹并持续产生$(thing)魔力$()。它喝得越饱，工作的时间就越长。$(p)若处在$(thing)寒冷生物群系$()，它的效率会提升至数倍。这是被冰雪眷顾的花朵的特权。",
+  "verdant_sky.page.drinking_snow_lotus.1": "饮雪莲吞噬不同的冰雪资源时，饱腹感也不同，提供的工作时间也不同：$(li)$(item)雪块$()饱腹感最强，每个提供8秒$(li)$(item)雪$()次之，每个提供4秒$(li)$(item)雪球$()最弱，每个提供2秒。$(p)值得注意的是，饮雪莲喝饱之后就不会想再饮用了。如果$(thing)正在降雪$()，它还会饮用天空落下的雪花。",
+  "verdant_sky.page.drinking_snow_lotus.2": "饮雪莲吞噬掉落物的频率很高，很难控制投喂时机，因此并不建议手动管理。使用计时器定时投喂等办法将雪球漏在它附近，是自动化它的最理想方案。",
+  "verdant_sky.page.drinking_snow_lotus.3": "$(o)反正冰天雪地我也不怕。$()"
 }

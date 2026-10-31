@@ -1,0 +1,29 @@
+{
+  "name": "verdant_sky.entry.drinking_snow_lotus",
+  "category": "botania:generating_flowers",
+  "icon": "verdant_sky:drinking_snow_lotus",
+  "advancement": "botania:main/pure_daisy_pickup",
+  "pages": [
+    {
+      "type": "text",
+      "text": "verdant_sky.page.drinking_snow_lotus.0"
+    },
+    {
+      "type": "text",
+      "text": "verdant_sky.page.drinking_snow_lotus.1"
+    },
+    {
+      "type": "text",
+      "text": "verdant_sky.page.drinking_snow_lotus.2"
+    },
+    {
+      "type": "botania:petal_apothecary",
+      "text": "verdant_sky.page.drinking_snow_lotus.3",
+      "recipe": "verdant_sky:petal_apothecary/drinking_snow_lotus"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "verdant_sky:floating_drinking_snow_lotus": 1,
+    "minecraft:snow": 1
+  }
+}

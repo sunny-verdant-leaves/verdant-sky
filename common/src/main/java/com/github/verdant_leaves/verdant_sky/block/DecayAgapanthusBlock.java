@@ -28,7 +28,6 @@ public class DecayAgapanthusBlock extends FlowerBlock implements EntityBlock {
         super(MobEffects.WITHER, 8, properties);
     }
 
-    // 类里加一个常量
     private static final VoxelShape SHAPE = Block.box(
         3.0, 0.0, 3.0,      // minX, minY, minZ
         13.0, 14.0, 13.0    // maxX, maxY, maxZ

@@ -29,6 +29,8 @@ public class ModCreativeTabs {
             VERDANT_TAB,
             ModBlocks.DECAY_AGAPANTHUS_ITEM,
             ModBlocks.FLOATING_DECAY_AGAPANTHUS_ITEM,
+            ModBlocks.DRINKING_SNOW_LOTUS_ITEM,
+            ModBlocks.FLOATING_DRINKING_SNOW_LOTUS_ITEM,
             ModBlocks.LIVINGWOOD_POOL_ITEM
         );
 
