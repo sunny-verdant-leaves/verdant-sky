@@ -76,9 +76,14 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
 
         if (level == null) return;
 
+        // 判断环境
+        boolean coldBiome = isColdBiome();
+        boolean snowing = isSnowingHere();
+        boolean isFreeWorking = coldBiome && snowing; // 免费工作状态
+
         // 客户端逻辑：工作粒子
         if (level.isClientSide) {
-            if (workTicks > 0 && level.random.nextInt(12) == 0) {
+            if ((workTicks > 0 || isFreeWorking) && level.random.nextInt(12) == 0) {
                 double x = worldPosition.getX() + 0.5 + (level.random.nextDouble() - 0.5) * 0.6;
                 double y = worldPosition.getY() + 0.3 + level.random.nextDouble() * 0.5;
                 double z = worldPosition.getZ() + 0.5 + (level.random.nextDouble() - 0.5) * 0.6;
@@ -94,12 +99,10 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
             }
         }
 
-        // 如果没有工作时间，直接返回
-        if (workTicks <= 0) return;
+        if (workTicks <= 0 && !isFreeWorking) {
+            return;
+        }
 
-        boolean coldBiome = isColdBiome();
-        boolean snowing = isSnowingHere();
-        boolean consumeWork = !(coldBiome && snowing);
         int baseAmount = coldBiome ? coldAmount : normalAmount;
         int interval = coldBiome ? coldInterval : normalInterval;
 
@@ -109,7 +112,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         }
 
         // 扣除工作时间
-        if (consumeWork) {
+        if (!isFreeWorking) {
             workTicks--;
         }
     }
