@@ -37,12 +37,6 @@ public class StartIslandSpawner {
     private static final long NEW_WORLD_GAME_TIME_THRESHOLD = 20;
     private static final int XZ_OFFSET = 8;
 
-    /** 下界起始岛的默认 Y 坐标 */
-    private static final int NETHER_TARGET_Y = 128;
-
-    /** 主世界起始岛的生成 Y 坐标 */
-    private static final int OVERWORLD_TARGET_Y = 192;
-
     public static void register() {
         LifecycleEvent.SERVER_STARTED.register(StartIslandSpawner::onServerStarted);
     }
@@ -85,7 +79,7 @@ public class StartIslandSpawner {
         int offsetZ = Mth.nextInt(random, -XZ_OFFSET, XZ_OFFSET);
 
         int targetX = spawnPos.getX() + offsetX;
-        int targetY = OVERWORLD_TARGET_Y;
+        int targetY = spawnPos.getY();
         int targetZ = spawnPos.getZ() + offsetZ;
 
         BlockPos targetPos = new BlockPos(targetX, targetY, targetZ);
@@ -112,8 +106,8 @@ public class StartIslandSpawner {
             }
 
             // Enable during debugging
-            System.out.println("[Verdant Sky] Start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
-            System.out.println("[Verdant Sky] Actual Biome at this pos: " + biome.unwrapKey().map(k -> k.location().toString()).orElse("Unknown"));
+            // System.out.println("[Verdant Sky] Start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
+            // System.out.println("[Verdant Sky] Actual Biome at this pos: " + biome.unwrapKey().map(k -> k.location().toString()).orElse("Unknown"));
 
             data.markGenerated();
             return targetPos;
@@ -151,7 +145,9 @@ public class StartIslandSpawner {
             targetX = spawnPos.getX() + offsetX;
             targetZ = spawnPos.getZ() + offsetZ;
         }
-        int targetY = NETHER_TARGET_Y;
+        
+        BlockPos spawnPos = level.getSharedSpawnPos();
+        int targetY = spawnPos.getY(); 
 
         BlockPos targetPos = new BlockPos(targetX, targetY, targetZ);
 
@@ -252,8 +248,8 @@ public class StartIslandSpawner {
         if (!success) {
             System.err.println("[Verdant Sky] Failed to place structure (" + structureId + ") at " + pos + ". Generating emergency platform.");
             
-            // 在 (0, 192, 0) 放置 3x3 石头平台
-            BlockPos fallbackCenter = new BlockPos(0, OVERWORLD_TARGET_Y, 0);
+            // 在原定位置的正上方放置石头平台
+            BlockPos fallbackCenter = pos;
             for (int x = -1; x <= 1; x++) {
                 for (int z = -1; z <= 1; z++) {
                     level.setBlockAndUpdate(fallbackCenter.offset(x, 0, z), Blocks.STONE.defaultBlockState());
@@ -295,14 +291,14 @@ public class StartIslandSpawner {
         var registry = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
 
         Holder<ConfiguredFeature<?, ?>> feature = null;
-        String usedId = null;
+        // String usedId = null;
         for (String id : featureIds) {
             ResourceLocation loc = parseResourceLocation(id);
             ResourceKey<ConfiguredFeature<?, ?>> key = ResourceKey.create(Registries.CONFIGURED_FEATURE, loc);
             var holder = registry.getHolder(key);
             if (holder.isPresent()) {
                 feature = holder.get();
-                usedId = id;
+                // usedId = id;
                 break;
             }
         }
@@ -320,7 +316,7 @@ public class StartIslandSpawner {
             GenerationStep.Decoration.VEGETAL_DECORATION.ordinal()
         );
 
-        boolean placed = 
+        // boolean placed = 
         feature.value().place(
             level,
             level.getChunkSource().getGenerator(),
@@ -329,7 +325,7 @@ public class StartIslandSpawner {
         );
 
         // Enable during debugging
-        System.out.println("[Verdant Sky] Feature " + usedId + " at " + placePos + " (success=" + placed + ")");
+        // System.out.println("[Verdant Sky] Feature " + usedId + " at " + placePos + " (success=" + placed + ")");
     }
 
     private static ResourceLocation parseResourceLocation(String id) {
@@ -351,7 +347,8 @@ public class StartIslandSpawner {
         if (biome.is(biomeTag("start_island_acacia")))   return "verdant_sky:overworld/start_island_acacia";
         if (biome.is(biomeTag("start_island_spruce")))   return "verdant_sky:overworld/start_island_spruce";
         if (biome.is(biomeTag("start_island_oak")))      return "verdant_sky:overworld/start_island_oak";
-        if (biome.is(biomeTag("start_island_forest")))   return "verdant_sky:start_island_forest";
+        if (biome.is(biomeTag("start_island_forest")))   return "verdant_sky:overworld/start_island_forest";
+        
         return "verdant_sky:start_island";
     }
 
