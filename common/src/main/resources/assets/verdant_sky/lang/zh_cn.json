@@ -104,6 +104,11 @@
   "jei.verdant_sky.condition.value.min": "≥ %s",
   "jei.verdant_sky.condition.value.max": "≤ %s",
 
+  "sign.verdant_sky.bug.line1": "§2碧空物语§r",
+  "sign.verdant_sky.bug.line2": "结构生成失败",
+  "sign.verdant_sky.bug.line3": "请将此问题上报",
+  "sign.verdant_sky.bug.line4": "给模组作者！",
+
   "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "饮雪莲：吞噬",
 
 	"resourcepack.verdant_sky.vanilla_blocks":  "碧空物语 - 原版方块",

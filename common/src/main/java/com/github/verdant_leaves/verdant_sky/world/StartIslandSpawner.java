@@ -1,12 +1,11 @@
 package com.github.verdant_leaves.verdant_sky.world;
 
-import dev.architectury.platform.Platform;
 import dev.architectury.event.events.common.LifecycleEvent;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -16,12 +15,14 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.StandingSignBlock;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.entity.SignText;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 
 public class StartIslandSpawner {
 
@@ -29,9 +30,6 @@ public class StartIslandSpawner {
 
     private static final long NEW_WORLD_GAME_TIME_THRESHOLD = 20;
     private static final int XZ_OFFSET = 8;
-
-    /** 下界起始岛的默认 Y 坐标（下界岩顶上方） */
-    private static final int NETHER_TARGET_Y = 128;
 
     public static void register() {
         LifecycleEvent.SERVER_STARTED.register(StartIslandSpawner::onServerStarted);
@@ -75,7 +73,7 @@ public class StartIslandSpawner {
         int offsetZ = Mth.nextInt(random, -XZ_OFFSET, XZ_OFFSET);
 
         int targetX = spawnPos.getX() + offsetX;
-        int targetY = spawnPos.getY();
+        int targetY = spawnPos.getY(); 
         int targetZ = spawnPos.getZ() + offsetZ;
 
         BlockPos targetPos = new BlockPos(targetX, targetY, targetZ);
@@ -93,28 +91,18 @@ public class StartIslandSpawner {
 
         // 放置结构
         String structureId = pickOverworldStructureForBiome(biome);
-        String structureCommand = String.format(
-            "place structure %s %d %d %d",
-            structureId, targetX, targetY, targetZ
-        );
-        server.getCommands().performPrefixedCommand(
-            server.createCommandSourceStack()
-                .withSuppressedOutput()
-                .withLevel(level)
-                .withPosition(Vec3.atCenterOf(targetPos)),
-            structureCommand
-        );
+        boolean placed = placeStructureDirectly(level, structureId, targetPos);
 
-        // Enable during debugging
-        // System.out.println("[Verdant Sky] Start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
+        if (placed) {
+            // Enable during debugging
+            // System.out.println("[Verdant Sky] Start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
+            // System.out.println("[Verdant Sky] Actual Biome at this pos: " + biome.unwrapKey().map(k -> k.location().toString()).orElse("Unknown"));
 
-        // 放置地物（featureIndex = 0）
-        if (biome.is(biomeTag("start_flowers"))) {
-            placeFeature(level, targetX, targetZ, 0, "minecraft:forest_flowers");
+            data.markGenerated();
+            return targetPos;
         }
 
-        data.markGenerated();
-        return targetPos;
+        return null;
     }
 
     // ─────────────────────────────────────────────
@@ -146,7 +134,9 @@ public class StartIslandSpawner {
             targetX = spawnPos.getX() + offsetX;
             targetZ = spawnPos.getZ() + offsetZ;
         }
-        int targetY = NETHER_TARGET_Y;
+        
+        BlockPos spawnPos = level.getSharedSpawnPos();
+        int targetY = spawnPos.getY(); 
 
         BlockPos targetPos = new BlockPos(targetX, targetY, targetZ);
 
@@ -163,79 +153,111 @@ public class StartIslandSpawner {
 
         // 放置结构
         String structureId = pickNetherStructureForBiome(biome);
-        String structureCommand = String.format(
-            "place structure %s %d %d %d",
-            structureId, targetX, targetY, targetZ
-        );
-        server.getCommands().performPrefixedCommand(
-            server.createCommandSourceStack()
-                .withSuppressedOutput()
-                .withLevel(level)
-                .withPosition(Vec3.atCenterOf(targetPos)),
-            structureCommand
-        );
+        boolean placed = placeStructureDirectly(level, structureId, targetPos);
 
-        // Enable during debugging
-        // System.out.println("[Verdant Sky] Nether start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
+        if (placed) {
+            // Enable during debugging
+            // System.out.println("[Verdant Sky] Nether start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
 
-        // 放置地物（featureIndex = 1，与主世界区分）
-        if (biome.is(biomeTag("start_flowers"))) {
-            if (Platform.isModLoaded("botania")) {
-                placeFeature(level, targetX, targetZ, 1,
-                    "botania:mystical_mushrooms",
-                    "minecraft:patch_brown_mushroom");
-            } else {
-                placeFeature(level, targetX, targetZ, 1,
-                    "minecraft:patch_brown_mushroom");
-            }
+            data.markGenerated();
         }
-
-        data.markGenerated();
     }
 
     // ─────────────────────────────────────────────
-    // 通用地物放置（可控随机）
+    // 结构放置
     // ─────────────────────────────────────────────
 
-    private static void placeFeature(ServerLevel level, int x, int z, int featureIndex, String... featureIds) {
-        var registry = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
+    private static boolean placeStructureDirectly(ServerLevel level, String structureId, BlockPos pos) {
+        boolean success = false;
+        
+        try {
+            var registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+            ResourceLocation loc = parseResourceLocation(structureId);
+            Structure structure = registry.get(loc);
 
-        Holder<ConfiguredFeature<?, ?>> feature = null;
-        // String usedId = null;
-        for (String id : featureIds) {
-            ResourceLocation loc = parseResourceLocation(id);
-            ResourceKey<ConfiguredFeature<?, ?>> key = ResourceKey.create(Registries.CONFIGURED_FEATURE, loc);
-            var holder = registry.getHolder(key);
-            if (holder.isPresent()) {
-                feature = holder.get();
-                // usedId = id;
-                break;
+            if (structure != null) {
+                ChunkPos chunkPos = new ChunkPos(pos);
+
+                // 生成结构起始点
+                StructureStart start = structure.generate(
+                    level.registryAccess(),
+                    level.getChunkSource().getGenerator(),
+                    level.getChunkSource().getGenerator().getBiomeSource(),
+                    level.getChunkSource().randomState(),
+                    level.getStructureManager(),
+                    level.getSeed(),
+                    chunkPos,
+                    0,
+                    level,
+                    biome -> true
+                );
+
+                if (start.isValid()) {
+                    BoundingBox box = start.getBoundingBox();
+                    ChunkPos min = new ChunkPos(box.minX() >> 4, box.minZ() >> 4);
+                    ChunkPos max = new ChunkPos(box.maxX() >> 4, box.maxZ() >> 4);
+
+                    for (int x = min.x; x <= max.x; x++) {
+                        for (int z = min.z; z <= max.z; z++) {
+                            ChunkPos currentChunk = new ChunkPos(x, z);
+                            start.placeInChunk(
+                                level,
+                                level.structureManager(),
+                                level.getChunkSource().getGenerator(),
+                                level.getRandom(),
+                                new BoundingBox(
+                                    currentChunk.getMinBlockX(), level.getMinBuildHeight(), currentChunk.getMinBlockZ(),
+                                    currentChunk.getMaxBlockX(), level.getMaxBuildHeight(), currentChunk.getMaxBlockZ()
+                                ),
+                                currentChunk
+                            );
+                        }
+                    }
+                    success = true;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("[Verdant Sky] Exception while placing structure: " + structureId);
+            e.printStackTrace();
+        }
+
+        // 兜底逻辑
+        if (!success) {
+            System.err.println("[Verdant Sky] Failed to place structure (" + structureId + ") at " + pos + ". Generating emergency platform.");
+            
+            // 在原定位置的正上方放置石头平台
+            BlockPos fallbackCenter = pos;
+            for (int x = -1; x <= 1; x++) {
+                for (int z = -1; z <= 1; z++) {
+                    level.setBlockAndUpdate(fallbackCenter.offset(x, 0, z), Blocks.STONE.defaultBlockState());
+                }
+            }
+
+            // 在平台中心放置告示牌
+            BlockPos signPos = fallbackCenter.above();
+            level.setBlockAndUpdate(signPos, Blocks.OAK_SIGN.defaultBlockState()
+                    .setValue(StandingSignBlock.ROTATION, 0));
+
+            if (level.getBlockEntity(signPos) instanceof SignBlockEntity sign) {
+                Component[] lines = new Component[] {
+                    Component.translatable("sign.verdant_sky.bug.line1"),
+                    Component.translatable("sign.verdant_sky.bug.line2"),
+                    Component.translatable("sign.verdant_sky.bug.line3"),
+                    Component.translatable("sign.verdant_sky.bug.line4")
+                };
+
+                SignText signText = new SignText()
+                        .setMessage(0, lines[0])
+                        .setMessage(1, lines[1])
+                        .setMessage(2, lines[2])
+                        .setMessage(3, lines[3]);
+
+                sign.setText(signText, true);
+                sign.setChanged();
             }
         }
 
-        if (feature == null) return;
-
-        int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
-        BlockPos placePos = new BlockPos(x, y, z);
-
-        long seed = level.getSeed();
-        WorldgenRandom random = new WorldgenRandom(RandomSource.create(seed));
-        random.setFeatureSeed(
-            seed,
-            featureIndex,
-            GenerationStep.Decoration.VEGETAL_DECORATION.ordinal()
-        );
-
-        // boolean placed = 
-        feature.value().place(
-            level,
-            level.getChunkSource().getGenerator(),
-            random,
-            placePos
-        );
-
-        // Enable during debugging
-        // System.out.println("[Verdant Sky] Feature " + usedId + " at " + placePos + " (success=" + placed + ")");
+        return success;
     }
 
     private static ResourceLocation parseResourceLocation(String id) {
@@ -257,7 +279,8 @@ public class StartIslandSpawner {
         if (biome.is(biomeTag("start_island_acacia")))   return "verdant_sky:overworld/start_island_acacia";
         if (biome.is(biomeTag("start_island_spruce")))   return "verdant_sky:overworld/start_island_spruce";
         if (biome.is(biomeTag("start_island_oak")))      return "verdant_sky:overworld/start_island_oak";
-        if (biome.is(biomeTag("start_island_forest")))   return "verdant_sky:start_island_forest";
+        if (biome.is(biomeTag("start_island_forest")))   return "verdant_sky:overworld/start_island_forest";
+        
         return "verdant_sky:start_island";
     }
 

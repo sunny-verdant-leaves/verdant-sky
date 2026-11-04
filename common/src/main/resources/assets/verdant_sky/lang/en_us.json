@@ -104,6 +104,11 @@
   "jei.verdant_sky.condition.value.min": "≥ %s",
   "jei.verdant_sky.condition.value.max": "≤ %s",
 
+  "sign.verdant_sky.bug.line1": "§2Verdant Sky§r",
+  "sign.verdant_sky.bug.line2": "Structure Failed",
+  "sign.verdant_sky.bug.line3": "Please report it",
+  "sign.verdant_sky.bug.line4": "to the author!",
+
   "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "Drinking Snow Lotus: Devours",
 
 	"resourcepack.verdant_sky.vanilla_blocks":  "verdant sky - Vanilla Blocks",
