@@ -1,13 +1,11 @@
 package com.github.verdant_leaves.verdant_sky.world;
 
-import dev.architectury.platform.Platform;
 import dev.architectury.event.events.common.LifecycleEvent;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -21,11 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.SignText;
-import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
@@ -79,7 +73,7 @@ public class StartIslandSpawner {
         int offsetZ = Mth.nextInt(random, -XZ_OFFSET, XZ_OFFSET);
 
         int targetX = spawnPos.getX() + offsetX;
-        int targetY = spawnPos.getY();
+        int targetY = spawnPos.getY(); 
         int targetZ = spawnPos.getZ() + offsetZ;
 
         BlockPos targetPos = new BlockPos(targetX, targetY, targetZ);
@@ -100,11 +94,6 @@ public class StartIslandSpawner {
         boolean placed = placeStructureDirectly(level, structureId, targetPos);
 
         if (placed) {
-            // 放置地物（featureIndex = 0）
-            if (biome.is(biomeTag("start_flowers"))) {
-                placeFeature(level, targetX, targetZ, 0, "minecraft:forest_flowers");
-            }
-
             // Enable during debugging
             // System.out.println("[Verdant Sky] Start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
             // System.out.println("[Verdant Sky] Actual Biome at this pos: " + biome.unwrapKey().map(k -> k.location().toString()).orElse("Unknown"));
@@ -167,18 +156,6 @@ public class StartIslandSpawner {
         boolean placed = placeStructureDirectly(level, structureId, targetPos);
 
         if (placed) {
-            // 放置地物（featureIndex = 1，与主世界区分）
-            if (biome.is(biomeTag("start_flowers"))) {
-                if (Platform.isModLoaded("botania")) {
-                    placeFeature(level, targetX, targetZ, 1,
-                        "botania:mystical_mushrooms",
-                        "minecraft:patch_brown_mushroom");
-                } else {
-                    placeFeature(level, targetX, targetZ, 1,
-                        "minecraft:patch_brown_mushroom");
-                }
-            }
-
             // Enable during debugging
             // System.out.println("[Verdant Sky] Nether start island (" + structureId + ") at " + targetX + " " + targetY + " " + targetZ);
 
@@ -263,10 +240,10 @@ public class StartIslandSpawner {
 
             if (level.getBlockEntity(signPos) instanceof SignBlockEntity sign) {
                 Component[] lines = new Component[] {
-                    Component.translatable("sign.verdant_sky.bug.line1").withStyle(style -> style.withColor(0xFF5555)),
-                    Component.translatable("sign.verdant_sky.bug.line2").withStyle(style -> style.withColor(0xAA0000)),
-                    Component.translatable("sign.verdant_sky.bug.line3").withStyle(style -> style.withColor(0x000000)),
-                    Component.translatable("sign.verdant_sky.bug.line4").withStyle(style -> style.withColor(0x555555))
+                    Component.translatable("sign.verdant_sky.bug.line1"),
+                    Component.translatable("sign.verdant_sky.bug.line2"),
+                    Component.translatable("sign.verdant_sky.bug.line3"),
+                    Component.translatable("sign.verdant_sky.bug.line4")
                 };
 
                 SignText signText = new SignText()
@@ -281,51 +258,6 @@ public class StartIslandSpawner {
         }
 
         return success;
-    }
-
-    // ─────────────────────────────────────────────
-    // 通用地物放置（可控随机）
-    // ─────────────────────────────────────────────
-
-    private static void placeFeature(ServerLevel level, int x, int z, int featureIndex, String... featureIds) {
-        var registry = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
-
-        Holder<ConfiguredFeature<?, ?>> feature = null;
-        // String usedId = null;
-        for (String id : featureIds) {
-            ResourceLocation loc = parseResourceLocation(id);
-            ResourceKey<ConfiguredFeature<?, ?>> key = ResourceKey.create(Registries.CONFIGURED_FEATURE, loc);
-            var holder = registry.getHolder(key);
-            if (holder.isPresent()) {
-                feature = holder.get();
-                // usedId = id;
-                break;
-            }
-        }
-
-        if (feature == null) return;
-
-        int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
-        BlockPos placePos = new BlockPos(x, y, z);
-
-        long seed = level.getSeed();
-        WorldgenRandom random = new WorldgenRandom(RandomSource.create(seed));
-        random.setFeatureSeed(
-            seed,
-            featureIndex,
-            GenerationStep.Decoration.VEGETAL_DECORATION.ordinal()
-        );
-
-        // boolean placed = 
-        feature.value().place(
-            level,
-            level.getChunkSource().getGenerator(),
-            random,
-            placePos
-        );
-
-        // Enable during debugging
-        // System.out.println("[Verdant Sky] Feature " + usedId + " at " + placePos + " (success=" + placed + ")");
     }
 
     private static ResourceLocation parseResourceLocation(String id) {
