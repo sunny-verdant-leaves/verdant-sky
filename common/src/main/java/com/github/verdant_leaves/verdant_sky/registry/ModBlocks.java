@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
@@ -64,7 +65,15 @@ public class ModBlocks {
         ITEMS.register("floating_decay_agapanthus", () ->
             new SpecialFlowerBlockItem(FLOATING_DECAY_AGAPANTHUS.get(), new Item.Properties())
         );
-    
+
+    public static final RegistrySupplier<Block> POTTED_DECAY_AGAPANTHUS =
+        BLOCKS.register("potted_decay_agapanthus", () ->
+            new FlowerPotBlock(
+                DECAY_AGAPANTHUS.get(), 
+                BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)
+            )
+        );
+
     // ══════════════════════════════════════════════════════════════
     //  饮雪莲 Drinking Snow Lotus
     // ══════════════════════════════════════════════════════════════
@@ -90,6 +99,14 @@ public class ModBlocks {
     public static final RegistrySupplier<Item> FLOATING_DRINKING_SNOW_LOTUS_ITEM =
         ITEMS.register("floating_drinking_snow_lotus", () ->
             new SpecialFlowerBlockItem(FLOATING_DRINKING_SNOW_LOTUS.get(), new Item.Properties())
+        );
+
+    public static final RegistrySupplier<Block> POTTED_DRINKING_SNOW_LOTUS =
+        BLOCKS.register("potted_drinking_snow_lotus", () ->
+            new FlowerPotBlock(
+                DRINKING_SNOW_LOTUS.get(), 
+                BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)
+            )
         );
 
     // ══════════════════════════════════════════════════════════════

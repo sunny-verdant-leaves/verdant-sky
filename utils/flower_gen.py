@@ -22,10 +22,12 @@ from pathlib import Path
 MOD_ID = "verdant_sky"
 
 # 花卉列表配置
-# type 可选: "misc" (杂项), "generating" (产能), "functional" (功能)
+# type: 可为 "misc" (杂项), "generating" (产能), "functional" (功能)
+# has_floating: 是否使用浮空花
+# crosses: True = 使用 verdant sky 四面交叉父模型, False = 使用植魔父模型
 FLOWERS = [
-    {"id": "decay_agapanthus", "type": "functional", "has_floating": True},
-    {"id": "drinking_snow_lotus", "type": "generating", "has_floating": True},
+    {"id": "decay_agapanthus", "type": "functional", "has_floating": True, "crosses": False},
+    {"id": "drinking_snow_lotus", "type": "generating", "has_floating": True, "crosses": True},
 ]
 
 # ══════════════════════════════════════════════════════════════
@@ -65,16 +67,18 @@ def gen_assets(root: Path):
 
     for flower in FLOWERS:
         fid = flower["id"]
+        use_crosses = flower.get("crosses", False)
         
-        # --普通花--
+        #  --普通花--
         # 方块状态
         write_json(bs_dir / f"{fid}.json", {
             "variants": { "": { "model": f"{MOD_ID}:block/{fid}" } }
         })
         
         # 方块模型
+        cross_parent = f"{MOD_ID}:block/shapes/crosses" if use_crosses else "botania:block/shapes/cross"
         write_json(block_model_dir / f"{fid}.json", {
-            "parent": "botania:block/shapes/cross",
+            "parent": cross_parent,
             "textures": { "cross": f"{MOD_ID}:block/{fid}" }
         })
         
@@ -82,6 +86,21 @@ def gen_assets(root: Path):
         write_json(item_model_dir / f"{fid}.json", {
             "parent": "minecraft:item/generated",
             "textures": { "layer0": f"{MOD_ID}:block/{fid}" }
+        })
+
+        # --盆栽--
+        potted_id = f"potted_{fid}"
+
+        # 方块状态
+        write_json(bs_dir / f"{potted_id}.json", {
+            "variants": { "": { "model": f"{MOD_ID}:block/{potted_id}" } }
+        })
+
+        # 方块模型
+        potted_parent = f"{MOD_ID}:block/shapes/flower_pot_crosses" if use_crosses else "minecraft:block/flower_pot_cross"
+        write_json(block_model_dir / f"{potted_id}.json", {
+            "parent": potted_parent,
+            "textures": { "plant": f"{MOD_ID}:block/{fid}" }
         })
 
         # --浮空花--
@@ -126,10 +145,37 @@ def gen_loot_tables(root: Path):
             }]
         }
 
+    def create_potted_loot(flower_name: str):
+        """
+        盆栽战利品
+        这种细节的东西果然必须得盯梢，太过相信 AI 了。它写得太马虎了。ヽ(`Д´)ﾉ
+        """
+        return {
+            "type": "minecraft:block",
+            "pools": [
+                {
+                    "bonus_rolls": 0.0,
+                    "conditions": [{ "condition": "minecraft:survives_explosion" }],
+                    "entries": [{ "type": "minecraft:item", "name": "minecraft:flower_pot" }],
+                    "rolls": 1.0
+                },
+                {
+                    "bonus_rolls": 0.0,
+                    "conditions": [{ "condition": "minecraft:survives_explosion" }],
+                    "entries": [{ "type": "minecraft:item", "name": flower_name }],
+                    "rolls": 1.0
+                }
+            ]
+        }
+
     for flower in FLOWERS:
         fid = flower["id"]
         # 普通花掉落
         write_json(lt_dir / f"{fid}.json", create_simple_loot(f"{MOD_ID}:{fid}"))
+
+        # 盆栽掉落
+        potted_id = f"potted_{fid}"
+        write_json(lt_dir / f"{potted_id}.json", create_potted_loot(f"{MOD_ID}:{fid}"))
 
         # 浮空花掉落
         if flower.get("has_floating"):

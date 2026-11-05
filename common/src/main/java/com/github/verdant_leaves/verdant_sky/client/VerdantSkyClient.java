@@ -33,24 +33,18 @@ public final class VerdantSkyClient {
     // ══════════════════════════════════════════════════════════════
 
     private static void registerRenderType() {
-        // -- 腐朽百子莲 --
         RenderTypeRegistry.register(
             RenderType.cutout(),
-            ModBlocks.DECAY_AGAPANTHUS.get()
-        );
-        RenderTypeRegistry.register(
-            RenderType.cutout(),
-            ModBlocks.FLOATING_DECAY_AGAPANTHUS.get()
-        );
 
-        // -- 饮雪莲 --
-        RenderTypeRegistry.register(
-            RenderType.cutout(),
-            ModBlocks.DRINKING_SNOW_LOTUS.get()
-        );
-        RenderTypeRegistry.register(
-            RenderType.cutout(),
-            ModBlocks.FLOATING_DRINKING_SNOW_LOTUS.get()
+            // -- 腐朽百子莲 --
+            ModBlocks.DECAY_AGAPANTHUS.get(),
+            ModBlocks.FLOATING_DECAY_AGAPANTHUS.get(),
+            ModBlocks.POTTED_DECAY_AGAPANTHUS.get(),
+
+            // -- 饮雪莲 --
+            ModBlocks.DRINKING_SNOW_LOTUS.get(),
+            ModBlocks.FLOATING_DRINKING_SNOW_LOTUS.get(),
+            ModBlocks.POTTED_DRINKING_SNOW_LOTUS.get()
         );
     }
 
