@@ -122,8 +122,15 @@ def gen_assets(root: Path):
             })
             
             # 物品模型
+            # 不理解为什么，直接将方块模型作为父模型，在 Forge 没有问题，在 Fabric 却会渲染失败。
+            # 更奇怪的是，在 v2.1.3 及之前 Fabric 上并不会有问题。
+            # 直到 v2.1.4 加入了 Drinking Snow Lotus 才暴露出这个问题
             write_json(item_model_dir / f"{floating_id}.json", {
-                "parent": f"{MOD_ID}:block/{floating_id}"
+                "parent": "minecraft:block/block",
+                "flower": {
+                    "parent": f"{MOD_ID}:block/{fid}"
+                },
+                "loader": "botania:floating_flower"
             })
 
     print(f"  [assets]     生成完毕")
