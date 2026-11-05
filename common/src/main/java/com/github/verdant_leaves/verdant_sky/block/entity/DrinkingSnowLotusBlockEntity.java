@@ -160,6 +160,29 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     }
 
     // ══════════════════════════════════════════════════════════════
+    //  红石比较器输出
+    // ══════════════════════════════════════════════════════════════
+    @Override
+    public int getComparatorSignal() {
+        // 边界处理
+        if (this.maxWorkTicks <= 0) {
+            return 0; 
+        }
+        if (this.workTicks <= 0) {
+            return 0;
+        }
+        if (this.workTicks >= this.maxWorkTicks) {
+            return 15;
+        }
+
+        // 每有 1/15 的工作时间输出 1, 向上取整
+        // 最少为 1, 最多为 15
+        long numerator = (long) this.workTicks * 15L;
+        long result = -Math.floorDiv(-numerator, this.maxWorkTicks);
+        return (int) result;
+    }
+
+    // ══════════════════════════════════════════════════════════════
     //  辅助方法
     // ══════════════════════════════════════════════════════════════
     

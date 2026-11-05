@@ -82,7 +82,8 @@ public class ModBlocks {
             PlatformBlocks.createSpecialFlowerBlock(
                 MobEffects.SATURATION, 1, FLOWER_PROPS, 
                 () -> ModBlockEntities.DRINKING_SNOW_LOTUS.get(),
-                Block.box(3.0, 0.0, 3.0,  13.0, 12.0, 13.0)
+                Block.box(3.0, 0.0, 3.0,  13.0, 12.0, 13.0),
+                true
             )
         );
 
