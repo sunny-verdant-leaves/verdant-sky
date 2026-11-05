@@ -94,7 +94,7 @@ public class ModBlocks {
 
     public static final RegistrySupplier<Block> FLOATING_DRINKING_SNOW_LOTUS =
         BLOCKS.register("floating_drinking_snow_lotus", () ->
-            new FloatingSpecialFlowerBlock(FLOATING_PROPS, () -> ModBlockEntities.DRINKING_SNOW_LOTUS.get())
+            new FloatingSpecialFlowerBlock(FLOATING_PROPS, () -> ModBlockEntities.DRINKING_SNOW_LOTUS.get(), true)
         );
 
     public static final RegistrySupplier<Item> FLOATING_DRINKING_SNOW_LOTUS_ITEM =
