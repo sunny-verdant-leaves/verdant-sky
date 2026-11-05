@@ -1,0 +1,6 @@
+{
+  "parent": "verdant_sky:block/shapes/flower_pot_crosses",
+  "textures": {
+    "plant": "verdant_sky:block/drinking_snow_lotus"
+  }
+}

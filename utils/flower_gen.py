@@ -57,6 +57,9 @@ def load_and_append_json(path: Path, new_values: list):
 # ══════════════════════════════════════════════════════════════
 #  1. 资源文件 (Blockstates & Models)
 # ══════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════
+#  1. 资源文件 (Blockstates & Models)
+# ══════════════════════════════════════════════════════════════
 
 def gen_assets(root: Path):
     bs_dir = root / "assets" / MOD_ID / "blockstates"
@@ -66,7 +69,7 @@ def gen_assets(root: Path):
     for flower in FLOWERS:
         fid = flower["id"]
         
-        # --普通花--
+        #  --普通花--
         # 方块状态
         write_json(bs_dir / f"{fid}.json", {
             "variants": { "": { "model": f"{MOD_ID}:block/{fid}" } }
@@ -82,6 +85,20 @@ def gen_assets(root: Path):
         write_json(item_model_dir / f"{fid}.json", {
             "parent": "minecraft:item/generated",
             "textures": { "layer0": f"{MOD_ID}:block/{fid}" }
+        })
+
+        # --花盆--
+        potted_id = f"potted_{fid}"
+
+        # 方块状态
+        write_json(bs_dir / f"{potted_id}.json", {
+            "variants": { "": { "model": f"{MOD_ID}:block/{potted_id}" } }
+        })
+
+        # 方块模型
+        write_json(block_model_dir / f"{potted_id}.json", {
+            "parent": "minecraft:block/flower_pot_cross",
+            "textures": { "plant": f"{MOD_ID}:block/{fid}" }
         })
 
         # --浮空花--
@@ -130,6 +147,10 @@ def gen_loot_tables(root: Path):
         fid = flower["id"]
         # 普通花掉落
         write_json(lt_dir / f"{fid}.json", create_simple_loot(f"{MOD_ID}:{fid}"))
+
+        # 花盆掉落
+        potted_id = f"potted_{fid}"
+        write_json(lt_dir / f"{potted_id}.json", create_simple_loot(f"{MOD_ID}:{fid}"))
 
         # 浮空花掉落
         if flower.get("has_floating"):
