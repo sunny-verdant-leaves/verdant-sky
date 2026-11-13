@@ -1,3 +1,5 @@
+English | [中文](docs/zh/README.md)
+
 # Verdant Sky
 
 This mod is for the modpack **Verdant Sky**, but it can also be used standalone or added to sky block modpacks. It adds some block variants and configurable modifications.
@@ -10,7 +12,7 @@ Built with the [Architectury](https://docs.architectury.dev/api) framework, this
 | :--- | :--- |
 | Minecraft | 1.20.1 |
 | Botania | 1.20.1-453+ |
-| Architectury API | 9.2.14+ |
+| Architectury API | 9.1.10+ |
 
 ## Usage
 
