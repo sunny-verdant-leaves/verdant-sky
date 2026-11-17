@@ -86,6 +86,10 @@
   "block.verdant_sky.snow_brick_wall": "雪砖墙",
 
   "emi.category.verdant_sky.decay": "腐朽百子莲",
+  
+  "item.verdant_sky.seed_snowball": "草籽雪团",
+  "item.verdant_sky.snow_tossed_greens": "雪拌草芽",
+  "item.verdant_sky.snow_packed_shoots": "雪裹嫩枝",
 
   "jei.verdant_sky.decay": "腐朽百子莲",
   "jei.verdant_sky.condition.required.short": "§8位置要求",

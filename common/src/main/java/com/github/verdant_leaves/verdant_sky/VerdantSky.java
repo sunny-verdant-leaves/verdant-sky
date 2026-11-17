@@ -8,6 +8,7 @@ import com.github.verdant_leaves.verdant_sky.loot.PlantLootModifier;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
 import com.github.verdant_leaves.verdant_sky.registry.ModCreativeTabs;
+import com.github.verdant_leaves.verdant_sky.registry.ModItems;
 import com.github.verdant_leaves.verdant_sky.registry.ModRecipeTypes;
 import com.github.verdant_leaves.verdant_sky.registry.ModSoundEvents;
 import com.github.verdant_leaves.verdant_sky.world.StartIslandSpawner;
@@ -22,6 +23,7 @@ public final class VerdantSky {
         ModSoundEvents.register();
         ModBlocks.register();
         ModBlockEntities.register();
+        ModItems.register();
         ModRecipeTypes.register();
         ModCreativeTabs.register();
 
