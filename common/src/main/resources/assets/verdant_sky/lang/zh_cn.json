@@ -121,6 +121,9 @@
 	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "使一些方块的纹理与高版本原版相匹配，",
 	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "例如雪砖。",
 
+  "tag.item.verdant_sky.drinking_snow_lotus_fuel": "饮雪莲燃料",
+  "tag.item.verdant_sky.seeds": "种子",
+
   "verdant_sky.entry.decay_agapanthus": "腐朽百子莲",
   "verdant_sky.tagline.decay_agapanthus": "白雏菊的反转版",
   "verdant_sky.page.decay_agapanthus.0": "$(item)腐朽百子莲$()是一种重要的花。$(p)这种花会将附近的$(item)树叶$()、下界中的$(item)圆石$()以及其他方块腐化成对应的腐化形态：$(item)泥土$()、$(item)下界岩$()等。它提供了在特殊环境中获取和再生某些材料的方法。",

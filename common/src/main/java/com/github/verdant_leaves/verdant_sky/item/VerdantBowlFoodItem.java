@@ -112,6 +112,14 @@ public class VerdantBowlFoodItem extends BowlFoodItem {
             return new EffectEntry(effectId, duration, amplifier, chance, false, true);
         }
 
+        public static EffectEntry ofAmbient(ResourceLocation effectId, int duration, int amplifier, boolean ambient) {
+            return new EffectEntry(effectId, duration, amplifier, 1.0F, ambient, false);
+        }
+
+        public static EffectEntry ofVisible(ResourceLocation effectId, int duration, int amplifier, boolean visible) {
+            return new EffectEntry(effectId, duration, amplifier, 1.0F, false, visible);
+        }
+
         // ---------- 访问器 ----------
 
         public ResourceLocation effectId() { return effectId; }

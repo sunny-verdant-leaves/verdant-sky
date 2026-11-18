@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "minecraft:snowball"
+    },
+    [
+      {"item": "minecraft:grass"},
+      {"item": "minecraft:fern"}
+    ],
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "item": "verdant_sky:snow_tossed_greens"
+  },
+  "show_notification": true
+}

@@ -121,6 +121,9 @@
 	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "Makes some block textures match newer vanilla versions, ",
 	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "such as Snow Bricks.",
 
+  "tag.item.verdant_sky.drinking_snow_lotus_fuel": "Drinking Snow Lotus Fuel",
+  "tag.item.verdant_sky.seeds": "Seeds",
+
   "verdant_sky.entry.decay_agapanthus": "Decay Agapanthus",
   "verdant_sky.tagline.decay_agapanthus": "Reverse version of the Pure Daisy",
   "verdant_sky.page.decay_agapanthus.0": "The $(item)Decay Agapanthus$() is an important flower.$(p)This flower will decay any nearby $(item)Leaves$(), $(item)Cobblestone$() in the Nether and other blocks into their decayed counterparts, $(item)Dirt$(), $(item)Netherrack$() and more. It provides ways to obtain and regenerate some materials in special environments.",

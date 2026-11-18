@@ -42,8 +42,8 @@ public class ModItems {
             return ITEMS.register(id, () -> new VerdantBowlFoodItem(item, effects));
         } else {
             return ITEMS.register(id, () -> new VerdantBowlFoodItem(
-                item, VerdantBowlFoodItem.EffectEntry.of(
-                    FarmersDelightIntegration.NOURISHMENT_ID, 300, 0
+                item, VerdantBowlFoodItem.EffectEntry.ofVisible(
+                    FarmersDelightIntegration.NOURISHMENT_ID, 300, 0, false
                 )
             ));
         }
