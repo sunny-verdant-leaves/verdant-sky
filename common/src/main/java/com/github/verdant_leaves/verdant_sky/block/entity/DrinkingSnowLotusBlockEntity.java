@@ -15,7 +15,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -26,14 +25,27 @@ import org.jetbrains.annotations.Nullable;
 import vazkii.botania.api.block_entity.GeneratingFlowerBlockEntity;
 import vazkii.botania.api.block_entity.RadiusDescriptor;
 
+import java.util.EnumMap;
 import java.util.List;
 
 public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
-    
-    public static final TagKey<Item> FUEL_TAG = TagKey.create(
-        Registries.ITEM,
-        new ResourceLocation("verdant_sky", "drinking_snow_lotus_fuel")
-    );
+
+    public enum FoodTier {
+        TNIY("snow_food/tiny"),
+        SMALL("snow_food/small"),
+        MEDIUM("snow_food/medium"),
+        LARGE("snow_food/large");
+
+        private final TagKey<Item> tag;
+
+        FoodTier(String path) {
+            this.tag = TagKey.create(Registries.ITEM, new ResourceLocation("verdant_sky", path));
+        }
+
+        public TagKey<Item> getTag() {
+            return tag;
+        }
+    }
 
     private static final String TAG_WORK_TICKS = "workTicks";
     private static final int START_CONSUME_EVENT = 0; // 自定义方块事件 ID
@@ -45,10 +57,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     private final int coldAmount;
     private final int coldInterval;
     private final int radius;
-    
-    private final int snowballTicks;
-    private final int snowTicks;
-    private final int snowBlockTicks;
+    private final EnumMap<FoodTier, Integer> foodTicksCache = new EnumMap<>(FoodTier.class);
 
     private int workTicks = 0;
 
@@ -61,10 +70,11 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         this.coldAmount = VerdantSkyConfig.drinkingSnowLotusColdManaAmount();
         this.coldInterval = VerdantSkyConfig.drinkingSnowLotusColdManaInterval();
         this.radius = VerdantSkyConfig.drinkingSnowLotusRadius();
-        
-        this.snowballTicks = VerdantSkyConfig.drinkingSnowLotusSnowballWorkTicks();
-        this.snowTicks = VerdantSkyConfig.drinkingSnowLotusSnowLayerWorkTicks();
-        this.snowBlockTicks = VerdantSkyConfig.drinkingSnowLotusSnowBlockWorkTicks();
+
+        this.foodTicksCache.put(FoodTier.TNIY,  VerdantSkyConfig.drinkingSnowLotusMomentTicks());
+        this.foodTicksCache.put(FoodTier.SMALL, VerdantSkyConfig.drinkingSnowLotusShortTicks());
+        this.foodTicksCache.put(FoodTier.MEDIUM,VerdantSkyConfig.drinkingSnowLotusMiddleTicks());
+        this.foodTicksCache.put(FoodTier.LARGE, VerdantSkyConfig.drinkingSnowLotusLongTicks());
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -95,7 +105,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         // 扫描掉落物
         if (ticksExisted % 20 == 0) {
             if (workTicks < maxWorkTicks && getMana() < getMaxMana()) {
-                tryConsumeDroppedFuel();
+                tryConsumeDroppedFood();
             }
         }
 
@@ -187,7 +197,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     // ══════════════════════════════════════════════════════════════
     
     /* 尝试消耗掉落物 */
-    private void tryConsumeDroppedFuel() {
+    private void tryConsumeDroppedFood() {
         if (level == null || level.isClientSide()) return;
 
         AABB area = new AABB(
@@ -198,7 +208,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, area);
         for (ItemEntity itemEntity : items) {
             ItemStack stack = itemEntity.getItem();
-            if (stack.isEmpty() || !stack.is(FUEL_TAG)) continue;
+            if (stack.isEmpty()) continue;
 
             int ticksToAdd = getWorkTicksForItem(stack);
             if (ticksToAdd <= 0) continue;
@@ -230,14 +240,13 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
 
     /* 获取掉落物对应的工作时长 */
     private int getWorkTicksForItem(ItemStack stack) {
-        if (stack.is(Items.SNOWBALL)) {
-            return snowballTicks;
-        } else if (stack.is(Items.SNOW)) {
-            return snowTicks;
-        } else if (stack.is(Items.SNOW_BLOCK)) {
-            return snowBlockTicks;
+        for (FoodTier tier : FoodTier.values()) {
+            if (stack.is(tier.getTag())) {
+                return foodTicksCache.getOrDefault(tier, foodTicksCache.get(FoodTier.TNIY));
+            }
         }
-        return snowballTicks;
+        // 不是燃料返回 0
+        return 0;
     }
 
     /* 是否为寒冷生物群系 */

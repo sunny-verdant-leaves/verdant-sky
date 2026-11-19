@@ -110,18 +110,26 @@
   "jei.verdant_sky.condition.value.min": "≥ %s",
   "jei.verdant_sky.condition.value.max": "≤ %s",
 
+	"resourcepack.verdant_sky.vanilla_blocks":  "碧空物语 - 原版方块",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "使一些方块的纹理与高版本原版相匹配，",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "例如雪砖。",
+
   "sign.verdant_sky.bug.line1": "§2碧空物语§r",
   "sign.verdant_sky.bug.line2": "结构生成失败",
   "sign.verdant_sky.bug.line3": "请将此问题上报",
   "sign.verdant_sky.bug.line4": "给模组作者！",
 
   "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "饮雪莲：吞噬",
-
-	"resourcepack.verdant_sky.vanilla_blocks":  "碧空物语 - 原版方块",
-	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "使一些方块的纹理与高版本原版相匹配，",
-	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "例如雪砖。",
-
-  "tag.item.verdant_sky.drinking_snow_lotus_fuel": "饮雪莲燃料",
+  
+  "tag.item.verdant_sky.snow_food": "雪类食物",
+  "tag.item.verdant_sky.snow_food.large": "大份雪类食物",
+  "tag.item.verdant_sky.snow_food/large": "大份雪类食物",
+  "tag.item.verdant_sky.snow_food.medium": "中份雪类食物",
+  "tag.item.verdant_sky.snow_food/medium": "中份雪类食物",
+  "tag.item.verdant_sky.snow_food.small": "小份雪类食物",
+  "tag.item.verdant_sky.snow_food/small": "小份雪类食物",
+  "tag.item.verdant_sky.snow_food.tiny": "微型雪类食物",
+  "tag.item.verdant_sky.snow_food/tiny": "微型雪类食物",
   "tag.item.verdant_sky.seeds": "种子",
 
   "verdant_sky.entry.decay_agapanthus": "腐朽百子莲",
