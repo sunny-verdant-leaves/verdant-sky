@@ -61,16 +61,16 @@ public class VerdantSkyConfig {
     /** 饮雪莲长时燃料提供的工作时间，单位：tick。*/
     public int drinkingSnowLotusLongTicks = 320;
 
-    /** 普通生物群系：单次产出的魔力量 */
-    public int drinkingSnowLotusNormalManaAmount = 3;
+    /** 普通生物群系的单次产出的魔力量 */
+    public int drinkingSnowLotusNormalManaAmount = 4;
 
-    /** 普通生物群系：产出间隔（tick） */
-    public int drinkingSnowLotusNormalManaInterval = 2;
+    /** 普通生物群系的产出间隔，单位：tick。 */
+    public int drinkingSnowLotusNormalManaInterval = 4;
 
-    /** 寒冷生物群系：单次产出的魔力量 */
-    public int drinkingSnowLotusColdManaAmount = 9;
+    /** 寒冷生物群系的单次产出的魔力量 */
+    public int drinkingSnowLotusColdManaAmount = 8;
 
-    /** 寒冷生物群系：产出间隔（tick） */
+    /** 寒冷生物群系的产出间隔，单位：tick。 */
     public int drinkingSnowLotusColdManaInterval = 4;
 
     /** 工作时间缓冲上限，单位：tick。 */
