@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "minecraft:snowball"
+    },
+    [
+      {"tag": "minecraft:leaves"},
+      {"tag": "minecraft:saplings"}
+    ],
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "item": "verdant_sky:snow_packed_shoots"
+  },
+  "show_notification": true
+}

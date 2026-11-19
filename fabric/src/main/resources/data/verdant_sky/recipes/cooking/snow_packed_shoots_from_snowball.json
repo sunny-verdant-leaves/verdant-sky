@@ -1,0 +1,31 @@
+
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": ["farmersdelight"]
+    }
+  ],
+  "type": "farmersdelight:cooking",
+  "container": {
+    "item": "minecraft:bowl"
+  },
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredients": [
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "minecraft:snowball"
+    },
+    [
+      {"tag": "minecraft:leaves"},
+      {"tag": "minecraft:saplings"}
+    ]
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "item": "verdant_sky:snow_packed_shoots"
+  }
+}

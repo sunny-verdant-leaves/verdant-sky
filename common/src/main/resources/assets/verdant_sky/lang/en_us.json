@@ -86,6 +86,10 @@
   "block.verdant_sky.snow_brick_wall": "Snow Brick Wall",
 
   "emi.category.verdant_sky.decay": "Decay Agapanthus",
+  
+  "item.verdant_sky.seed_snowball": "Seed Snowball",
+  "item.verdant_sky.snow_tossed_greens": "Snow-Tossed Greens",
+  "item.verdant_sky.snow_packed_shoots": "Snow-Packed Shoots",
 
   "jei.verdant_sky.decay": "Decay Agapanthus",
   "jei.verdant_sky.condition.required.short": "§8Location Requirements",
@@ -116,6 +120,9 @@
 	"resourcepack.verdant_sky.vanilla_blocks":  "verdant sky - Vanilla Blocks",
 	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "Makes some block textures match newer vanilla versions, ",
 	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "such as Snow Bricks.",
+
+  "tag.item.verdant_sky.drinking_snow_lotus_fuel": "Drinking Snow Lotus Fuel",
+  "tag.item.verdant_sky.seeds": "Seeds",
 
   "verdant_sky.entry.decay_agapanthus": "Decay Agapanthus",
   "verdant_sky.tagline.decay_agapanthus": "Reverse version of the Pure Daisy",
