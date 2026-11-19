@@ -71,10 +71,10 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         this.coldInterval = VerdantSkyConfig.drinkingSnowLotusColdManaInterval();
         this.radius = VerdantSkyConfig.drinkingSnowLotusRadius();
 
-        this.foodTicksCache.put(FoodTier.TNIY,  VerdantSkyConfig.drinkingSnowLotusMomentTicks());
-        this.foodTicksCache.put(FoodTier.SMALL, VerdantSkyConfig.drinkingSnowLotusShortTicks());
-        this.foodTicksCache.put(FoodTier.MEDIUM,VerdantSkyConfig.drinkingSnowLotusMiddleTicks());
-        this.foodTicksCache.put(FoodTier.LARGE, VerdantSkyConfig.drinkingSnowLotusLongTicks());
+        this.foodTicksCache.put(FoodTier.TNIY,  VerdantSkyConfig.drinkingSnowLotusTinyTicks());
+        this.foodTicksCache.put(FoodTier.SMALL, VerdantSkyConfig.drinkingSnowLotusSmallTicks());
+        this.foodTicksCache.put(FoodTier.MEDIUM,VerdantSkyConfig.drinkingSnowLotusMediumTicks());
+        this.foodTicksCache.put(FoodTier.LARGE, VerdantSkyConfig.drinkingSnowLotusLargeTicks());
     }
 
     // ══════════════════════════════════════════════════════════════
