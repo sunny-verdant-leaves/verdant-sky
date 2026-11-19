@@ -11,14 +11,14 @@
       ],
       "recipe": {
         "type": "farmersdelight:cooking",
+        "container": {
+          "item": "minecraft:bowl"
+        },
         "cookingtime": 200,
         "experience": 0.35,
         "ingredients": [
           {
-            "item": "minecraft:snowball"
-          },
-          {
-            "item": "minecraft:snowball"
+            "item": "minecraft:snow_block"
           },
           [
             {"tag": "minecraft:leaves"},
