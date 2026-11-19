@@ -110,6 +110,10 @@
   "jei.verdant_sky.condition.value.min": "≥ %s",
   "jei.verdant_sky.condition.value.max": "≤ %s",
 
+	"resourcepack.verdant_sky.vanilla_blocks":  "verdant sky - Vanilla Blocks",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "Makes some block textures match newer vanilla versions, ",
+	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "such as Snow Bricks.",
+
   "sign.verdant_sky.bug.line1": "§2Verdant Sky§r",
   "sign.verdant_sky.bug.line2": "Structure Failed",
   "sign.verdant_sky.bug.line3": "Please report it",
@@ -117,11 +121,15 @@
 
   "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "Drinking Snow Lotus: Devours",
 
-	"resourcepack.verdant_sky.vanilla_blocks":  "verdant sky - Vanilla Blocks",
-	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.1":  "Makes some block textures match newer vanilla versions, ",
-	"resourcepack.descriptionTranslation.verdant_sky.vanilla_blocks.2":  "such as Snow Bricks.",
-
-  "tag.item.verdant_sky.drinking_snow_lotus_fuel": "Drinking Snow Lotus Fuel",
+  "tag.item.verdant_sky.snow_food": "Snow Food",
+  "tag.item.verdant_sky.snow_food.large": "Large Snow Food",
+  "tag.item.verdant_sky.snow_food/large": "Large Snow Food",
+  "tag.item.verdant_sky.snow_food.medium": "Medium Snow Food",
+  "tag.item.verdant_sky.snow_food/medium": "Medium Snow Food",
+  "tag.item.verdant_sky.snow_food.small": "Small Snow Food",
+  "tag.item.verdant_sky.snow_food/small": "Small Snow Food",
+  "tag.item.verdant_sky.snow_food.tiny": "Tiny Snow Food",
+  "tag.item.verdant_sky.snow_food/tiny": "Tiny Snow Food",
   "tag.item.verdant_sky.seeds": "Seeds",
 
   "verdant_sky.entry.decay_agapanthus": "Decay Agapanthus",

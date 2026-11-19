@@ -49,25 +49,28 @@ public class VerdantSkyConfig {
     /** 饮雪莲工作半径（以花为中心的正方体边长）。3 表示 7×7×7。 */
     public int drinkingSnowLotusRadius = 3;
     
-    /** 雪球提供的工作时间，单位：tick。 */
-    public int drinkingSnowLotusSnowballWorkTicks = 40;
+    /** 饮雪莲微型雪类食物（如雪球）提供的工作时间，单位：tick。 */
+    public int drinkingSnowLotusTinyTicks = 40;
 
-    /** 顶层雪提供的工作时间，单位：tick。 */
-    public int drinkingSnowLotusSnowLayerWorkTicks = 80;
+    /** 饮雪莲小份雪类食物（如雪）提供的工作时间，单位：tick。 */
+    public int drinkingSnowLotusSmallTicks = 80;
 
-    /** 雪块提供的工作时间，单位：tick。 */
-    public int drinkingSnowLotusSnowBlockWorkTicks = 160;
+    /** 饮雪莲中份雪类食物（如雪块）提供的工作时间，单位：tick。*/
+    public int drinkingSnowLotusMediumTicks = 160;
 
-    /** 普通生物群系：单次产出的魔力量 */
-    public int drinkingSnowLotusNormalManaAmount = 3;
+    /** 饮雪莲大份雪类食物提供的工作时间，单位：tick。*/
+    public int drinkingSnowLotusLargeTicks = 320;
 
-    /** 普通生物群系：产出间隔（tick） */
-    public int drinkingSnowLotusNormalManaInterval = 2;
+    /** 普通生物群系的单次产出的魔力量 */
+    public int drinkingSnowLotusNormalManaAmount = 4;
 
-    /** 寒冷生物群系：单次产出的魔力量 */
-    public int drinkingSnowLotusColdManaAmount = 9;
+    /** 普通生物群系的产出间隔，单位：tick。 */
+    public int drinkingSnowLotusNormalManaInterval = 4;
 
-    /** 寒冷生物群系：产出间隔（tick） */
+    /** 寒冷生物群系的单次产出的魔力量 */
+    public int drinkingSnowLotusColdManaAmount = 8;
+
+    /** 寒冷生物群系的产出间隔，单位：tick。 */
     public int drinkingSnowLotusColdManaInterval = 4;
 
     /** 工作时间缓冲上限，单位：tick。 */
@@ -161,16 +164,20 @@ public class VerdantSkyConfig {
         return Math.max(1, INSTANCE.drinkingSnowLotusRadius);
     }
     
-    public static int drinkingSnowLotusSnowballWorkTicks() {
-        return Math.max(1, INSTANCE.drinkingSnowLotusSnowballWorkTicks);
+    public static int drinkingSnowLotusTinyTicks() {
+        return Math.max(0, INSTANCE.drinkingSnowLotusTinyTicks);
     }
     
-    public static int drinkingSnowLotusSnowLayerWorkTicks() {
-        return Math.max(1, INSTANCE.drinkingSnowLotusSnowLayerWorkTicks);
+    public static int drinkingSnowLotusSmallTicks() {
+        return Math.max(0, INSTANCE.drinkingSnowLotusSmallTicks);
     }
     
-    public static int drinkingSnowLotusSnowBlockWorkTicks() {
-        return Math.max(1, INSTANCE.drinkingSnowLotusSnowBlockWorkTicks);
+    public static int drinkingSnowLotusMediumTicks() {
+        return Math.max(0, INSTANCE.drinkingSnowLotusMediumTicks);
+    }
+    
+    public static int drinkingSnowLotusLargeTicks() {
+        return Math.max(0, INSTANCE.drinkingSnowLotusLargeTicks);
     }
     
     public static int drinkingSnowLotusNormalManaAmount() {
