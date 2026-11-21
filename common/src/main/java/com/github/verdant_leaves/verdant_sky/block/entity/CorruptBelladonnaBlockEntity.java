@@ -7,12 +7,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 
 import vazkii.botania.api.block_entity.RadiusDescriptor;
 import vazkii.botania.api.block_entity.SpecialFlowerBlockEntity;
+import vazkii.botania.client.fx.SparkleParticleData;
 
 import com.github.verdant_leaves.verdant_sky.recipe.DecayRecipe;
 import com.github.verdant_leaves.verdant_sky.registry.ModBlockEntities;
@@ -34,10 +36,11 @@ public class CorruptBelladonnaBlockEntity extends SpecialFlowerBlockEntity {
 
     private static final int CHECK_INTERVAL = 5;
     private static final int PROGRESS_PER_CHECK = NEIGHBOR_OFFSETS.length * CHECK_INTERVAL; // 40
-    private static final int PROGRESS_REQUIRED = 20 * 60; // 1200 ticks = 60秒
+    private static final int PROGRESS_REQUIRED = 20 * 60;   // 1200 ticks = 60秒
 
     private static final String TAG_POSITION = "positionAt";
     private static final String TAG_PROGRESS = "progress";
+    private static final int RECIPE_COMPLETE_EVENT = 0;     // 自定义方块事件 ID
 
     private final int[] positionProgress = new int[NEIGHBOR_OFFSETS.length];
     private final int[] lastSnapshot = new int[NEIGHBOR_OFFSETS.length];
@@ -100,19 +103,19 @@ public class CorruptBelladonnaBlockEntity extends SpecialFlowerBlockEntity {
             positionProgress[rotationIndex] = -1;
 
             serverLevel.setBlockAndUpdate(targetPos, matchedRecipe.outputState());
-            serverLevel.sendParticles(
-                ParticleTypes.SCULK_SOUL,
-                targetPos.getX() + 0.5,
-                targetPos.getY() + 1.1,
-                targetPos.getZ() + 0.5,
-                12, 0.4, 0.3, 0.4, 0.01
-            );
-            playSoulEscape(serverLevel);
+            serverLevel.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, targetPos, Block.getId(matchedRecipe.outputState()));
+            serverLevel.gameEvent(null, GameEvent.BLOCK_CHANGE, targetPos);
+            serverLevel.blockEvent(getBlockPos(), getBlockState().getBlock(), RECIPE_COMPLETE_EVENT, rotationIndex);
+            
             sync();
         }
 
         saveAndSyncIfChanged();
     }
+    
+    // ══════════════════════════════════════════════════════════════
+    //  客户端
+    // ══════════════════════════════════════════════════════════════
 
     /* 客户端粒子 */
     private void emitProgressParticles() {
@@ -121,10 +124,31 @@ public class CorruptBelladonnaBlockEntity extends SpecialFlowerBlockEntity {
                 continue;
             }
             BlockPos coords = getEffectivePos().offset(NEIGHBOR_OFFSETS[i]);
-            double x = coords.getX() + Math.random();
-            double y = coords.getY() + Math.random() + 0.5;
-            double z = coords.getZ() + Math.random();
-            level.addParticle(ParticleTypes.SCULK_SOUL, x, y, z, 0, 0.01, 0);
+            SparkleParticleData data = SparkleParticleData.sparkle((float) Math.random(), 0.51F, 0.11F, 0.65F, 5);
+            level.addParticle(data, coords.getX() + Math.random(), coords.getY() + Math.random(), coords.getZ() + Math.random(), 0, 0, 0);
+        }
+    }
+
+    @Override
+    public boolean triggerEvent(int type, int param) {
+        switch (type) {
+            case RECIPE_COMPLETE_EVENT: {
+                if (level != null && level.isClientSide) {
+                    BlockPos coords = getEffectivePos().offset(NEIGHBOR_OFFSETS[param]);
+                    
+                    for (int i = 0; i < 15; i++) {
+                        double x = coords.getX() + 0.5 + (Math.random() - 0.5) * 0.8;
+                        double y = coords.getY() + 0.5 + Math.random() * 0.8;
+                        double z = coords.getZ() + 0.5 + (Math.random() - 0.5) * 0.8;
+
+                        level.addParticle(ParticleTypes.SCULK_SOUL, x, y, z, 0, 0.01, 0);
+                    }
+                }
+                return true;
+            }
+            default: {
+                return super.triggerEvent(type, param);
+            }
         }
     }
     
@@ -151,11 +175,6 @@ public class CorruptBelladonnaBlockEntity extends SpecialFlowerBlockEntity {
             return recipe;
         }
         return null;
-    }
-
-    /* 是否播放音效  */
-    private void playSoulEscape(ServerLevel level) {
-        level.playSound(null, getEffectivePos(), SoundEvents.SOUL_ESCAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 
     /* 对比快照，变化才保存并同步  */
@@ -194,7 +213,7 @@ public class CorruptBelladonnaBlockEntity extends SpecialFlowerBlockEntity {
     //  魔力与范围
     // ══════════════════════════════════════════════════════════════
     public int getColor() {
-        return 0x5A2A6B;
+        return 0x831BA7;
     }
 
     @Override
