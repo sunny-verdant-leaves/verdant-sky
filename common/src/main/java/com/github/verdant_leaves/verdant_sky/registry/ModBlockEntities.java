@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
+import com.github.verdant_leaves.verdant_sky.block.entity.CorruptBelladonnaBlockEntity;
 import com.github.verdant_leaves.verdant_sky.block.entity.DecayAgapanthusBlockEntity;
 import com.github.verdant_leaves.verdant_sky.block.entity.DrinkingSnowLotusBlockEntity;
 import com.github.verdant_leaves.verdant_sky.mixin.BlockEntityTypeAccessor;
@@ -20,7 +21,17 @@ import vazkii.botania.common.block.block_entity.BotaniaBlockEntities;
 public class ModBlockEntities {
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(VerdantSky.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
-
+    
+    // 腐颠茄
+    public static final RegistrySupplier<BlockEntityType<CorruptBelladonnaBlockEntity>> CORRUPT_BELLADONNA = 
+        BLOCK_ENTITIES.register("corrupt_belladonna", () ->
+            BlockEntityType.Builder.of(
+                CorruptBelladonnaBlockEntity::new,
+                ModBlocks.CORRUPT_BELLADONNA.get(),
+                ModBlocks.FLOATING_CORRUPT_BELLADONNA.get()
+            ).build(null)
+        );
+    
     // 腐朽百子莲
     public static final RegistrySupplier<BlockEntityType<DecayAgapanthusBlockEntity>> DECAY_AGAPANTHUS =
         BLOCK_ENTITIES.register("decay_agapanthus", () ->

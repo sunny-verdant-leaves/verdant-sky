@@ -26,6 +26,7 @@ MOD_ID = "verdant_sky"
 # has_floating: 是否使用浮空花
 # crosses: True = 使用 verdant sky 四面交叉父模型, False = 使用植魔父模型
 FLOWERS = [
+    {"id": "corrupt_belladonna", "type": "misc", "has_floating": True, "crosses": False},
     {"id": "decay_agapanthus", "type": "functional", "has_floating": True, "crosses": False},
     {"id": "drinking_snow_lotus", "type": "generating", "has_floating": True, "crosses": True},
 ]
