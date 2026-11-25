@@ -1,0 +1,31 @@
+{
+  "name": "verdant_sky.entry.corrupt_belladonna",
+  "category": "botania:basics",
+  "icon": "verdant_sky:corrupt_belladonna",
+  "advancement": "botania:main/flower_pickup_lexicon",
+  "turnin": "botania:main/apothecary_pickup",
+  "pages": [
+    {
+      "type": "text",
+      "text": "verdant_sky.page.corrupt_belladonna.0"
+    },
+    {
+      "type": "text",
+      "text": "verdant_sky.page.corrupt_belladonna.1"
+    },
+    {
+      "type": "text",
+      "text": "verdant_sky.page.corrupt_belladonna.2"
+    },
+    {
+      "type": "botania:petal_apothecary",
+      "text": "verdant_sky.page.corrupt_belladonna.3",
+      "recipe": "verdant_sky:petal_apothecary/corrupt_belladonna"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "verdant_sky:floating_corrupt_belladonna": 1,
+    "minecraft:crying_obsidian": 2,
+    "minecraft:dirt": 1
+  }
+}

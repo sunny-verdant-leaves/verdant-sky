@@ -4,6 +4,10 @@
   "generator.verdant_sky.floating_islands": "浮空岛",
   "generator.verdant_sky.void": "无中生有空岛",
 
+  "block.verdant_sky.corrupt_belladonna": "腐颠茄",
+  "block.verdant_sky.corrupt_belladonna.reference": "梦幻而致命",
+  "block.verdant_sky.floating_corrupt_belladonna": "浮空腐颠茄",
+  "block.verdant_sky.potted_corrupt_belladonna": "腐颠茄盆栽",
   "block.verdant_sky.decay_agapanthus": "腐朽百子莲",
   "block.verdant_sky.decay_agapanthus.reference": "万物终将归于腐朽。",
   "block.verdant_sky.floating_decay_agapanthus": "浮空腐朽百子莲",
@@ -131,6 +135,13 @@
   "tag.item.verdant_sky.snow_food.tiny": "微型雪类食物",
   "tag.item.verdant_sky.snow_food/tiny": "微型雪类食物",
   "tag.item.verdant_sky.seeds": "种子",
+
+  "verdant_sky.entry.corrupt_belladonna": "腐颠茄",
+  "verdant_sky.tagline.corrupt_belladonna": "白雏菊的反转版",
+  "verdant_sky.page.corrupt_belladonna.0": "$(item)腐颠茄$()是一种重要的花。$(p)给它一分钟，它就会将附近的$(item)树叶$()及其他方块腐化变为它们对应的腐化形态，例如$(item)泥土$()等。它提供了在特殊环境中获取和再生某些材料的方法。",
+  "verdant_sky.page.corrupt_belladonna.1": "还有其他一些方块放在这朵花周围也能被腐化，其中一些需要特定的环境。这些配方不如泥土那样重要，但它们在某些情况下仍然很有用。例如，在你缺少水但有一些雪的时候，可以把$(item)雪块$()腐化为$(item)水$()。",
+  "verdant_sky.page.corrupt_belladonna.2": "以下是所有可能的转换列表：$(li)$(item)树叶$()腐化为$(item)泥土$() $(li)$(item)雪块$()腐化为$(item)水$() $(li)$(item)活木原木$()腐化为$(item)橡木原木$() $(li)$(item)活石$()腐化为$(item)石头$() $(li)$(item)蓝冰$()腐化为$(item)浮冰$() $(li)$(item)浮冰$()腐化为$(item)冰$() $(li)$(item)黑曜石$()腐化为$(item)哭泣的黑曜石$() $(p)在下界中：$(li)$(item)圆石$()腐化为$(item)地狱岩$() $(li)$(item)沙子$()腐化为$(item)灵魂沙$() $(p)在末地中：$(li)$(item)深板岩圆石$()腐化为$(item)末地石$()",
+  "verdant_sky.page.corrupt_belladonna.3": "你必须腐化这个纯洁的世界。",
 
   "verdant_sky.entry.decay_agapanthus": "腐朽百子莲",
   "verdant_sky.tagline.decay_agapanthus": "白雏菊的反转版",
