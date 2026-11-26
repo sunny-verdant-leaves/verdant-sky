@@ -36,6 +36,11 @@ public final class VerdantSkyClient {
         RenderTypeRegistry.register(
             RenderType.cutout(),
 
+            // -- 腐颠茄 --
+            ModBlocks.CORRUPT_BELLADONNA.get(),
+            ModBlocks.FLOATING_CORRUPT_BELLADONNA.get(),
+            ModBlocks.POTTED_CORRUPT_BELLADONNA.get(),
+
             // -- 腐朽百子莲 --
             ModBlocks.DECAY_AGAPANTHUS.get(),
             ModBlocks.FLOATING_DECAY_AGAPANTHUS.get(),
@@ -53,6 +58,12 @@ public final class VerdantSkyClient {
     // ══════════════════════════════════════════════════════════════
     
     private static void registerRenderer() {
+        // -- 腐颠茄 --
+        BlockEntityRendererRegistry.register(
+            ModBlockEntities.CORRUPT_BELLADONNA.get(),
+            ctx -> new SpecialFlowerBlockEntityRenderer<>(ctx)
+        );
+
         // -- 腐朽百子莲 --
         BlockEntityRendererRegistry.register(
             ModBlockEntities.DECAY_AGAPANTHUS.get(),

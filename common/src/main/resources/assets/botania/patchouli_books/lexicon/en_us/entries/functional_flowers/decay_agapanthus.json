@@ -24,8 +24,6 @@
     }
   ],
   "extra_recipe_mappings": {
-    "verdant_sky:floating_decay_agapanthus": 1,
-    "minecraft:crying_obsidian": 2,
-    "minecraft:dirt": 1
+    "verdant_sky:floating_decay_agapanthus": 1
   }
 }

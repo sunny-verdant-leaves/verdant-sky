@@ -43,6 +43,40 @@ public class ModBlocks {
     public static final int WOOD_BURN_TIME = 300;
 
     // ══════════════════════════════════════════════════════════════
+    //  腐颠茄 Corrupt Belladonna
+    // ══════════════════════════════════════════════════════════════
+    public static final RegistrySupplier<Block> CORRUPT_BELLADONNA =
+        BLOCKS.register("corrupt_belladonna", () ->
+            PlatformBlocks.createSpecialFlowerBlock(
+                MobEffects.WITHER, 5, FLOWER_PROPS, 
+                () -> ModBlockEntities.CORRUPT_BELLADONNA.get()
+            )
+        );
+
+    public static final RegistrySupplier<Item> CORRUPT_BELLADONNA_ITEM =
+        ITEMS.register("corrupt_belladonna", () ->
+            new SpecialFlowerBlockItem(CORRUPT_BELLADONNA.get(), new Item.Properties())
+        );
+
+    public static final RegistrySupplier<Block> FLOATING_CORRUPT_BELLADONNA =
+        BLOCKS.register("floating_corrupt_belladonna", () ->
+            new FloatingSpecialFlowerBlock(FLOATING_PROPS, () -> ModBlockEntities.CORRUPT_BELLADONNA.get(), true)
+        );
+
+    public static final RegistrySupplier<Item> FLOATING_CORRUPT_BELLADONNA_ITEM =
+        ITEMS.register("floating_corrupt_belladonna", () ->
+            new SpecialFlowerBlockItem(FLOATING_CORRUPT_BELLADONNA.get(), new Item.Properties())
+        );
+
+    public static final RegistrySupplier<Block> POTTED_CORRUPT_BELLADONNA =
+        BLOCKS.register("potted_corrupt_belladonna", () ->
+            new FlowerPotBlock(
+                CORRUPT_BELLADONNA.get(), 
+                BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)
+            )
+        );
+
+    // ══════════════════════════════════════════════════════════════
     //  腐朽百子莲 Decay Agapanthus
     // ══════════════════════════════════════════════════════════════
 
@@ -109,7 +143,7 @@ public class ModBlocks {
                 BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)
             )
         );
-
+    
     // ══════════════════════════════════════════════════════════════
     //  活木魔力池
     // ══════════════════════════════════════════════════════════════

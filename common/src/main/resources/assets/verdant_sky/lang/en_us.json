@@ -4,6 +4,10 @@
   "generator.verdant_sky.floating_islands": "Floating Islands",
   "generator.verdant_sky.void": "Void World",
 
+  "block.verdant_sky.corrupt_belladonna": "Corrupt Belladonna",
+  "block.verdant_sky.corrupt_belladonna.reference": "Dreamy and Deadly",
+  "block.verdant_sky.floating_corrupt_belladonna": "Floating Corrupt Belladonna",
+  "block.verdant_sky.potted_corrupt_belladonna": "Potted Corrupt Belladonna",
   "block.verdant_sky.decay_agapanthus": "Decay Agapanthus",
   "block.verdant_sky.decay_agapanthus.reference": "All things shall wither and decay.",
   "block.verdant_sky.floating_decay_agapanthus": "Floating Decay Agapanthus",
@@ -85,14 +89,14 @@
   "block.verdant_sky.snow_brick_stairs": "Snow Brick Stairs",
   "block.verdant_sky.snow_brick_wall": "Snow Brick Wall",
 
-  "emi.category.verdant_sky.decay": "Decay Agapanthus",
+  "emi.category.verdant_sky.decay": "Decay",
   
   "item.verdant_sky.seed_snowball": "Seed Snowball",
   "item.verdant_sky.snow_tossed_greens": "Snow-Tossed Greens",
   "item.verdant_sky.snow_packed_shoots": "Snow-Packed Shoots",
 
-  "jei.verdant_sky.decay": "Decay Agapanthus",
-  "jei.verdant_sky.condition.required.short": "§8Location Requirements",
+  "jei.verdant_sky.decay": "Decay",
+  "jei.verdant_sky.condition.required.short": "§8Condition",
   "jei.verdant_sky.condition.required": "Flower need to be at specific location",
   "jei.verdant_sky.condition.dimension": "Dimension: %s",
   "jei.verdant_sky.condition.biome": "Biome: %s",
@@ -131,6 +135,13 @@
   "tag.item.verdant_sky.snow_food.tiny": "Tiny Snow Food",
   "tag.item.verdant_sky.snow_food/tiny": "Tiny Snow Food",
   "tag.item.verdant_sky.seeds": "Seeds",
+
+  "verdant_sky.entry.corrupt_belladonna": "Corrupt Belladonna",
+  "verdant_sky.tagline.corrupt_belladonna": "Reverse version of the Pure Daisy",
+  "verdant_sky.page.corrupt_belladonna.0": "The $(item)Corrupt Belladonna$() is an important flower. $(p)Give this flower a minute, and it will decay any nearby $(item)Leaves$() and other blocks into their decayed counterparts, $(item)Dirt$() and more. It provides ways to obtain and regenerate some materials in special environments.",
+  "verdant_sky.page.corrupt_belladonna.1": "A few other blocks can also be decayed by this flower, some of which require specific environments. These recipes aren't as important as Dirt, but they can still be useful in certain situations. For example, if you are short on water but have some snow, you can decay $(item)Snow Blocks$() into $(item)Water$().",
+  "verdant_sky.page.corrupt_belladonna.2": "Here is a list of all possible conversions:$(li)$(item)Leaves$() decays into $(item)Dirt$() $(li)$(item)Snow Blocks$() decays into $(item)Water$() $(li)$(item)Livingwood Logs$() decays into $(item)Oak Logs$() $(li)$(item)Livingrock$() decays into $(item)Stone$() $(li)$(item)Blue Ice$() decays into $(item)Packed Ice$() $(li)$(item)Packed Ice$() decays into $(item)Ice$() $(li)$(item)Obsidian$() decays into $(item)Crying Obsidian$() $(p)In the Nether:$(li)$(item)Cobblestone$() decays into $(item)Netherrack$() $(li)$(item)Sand$() decays into $(item)Soul Sand$() $(p)In the End:$(li)$(item)Cobbled Deepslate$() decays into $(item)End Stone$()",
+  "verdant_sky.page.corrupt_belladonna.3": "You must corrupt the world of this purity.",
 
   "verdant_sky.entry.decay_agapanthus": "Decay Agapanthus",
   "verdant_sky.tagline.decay_agapanthus": "Reverse version of the Pure Daisy",

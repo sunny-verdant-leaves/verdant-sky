@@ -29,6 +29,8 @@ public class ModCreativeTabs {
         // 魔力系统
         CreativeTabRegistry.append(
             VERDANT_TAB,
+            ModBlocks.CORRUPT_BELLADONNA_ITEM,
+            ModBlocks.FLOATING_CORRUPT_BELLADONNA_ITEM,
             ModBlocks.DECAY_AGAPANTHUS_ITEM,
             ModBlocks.FLOATING_DECAY_AGAPANTHUS_ITEM,
             ModBlocks.DRINKING_SNOW_LOTUS_ITEM,

@@ -24,6 +24,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -38,6 +39,10 @@ import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 public class DecayRecipeCategory implements IRecipeCategory<DecayRecipe> {
 
     public static final RecipeType<DecayRecipe> TYPE = RecipeType.create(VerdantSky.MOD_ID, "decay", DecayRecipe.class);
+    private static final Ingredient DECAY_FLOWER = Ingredient.of(
+        ModBlocks.CORRUPT_BELLADONNA.get(),
+        ModBlocks.DECAY_AGAPANTHUS.get()
+    );
 
     private final IDrawable background;
     private final Component localizedName;
@@ -114,7 +119,7 @@ public class DecayRecipeCategory implements IRecipeCategory<DecayRecipe> {
 
         // 催化剂
         builder.addSlot(RecipeIngredientRole.CATALYST, 39, 12)
-            .addItemStack(new ItemStack(ModBlocks.DECAY_AGAPANTHUS.get()));
+            .addIngredients(DECAY_FLOWER);
 
         // 输出
         Block outBlock = recipe.outputState().getBlock();
@@ -147,7 +152,7 @@ public class DecayRecipeCategory implements IRecipeCategory<DecayRecipe> {
         if (recipe.locationPredicate() != null) {
             Font font = Minecraft.getInstance().font;
             Component shortHint = Component.translatable("jei.verdant_sky.condition.required.short");
-            int xOffset = background.getWidth() - font.width(shortHint) - 2;
+            int xOffset = 68 + 16/2 - font.width(shortHint)/2;
             int yOffset = 2;
             gui.drawString(font, shortHint, xOffset, yOffset, 0x808080, false);
         }
@@ -167,7 +172,7 @@ public class DecayRecipeCategory implements IRecipeCategory<DecayRecipe> {
 
         Font font = Minecraft.getInstance().font;
         Component shortHint = Component.translatable("jei.verdant_sky.condition.required.short");
-        int xOffset = background.getWidth() - font.width(shortHint) - 2;
+        int xOffset = 68 + 16/2 - font.width(shortHint)/2;
         int yOffset = 2;
         int width = font.width(shortHint);
         int height = font.lineHeight;

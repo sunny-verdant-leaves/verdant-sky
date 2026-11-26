@@ -5,7 +5,7 @@ Botania 花卉资源与数据生成器 / Botania Flower Generator
 =================================================
 为 Verdant Sky 批量生成 Botania 风格的花（普通与浮空）的资源和数据。
 包括：方块状态、模型（方块+物品）、纹理（方块）、战利品表、标签（方块+物品）
-不包括：本地化、帕秋莉手册、配方
+不包括：纹理、本地化、帕秋莉手册、配方
 
 用法:
     python utils/flower_gen.py [--output <目录>]
@@ -26,6 +26,7 @@ MOD_ID = "verdant_sky"
 # has_floating: 是否使用浮空花
 # crosses: True = 使用 verdant sky 四面交叉父模型, False = 使用植魔父模型
 FLOWERS = [
+    {"id": "corrupt_belladonna", "type": "misc", "has_floating": True, "crosses": False},
     {"id": "decay_agapanthus", "type": "functional", "has_floating": True, "crosses": False},
     {"id": "drinking_snow_lotus", "type": "generating", "has_floating": True, "crosses": True},
 ]
