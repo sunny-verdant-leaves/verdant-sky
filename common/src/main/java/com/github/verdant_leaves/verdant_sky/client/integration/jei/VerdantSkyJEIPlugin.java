@@ -68,14 +68,10 @@ public class VerdantSkyJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(@NotNull IRecipeCatalystRegistration registration) {
         // 本模组的催化剂
-        registration.addRecipeCatalyst(
-            new ItemStack(ModBlocks.DECAY_AGAPANTHUS.get()),
-            DecayRecipeCategory.TYPE
-        );
-        registration.addRecipeCatalyst(
-            new ItemStack(ModBlocks.FLOATING_DECAY_AGAPANTHUS.get()),
-            DecayRecipeCategory.TYPE
-        );
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.CORRUPT_BELLADONNA.get()), DecayRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.FLOATING_CORRUPT_BELLADONNA.get()), DecayRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.DECAY_AGAPANTHUS.get()), DecayRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.FLOATING_DECAY_AGAPANTHUS.get()), DecayRecipeCategory.TYPE);
 
         // 仅 Botania 加载时才注册
         if (Platform.isModLoaded("botania")) {

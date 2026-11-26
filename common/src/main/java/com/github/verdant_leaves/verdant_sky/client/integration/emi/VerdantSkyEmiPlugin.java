@@ -43,12 +43,13 @@ public class VerdantSkyEmiPlugin implements EmiPlugin {
         registry.addCategory(DECAY);
 
         // 注册催化剂
+        registry.addWorkstation(DECAY, EmiStack.of(ModBlocks.CORRUPT_BELLADONNA.get()));
+        registry.addWorkstation(DECAY, EmiStack.of(ModBlocks.FLOATING_CORRUPT_BELLADONNA.get()));
         registry.addWorkstation(DECAY, EmiStack.of(ModBlocks.DECAY_AGAPANTHUS.get()));
         registry.addWorkstation(DECAY, EmiStack.of(ModBlocks.FLOATING_DECAY_AGAPANTHUS.get()));
 
         // 注册配方
-        for (DecayRecipe recipe : registry.getRecipeManager()
-                .getAllRecipesFor(ModRecipeTypes.DECAY.get())) {
+        for (DecayRecipe recipe : registry.getRecipeManager().getAllRecipesFor(ModRecipeTypes.DECAY.get())) {
             registry.addRecipe(new DecayEmiRecipe(recipe));
         }
         if (Platform.isModLoaded("botania")) {

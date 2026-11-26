@@ -89,14 +89,14 @@
   "block.verdant_sky.snow_brick_stairs": "Snow Brick Stairs",
   "block.verdant_sky.snow_brick_wall": "Snow Brick Wall",
 
-  "emi.category.verdant_sky.decay": "Decay Agapanthus",
+  "emi.category.verdant_sky.decay": "Decay",
   
   "item.verdant_sky.seed_snowball": "Seed Snowball",
   "item.verdant_sky.snow_tossed_greens": "Snow-Tossed Greens",
   "item.verdant_sky.snow_packed_shoots": "Snow-Packed Shoots",
 
-  "jei.verdant_sky.decay": "Decay Agapanthus",
-  "jei.verdant_sky.condition.required.short": "§8Location Requirements",
+  "jei.verdant_sky.decay": "Decay",
+  "jei.verdant_sky.condition.required.short": "§8Condition",
   "jei.verdant_sky.condition.required": "Flower need to be at specific location",
   "jei.verdant_sky.condition.dimension": "Dimension: %s",
   "jei.verdant_sky.condition.biome": "Biome: %s",

@@ -12,6 +12,7 @@ import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
 import com.github.verdant_leaves.verdant_sky.client.integration.jei.helper.LocationPredicateFormatter;
@@ -21,7 +22,13 @@ import com.github.verdant_leaves.verdant_sky.registry.ModBlocks;
 public class DecayEmiRecipe extends VerdantEmiRecipe {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(VerdantSky.MOD_ID, "textures/gui/decay_overlay.png");
-    private static final EmiStack DECAY_FLOWER = EmiStack.of(ModBlocks.DECAY_AGAPANTHUS.get());
+    private static final EmiIngredient DECAY_FLOWER = EmiIngredient.of(
+        Ingredient.of(
+            ModBlocks.CORRUPT_BELLADONNA.get(),
+            ModBlocks.DECAY_AGAPANTHUS.get()
+        )
+    );
+
 
     private final DecayRecipe recipe;
 
@@ -89,7 +96,7 @@ public class DecayEmiRecipe extends VerdantEmiRecipe {
 
         var font = Minecraft.getInstance().font;
         var shortHint = Component.translatable("jei.verdant_sky.condition.required.short");
-        int x = getDisplayWidth() - font.width(shortHint) - 2;
+        int x = 68 + 16/2 - font.width(shortHint)/2;
 
         widgets.addText(shortHint, x, 2, 0x888888, false);
 

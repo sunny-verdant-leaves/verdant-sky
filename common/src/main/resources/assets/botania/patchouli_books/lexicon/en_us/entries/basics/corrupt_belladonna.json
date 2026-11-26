@@ -2,8 +2,8 @@
   "name": "verdant_sky.entry.corrupt_belladonna",
   "category": "botania:basics",
   "icon": "verdant_sky:corrupt_belladonna",
+  "priority": true,
   "advancement": "botania:main/flower_pickup_lexicon",
-  "turnin": "botania:main/apothecary_pickup",
   "pages": [
     {
       "type": "text",
@@ -25,7 +25,9 @@
   ],
   "extra_recipe_mappings": {
     "verdant_sky:floating_corrupt_belladonna": 1,
-    "minecraft:crying_obsidian": 2,
-    "minecraft:dirt": 1
+    "minecraft:dirt": 1,
+    "minecraft:oak_log": 2,
+    "minecraft:stone": 2,
+    "minecraft:crying_obsidian": 2
   }
 }

@@ -89,14 +89,14 @@
   "block.verdant_sky.snow_brick_stairs": "雪砖楼梯",
   "block.verdant_sky.snow_brick_wall": "雪砖墙",
 
-  "emi.category.verdant_sky.decay": "腐朽百子莲",
+  "emi.category.verdant_sky.decay": "腐化",
   
   "item.verdant_sky.seed_snowball": "草籽雪团",
   "item.verdant_sky.snow_tossed_greens": "雪拌草芽",
   "item.verdant_sky.snow_packed_shoots": "雪裹嫩枝",
 
-  "jei.verdant_sky.decay": "腐朽百子莲",
-  "jei.verdant_sky.condition.required.short": "§8位置要求",
+  "jei.verdant_sky.decay": "腐化",
+  "jei.verdant_sky.condition.required.short": "§8位置条件",
   "jei.verdant_sky.condition.required": "花需要在特定位置",
   "jei.verdant_sky.condition.dimension": "维度: %s",
   "jei.verdant_sky.condition.biome": "生物群系: %s",
