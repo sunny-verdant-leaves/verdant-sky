@@ -144,10 +144,8 @@
   "verdant_sky.page.corrupt_belladonna.3": "You must corrupt the world of this purity.",
 
   "verdant_sky.entry.decay_agapanthus": "Decay Agapanthus",
-  "verdant_sky.tagline.decay_agapanthus": "Reverse version of the Pure Daisy",
-  "verdant_sky.page.decay_agapanthus.0": "The $(item)Decay Agapanthus$() is an important flower.$(p)This flower will decay any nearby $(item)Leaves$(), $(item)Cobblestone$() in the Nether and other blocks into their decayed counterparts, $(item)Dirt$(), $(item)Netherrack$() and more. It provides ways to obtain and regenerate some materials in special environments.",
-  "verdant_sky.page.decay_agapanthus.1": "A few other blocks can also be decayed by placing them around the flower. While not as unique or essential as Dirt, these recipes can still come in handy. $(p)$(item)Blue Ice$() decays into $(item)Packed Ice$(), $(item)Packed Ice$() into $(item)Ice$(), $(item)Snow Block$() into $(item)Water$(), and $(item)Obsidian$() into $(item)Crying Obsidian$(). In the Nether, $(item)Sand$() decays into $(item)Soul Sand$(); in the End, $(item)Cobbled Deepslate$() decays into $(item)End Stone$().",
-  "verdant_sky.page.decay_agapanthus.2": "In addition, when the Decay Agapanthus is working, it also applies the Wither effect to nearby mobs.",
+  "verdant_sky.tagline.decay_agapanthus": "Enhanced version of the Corrupt Belladonna",
+  "verdant_sky.page.decay_agapanthus.0": "$(item)Decay Agapanthus$() is a $(thing)Functional Flower$(0) that serves as the enhanced version to the Corrupt Belladonna. It consumes $(thing)Mana$(0) to operate, but it works faster and covers a larger radius. $(p)It can be toggled on and off using a $(thing)Redstone signal$(0). $(p)Beware of its side effects: when it successfully decays a block, it applies the $(thing)Wither effect$(0) to nearby mobs.",
   "verdant_sky.page.decay_agapanthus.3": "$(o)...Though turned to mud, they'd nurture flowers' growth next spring.$()",
 
   "verdant_sky.entry.drinking_snow_lotus": "Drinking Snow Lotus",
