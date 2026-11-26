@@ -2,7 +2,6 @@
   "name": "verdant_sky.entry.decay_agapanthus",
   "category": "botania:functional_flowers",
   "icon": "verdant_sky:decay_agapanthus",
-  "priority": true,
   "advancement": "botania:main/pure_daisy_pickup",
   "pages": [
     {
