@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "verdant_sky:apothecary_oak",
     "verdant_sky:apothecary_spruce",
@@ -11,7 +12,7 @@
     "verdant_sky:apothecary_bamboo",
     "verdant_sky:apothecary_crimson",
     "verdant_sky:apothecary_warped",
-    { "id": "verdant_sky:apothecary_livingwood",  "required": false },
-    { "id": "verdant_sky:apothecary_dreamwood",   "required": false }
+    {"id": "verdant_sky:apothecary_livingwood", "required": false},
+    {"id": "verdant_sky:apothecary_dreamwood", "required": false}
   ]
 }
