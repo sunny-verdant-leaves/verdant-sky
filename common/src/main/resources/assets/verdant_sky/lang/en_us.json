@@ -125,6 +125,12 @@
 
   "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "Drinking Snow Lotus: Devours",
 
+  "tag.block.verdant_sky.apothecary_wooden": "Wooden Petal Apothecary",
+  "tag.block.verdant_sky.mana_pool": "Mana Pool",
+  "tag.block.verdant_sky.wooden_cauldrons": "Wooden Cauldrons",
+
+  "tag.item.verdant_sky.apothecary_wooden": "Wooden Petal Apothecary",
+  "tag.item.verdant_sky.mana_pool": "Mana Pool",
   "tag.item.verdant_sky.snow_food": "Snow Food",
   "tag.item.verdant_sky.snow_food.large": "Large Snow Food",
   "tag.item.verdant_sky.snow_food/large": "Large Snow Food",
@@ -135,6 +141,7 @@
   "tag.item.verdant_sky.snow_food.tiny": "Tiny Snow Food",
   "tag.item.verdant_sky.snow_food/tiny": "Tiny Snow Food",
   "tag.item.verdant_sky.seeds": "Seeds",
+  "tag.item.verdant_sky.wooden_cauldrons": "Wooden Cauldrons",
 
   "verdant_sky.entry.verdant_sky": "Verdant Sky",
   "verdant_sky.tagline.verdant_sky": "Harder challenge",
