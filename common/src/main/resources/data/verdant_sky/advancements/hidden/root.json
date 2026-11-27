@@ -1,0 +1,13 @@
+{
+  "requirements": [
+    [
+      "welcome"
+    ]
+  ],
+  "criteria": {
+    "welcome": {
+      "trigger": "minecraft:location"
+    }
+  },
+  "sends_telemetry_event": false
+}
