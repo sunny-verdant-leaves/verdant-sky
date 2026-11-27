@@ -136,6 +136,17 @@
   "tag.item.verdant_sky.snow_food/tiny": "微型雪类食物",
   "tag.item.verdant_sky.seeds": "种子",
 
+  "verdant_sky.entry.verdant_sky": "碧空物语",
+  "verdant_sky.tagline.verdant_sky": "更严苛的挑战",
+  "verdant_sky.page.verdant_sky.0": "攀至云端之上，你能瞥见流星划过$(2)碧翠之空$()。$(p)这里除了你自己，空无一人。或许还有几块卵石，一汪细流；可若是连这些微小的恩赐都不复存在呢？$(p)幸运的是，植物将永远伴你左右~",
+  "verdant_sky.page.verdant_sky.1": "$(2)碧空物语$()是比$(thing)水晶花园$()更严苛的植物魔法空岛。它只适合熟悉原版机制和植物魔法的抖M。当然，即使你都不了解，也不妨碍你体验。$(p)它并没有对植物魔法进行任何修改（除非某些东西被开启了）。它主要在$(thing)水晶花园$()的流程基础上，提供了一些应对缺水或缺石材的手段。",
+  "verdant_sky.page.verdant_sky.2": "创建 Void 世界之后，你能借助树制作$(item)堆肥桶$()，进而获取$(item)骨粉$()和$(l:basics/flowers)$(item)花肥$(0)$(/l)。这里是没有水源的，因此你的$(item)花药台$()只能等待下雨来获取水。要是不下雨，你可能得去到会下雨的地方或者找其他的办法，例如$(l:basics/corrupt_belladonna)$(item)腐颠茄$(0)$(/l)。",
+  "verdant_sky.page.verdant_sky.3": "也许环境并不允许你获得$(item)圆石$()（或者你觉得从土壤里翻出无限多的$(item)卵石$()很不合理）。那你可以通过$(item)木板$()来制作木花药台、木炼药锅，通过$(item)活木$()来制作$(item)活木魔力池$()。先用它们临时替代下，之后再考虑获取石头。",
+  "verdant_sky.page.verdant_sky.4": "制作$(item)橡木花药台$()。其他种类的木材也有对应的花药台。",
+  "verdant_sky.page.verdant_sky.5": "制作$(item)橡木炼药锅$()。其他种类的木材也有对应的炼药锅。",
+  "verdant_sky.page.verdant_sky.6": "制作$(item)活木魔力池$()。它的容量相当于$(l:mana/pool)$(item)稀释魔力池$(0)$(/l)。",
+  "verdant_sky.page.verdant_sky.7": "除此之外，$(2)碧空物语$()还提供了新的杂项花、产能花和功能花。例如$(l:basics/corrupt_belladonna)$(item)腐颠茄$(0)$(/l)和$(l:functional_flowers/decay_agapanthus)$(item)腐朽百子莲$(0)$(/l)可以把树叶变成泥土、$(l:generating_flowers/drinking_snow_lotus)$(item)饮雪莲$(0)$(/l)可以消耗雪生产魔力等等。不过很显然，这些新植物大多得靠自己探索与思考才能知道它们的用武之地。",
+
   "verdant_sky.entry.corrupt_belladonna": "腐颠茄",
   "verdant_sky.tagline.corrupt_belladonna": "白雏菊的反转版",
   "verdant_sky.page.corrupt_belladonna.0": "$(item)腐颠茄$()是一种重要的花。$(p)给它一分钟，它就会将附近的$(item)树叶$()及其他方块腐化变为它们对应的腐化形态，例如$(item)泥土$()等。它提供了在特殊环境中获取和再生某些材料的方法。",
@@ -144,10 +155,8 @@
   "verdant_sky.page.corrupt_belladonna.3": "你必须腐化这个纯洁的世界。",
 
   "verdant_sky.entry.decay_agapanthus": "腐朽百子莲",
-  "verdant_sky.tagline.decay_agapanthus": "白雏菊的反转版",
-  "verdant_sky.page.decay_agapanthus.0": "$(item)腐朽百子莲$()是一种重要的花。$(p)这种花会将附近的$(item)树叶$()、下界中的$(item)圆石$()以及其他方块腐化成对应的腐化形态：$(item)泥土$()、$(item)下界岩$()等。它提供了在特殊环境中获取和再生某些材料的方法。",
-  "verdant_sky.page.decay_agapanthus.1": "还有一些方块放在这朵花旁边时也能被腐化。尽管它们并不像泥土那样独特且必要，但这些配方仍然很有用。$(p)$(item)蓝冰$()变为$(item)浮冰$()，$(item)浮冰$()变为$(item)冰$()，$(item)雪块$()变为$(item)水$()，$(item)黑曜石$()变为$(item)哭泣的黑曜石$()。在下界中，$(item)沙子$()变为$(item)灵魂沙$()；在末地中，$(item)深板岩圆石$()变为$(item)末地石$()。",
-  "verdant_sky.page.decay_agapanthus.2": "除此之外，腐朽百子莲工作的时候，也会为附近的生物施加凋零效果。",
+  "verdant_sky.tagline.decay_agapanthus": "腐颠茄的增强版",
+  "verdant_sky.page.decay_agapanthus.0": "$(item)腐朽百子莲$()是一种$(thing)功能花$(0)，是腐颠茄的增强版。它通过消耗$(thing)魔力$(0)来运作，但它工作速度更快，工作范围也更广。$(p)它可以通过$(thing)红石信号$(0)来控制开启或关闭。$(p)请当心它的副作用：当它成功腐化方块，它会给周围的生物施加$(thing)凋零效果$(0)。",
   "verdant_sky.page.decay_agapanthus.3": "$(o)……化作春泥更护花。$()",
   
   "verdant_sky.entry.drinking_snow_lotus": "饮雪莲",

@@ -1,0 +1,43 @@
+{
+  "name": "verdant_sky.entry.verdant_sky",
+  "category": "botania:basics",
+  "icon": "verdant_sky:apothecary_oak",
+  "priority": true,
+  "pages": [
+    {
+      "type": "text",
+      "text": "verdant_sky.page.verdant_sky.0"
+    },
+    {
+      "type": "text",
+      "text": "verdant_sky.page.verdant_sky.1"
+    },
+    {
+      "type": "text",
+      "text": "verdant_sky.page.verdant_sky.2"
+    },
+    {
+      "type": "text",
+      "text": "verdant_sky.page.verdant_sky.3"
+    },
+    {
+      "type": "crafting",
+      "text": "verdant_sky.page.verdant_sky.4",
+      "recipe": "verdant_sky:crafting/apothecary_oak"
+    },
+    {
+      "type": "crafting",
+      "text": "verdant_sky.page.verdant_sky.5",
+      "recipe": "verdant_sky:crafting/oak_cauldron"
+    },
+    {
+      "type": "crafting",
+      "text": "verdant_sky.page.verdant_sky.6",
+      "recipe": "verdant_sky:crafting/livingwood_pool"
+    },
+    {
+      "type": "text",
+      "text": "verdant_sky.page.verdant_sky.7"
+    }
+  ]
+}
