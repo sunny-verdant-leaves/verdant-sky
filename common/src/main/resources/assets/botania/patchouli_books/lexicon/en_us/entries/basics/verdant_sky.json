@@ -39,5 +39,36 @@
       "type": "text",
       "text": "verdant_sky.page.verdant_sky.7"
     }
-  ]
+  ],
+  "extra_recipe_mappings": {
+    "verdant_sky:apothecary_oak": 4,
+    "verdant_sky:apothecary_spruce": 4,
+    "verdant_sky:apothecary_birch": 4,
+    "verdant_sky:apothecary_jungle": 4,
+    "verdant_sky:apothecary_acacia": 4,
+    "verdant_sky:apothecary_dark_oak": 4,
+    "verdant_sky:apothecary_mangrove": 4,
+    "verdant_sky:apothecary_cherry": 4,
+    "verdant_sky:apothecary_bamboo": 4,
+    "verdant_sky:apothecary_crimson": 4,
+    "verdant_sky:apothecary_warped": 4,
+    "verdant_sky:apothecary_livingwood": 4,
+    "verdant_sky:apothecary_dreamwood": 4,
+
+    "verdant_sky:oak_cauldron": 5,
+    "verdant_sky:spruce_cauldron": 5,
+    "verdant_sky:birch_cauldron": 5,
+    "verdant_sky:jungle_cauldron": 5,
+    "verdant_sky:acacia_cauldron": 5,
+    "verdant_sky:dark_oak_cauldron": 5,
+    "verdant_sky:mangrove_cauldron": 5,
+    "verdant_sky:cherry_cauldron": 5,
+    "verdant_sky:bamboo_cauldron": 5,
+    "verdant_sky:crimson_cauldron": 5,
+    "verdant_sky:warped_cauldron": 5,
+    "verdant_sky:livingwood_cauldron": 5,
+    "verdant_sky:dreamwood_cauldron": 5,
+
+    "verdant_sky:livingwood_pool": 6
+  }
 }
