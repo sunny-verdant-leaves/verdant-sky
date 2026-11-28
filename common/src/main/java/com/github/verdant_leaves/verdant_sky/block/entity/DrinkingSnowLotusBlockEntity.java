@@ -31,7 +31,7 @@ import java.util.List;
 public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
 
     public enum FoodTier {
-        TNIY("snow_food/tiny"),
+        TINY("snow_food/tiny"),
         SMALL("snow_food/small"),
         MEDIUM("snow_food/medium"),
         LARGE("snow_food/large");
@@ -71,7 +71,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
         this.coldInterval = VerdantSkyConfig.drinkingSnowLotusColdManaInterval();
         this.radius = VerdantSkyConfig.drinkingSnowLotusRadius();
 
-        this.foodTicksCache.put(FoodTier.TNIY,  VerdantSkyConfig.drinkingSnowLotusTinyTicks());
+        this.foodTicksCache.put(FoodTier.TINY,  VerdantSkyConfig.drinkingSnowLotusTinyTicks());
         this.foodTicksCache.put(FoodTier.SMALL, VerdantSkyConfig.drinkingSnowLotusSmallTicks());
         this.foodTicksCache.put(FoodTier.MEDIUM,VerdantSkyConfig.drinkingSnowLotusMediumTicks());
         this.foodTicksCache.put(FoodTier.LARGE, VerdantSkyConfig.drinkingSnowLotusLargeTicks());
@@ -242,7 +242,7 @@ public class DrinkingSnowLotusBlockEntity extends GeneratingFlowerBlockEntity {
     private int getWorkTicksForItem(ItemStack stack) {
         for (FoodTier tier : FoodTier.values()) {
             if (stack.is(tier.getTag())) {
-                return foodTicksCache.getOrDefault(tier, foodTicksCache.get(FoodTier.TNIY));
+                return foodTicksCache.getOrDefault(tier, foodTicksCache.get(FoodTier.TINY));
             }
         }
         // 不是燃料返回 0
