@@ -20,7 +20,9 @@ import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import vazkii.botania.api.block.PetalApothecary;
 import vazkii.botania.common.block.FloatingSpecialFlowerBlock;
+import vazkii.botania.common.block.PetalApothecaryBlock;
 import vazkii.botania.common.item.block.SpecialFlowerBlockItem;
 
 import com.github.verdant_leaves.verdant_sky.VerdantSky;
@@ -210,7 +212,8 @@ public class ModBlocks {
             .mapColor(wood.mapColor())
             .strength(2.5F)
             .sound(wood.soundType())
-            .noOcclusion();
+            .noOcclusion()
+            .lightLevel(state -> state.getValue(PetalApothecaryBlock.FLUID) == PetalApothecary.State.LAVA ? 15 : 0);
         return props;
     }
 
@@ -227,13 +230,13 @@ public class ModBlocks {
     private static void registerCauldronSet(WoodVariant wood) {
         String id = wood.name();
 
-        RegistrySupplier<Block> empty = BLOCKS.register(VerdantCauldronNames.empty(id), () -> new WoodenCauldronBlock(cauldronProps(wood), wood));
+        RegistrySupplier<Block> empty = BLOCKS.register(VerdantCauldronNames.empty(id), () -> new WoodenCauldronBlock(cauldronProps(wood, false), wood));
         EMPTY_CAULDRONS.put(id, empty);
-        RegistrySupplier<Block> water = BLOCKS.register(VerdantCauldronNames.water(id), () -> new WoodenWaterCauldronBlock(cauldronProps(wood), wood));
+        RegistrySupplier<Block> water = BLOCKS.register(VerdantCauldronNames.water(id), () -> new WoodenWaterCauldronBlock(cauldronProps(wood, false), wood));
         WATER_CAULDRONS.put(id, water);
-        RegistrySupplier<Block> lava = BLOCKS.register(VerdantCauldronNames.lava(id), () -> new WoodenLavaCauldronBlock(cauldronProps(wood), wood));
+        RegistrySupplier<Block> lava = BLOCKS.register(VerdantCauldronNames.lava(id), () -> new WoodenLavaCauldronBlock(cauldronProps(wood, true), wood));
         LAVA_CAULDRONS.put(id, lava);
-        RegistrySupplier<Block> powder = BLOCKS.register(VerdantCauldronNames.powderSnow(id), () -> new WoodenPowderSnowCauldronBlock(cauldronProps(wood), wood));
+        RegistrySupplier<Block> powder = BLOCKS.register(VerdantCauldronNames.powderSnow(id), () -> new WoodenPowderSnowCauldronBlock(cauldronProps(wood, false), wood));
         POWDER_SNOW_CAULDRONS.put(id, powder);
 
         // 只给空锅注册 BlockItem
@@ -264,12 +267,17 @@ public class ModBlocks {
         }
     }
 
-    private static BlockBehaviour.Properties cauldronProps(WoodVariant wood) {
-        return BlockBehaviour.Properties.of()
+    private static BlockBehaviour.Properties cauldronProps(WoodVariant wood, boolean isLava) {
+        BlockBehaviour.Properties props = BlockBehaviour.Properties.of()
             .mapColor(wood.mapColor())
             .strength(2.0F)
             .sound(wood.soundType())
             .noOcclusion();
+        
+        if (isLava) {
+            props.lightLevel(state -> 15);
+        }
+        return props;
     }
     
     // ══════════════════════════════════════════════════════════════

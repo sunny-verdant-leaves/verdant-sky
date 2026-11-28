@@ -1,0 +1,24 @@
+{
+  "parent": "verdant_sky:hidden/root",
+  "requirements": [
+    [
+      "pickup"
+    ]
+  ],
+  "criteria": {
+    "pickup": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "verdant_sky:apothecary_wooden"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "rewards": {
+    "function": "verdant_sky:unlock/apothecary"
+  },
+  "sends_telemetry_event": false
+}

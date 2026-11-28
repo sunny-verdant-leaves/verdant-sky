@@ -125,6 +125,12 @@
 
   "subtitles.verdant_sky.block.drinking_snow_lotus.consume": "饮雪莲：吞噬",
   
+  "tag.block.verdant_sky.apothecary_wooden": "木花药台",
+  "tag.block.verdant_sky.mana_pool": "魔力池",
+  "tag.block.verdant_sky.wooden_cauldrons": "木炼药锅",
+
+  "tag.item.verdant_sky.apothecary_wooden": "木花药台",
+  "tag.item.verdant_sky.mana_pool": "魔力池",
   "tag.item.verdant_sky.snow_food": "雪类食物",
   "tag.item.verdant_sky.snow_food.large": "大份雪类食物",
   "tag.item.verdant_sky.snow_food/large": "大份雪类食物",
@@ -135,6 +141,7 @@
   "tag.item.verdant_sky.snow_food.tiny": "微型雪类食物",
   "tag.item.verdant_sky.snow_food/tiny": "微型雪类食物",
   "tag.item.verdant_sky.seeds": "种子",
+  "tag.item.verdant_sky.wooden_cauldrons": "木炼药锅",
 
   "verdant_sky.entry.verdant_sky": "碧空物语",
   "verdant_sky.tagline.verdant_sky": "更严苛的挑战",

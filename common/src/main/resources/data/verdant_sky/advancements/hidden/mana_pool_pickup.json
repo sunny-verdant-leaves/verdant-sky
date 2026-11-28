@@ -1,0 +1,24 @@
+{
+  "parent": "verdant_sky:hidden/root",
+  "requirements": [
+    [
+      "pickup"
+    ]
+  ],
+  "criteria": {
+    "pickup": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "verdant_sky:mana_pool"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "rewards": {
+    "function": "verdant_sky:unlock/mana_pool"
+  },
+  "sends_telemetry_event": false
+}
