@@ -14,10 +14,7 @@
       "tag": "botania:petals/blue"
     },
     {
-      "tag": "botania:petals/purple"
-    },
-    {
-      "tag": "botania:petals/purple"
+      "item": "botania:redstone_root"
     },
     {
       "item": "botania:mana_powder"
